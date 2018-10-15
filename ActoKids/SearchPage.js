@@ -3,13 +3,14 @@
  * If filters have not been applied, it displays all events.
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   AppRegistry,
   StyleSheet,
   Text,
   TextInput,
   ListView,
-  Button,
+  TouchableOpacity,
   TouchableHighlight,
   View
 } from 'react-native';
@@ -43,7 +44,7 @@ export default class HomePage extends Component {
     return (     
      <View style={styles.outerApp}>  
        <View style={{ justifyContent: 'flex-start', flexDirection: 'row',}}>
-         <Button 
+         <TouchableOpacity 
            onPress={() => this._onBack()}
            title="Back"
            color="darkgray"
@@ -56,7 +57,7 @@ export default class HomePage extends Component {
         </Text>
         </View>
         <View style = {{height:50, justifyContent: 'center', backgroundColor: 'lightgray',}}>
-          <Button
+          <TouchableOpacity
             onPress={ () => this._navigate() } 
             color="purple" 
             title="Click here to filter results"

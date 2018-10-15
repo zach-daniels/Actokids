@@ -3,13 +3,14 @@
  * events displayed
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   AppRegistry,
   StyleSheet,
   Text,
   TextInput,
   ListView,
-  Button,
+  TouchableOpacity,
   ScrollView,
   TouchableHighlight,
   View,
@@ -100,7 +101,7 @@ export default class FilterPage extends Component {
     return (   
     <View style={styles.outerApp}>  
       <View style={{ justifyContent: 'flex-start', flexDirection: 'row',}}>
-         <Button 
+         <TouchableOpacity 
            onPress={() => this._onBack()}
            title="Back"
            color="darkgray"
@@ -162,7 +163,7 @@ export default class FilterPage extends Component {
           options={['Yes', 'No']}
           onSelect={(i,v) => this.setState({wheelchair_accessible : this.yesNo(v) }) } 
         />
-        <Button
+        <TouchableOpacity
             onPress={ this.get_events.bind(this)} 
             color="purple" 
             title="Submit"

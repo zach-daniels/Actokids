@@ -1,5 +1,6 @@
 /**Page for entering an event into the database */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   AppRegistry,
   StyleSheet,
@@ -7,12 +8,11 @@ import {
   TextInput,
   ListView,
   ScrollView,
-  Button,
+  TouchableOpacity,
   View,
   TouchableHighlight,
   TimePickerAndroid,
   DatePickerAndroid,
-  TouchableOpacity,
   Alert
 } from 'react-native';
 import {Navigator} from 'react-native-deprecated-custom-components';
@@ -186,7 +186,7 @@ showTimePicker = async (stateKey, options) => {
     return (
       <View style={styles.outerApp}>
         <View style={{ justifyContent: 'flex-start', flexDirection: 'row',}}>
-         <Button 
+         <TouchableOpacity 
            onPress={() => this._onBack()}
            title="Back"
            color="darkgray"
@@ -430,7 +430,7 @@ showTimePicker = async (stateKey, options) => {
           options={['Yes', 'No']}
           onSelect={(i,v) =>this.setState({childcare : this.yesNo(v)}) }
         />
-        <Button
+        <TouchableOpacity
           onPress={()=> {this.check_submission()}}
           color="purple"
           title="Submit"
