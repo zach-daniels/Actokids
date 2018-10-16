@@ -1,12 +1,13 @@
 /**Home page for our app */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   AppRegistry,
   StyleSheet,
   Text,
   TextInput,
   ListView,
-  Button,
+  TouchableOpacity,
   TouchableHighlight,
   View
 } from 'react-native';
@@ -58,20 +59,21 @@ get_events() {
           This app was created to help connect children with disabilites to community events that are suitable for them.
         </Text>
         <View style = {{height: 100, justifyContent: 'center'}}>
-          <Button
+          <TouchableOpacity
+			style={styles.button}
             onPress={ () => this.get_events() }  
             color="purple"
-            title="If you would like to search for an activity, click here"
-            accessibilityLabel="If you would like to search for an activity, click here"
-          />     
+          >
+			<Text> Activities </Text>
+		</TouchableOpacity>
         </View>  
-        <Button
+        <TouchableOpacity
+		  style={styles.button}
           onPress={ () => this._navigateEvent()}  
           color="purple"
-          title="If you are an organizer who would like to add an activity to our database, click here "
-          accessibilityLabel="If you are an organizer who would like to add an activity to our database, click here "
-        />
-
+        >
+			<Text> Add an activity </Text>
+		</TouchableOpacity>
        </View>      
        
     );
