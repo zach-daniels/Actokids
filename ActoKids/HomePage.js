@@ -5,12 +5,17 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  Button,
   TextInput,
   ListView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   TouchableHighlight,
   View
 } from 'react-native';
+
+
+
 import {Navigator} from 'react-native-deprecated-custom-components';
 import SearchPage from './SearchPage';
 import EnterEvent from './EnterEvent';
@@ -52,28 +57,42 @@ get_events() {
     <View style={styles.container}>
       <View style={styles.outerApp}>
         <Text style={styles.titleText}>
-          Welcome to ActoKids!
-        </Text>
+            Welcome to ActoKids!
+          </Text>
+
         </View>
-        <Text style={styles.inputText} >
-          This app was created to help connect children with disabilites to community events that are suitable for them.
-        </Text>
+            <Text style={styles.inputText} >
+              This app was created to help connect children with disabilites to community events that are suitable for them.
+            </Text>
+
         <View style = {{height: 100, justifyContent: 'center'}}>
-          <TouchableOpacity
-			style={styles.button}
-            onPress={ () => this.get_events() }  
-            color="purple"
-          >
-			<Text> Activities </Text>
-		</TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={ () => this.get_events() }  
+                color="purple">
+                <Text> Activities </Text>
+             </TouchableOpacity>
         </View>  
+
         <TouchableOpacity
-		  style={styles.button}
+		      style={styles.button}
           onPress={ () => this._navigateEvent()}  
-          color="purple"
-        >
-			<Text> Add an activity </Text>
+          color="purple">
+			  <Text> Add an activity </Text>
 		</TouchableOpacity>
+
+      <TouchableOpacity onPress={()=>{alert("You clicked me")}}>
+        <Text>Click Me!</Text>
+      </TouchableOpacity>
+
+      <TouchableWithoutFeedback>
+        <Text style={{fontSize: 24 }}>Button</Text>
+      </TouchableWithoutFeedback>
+
+
+
+     
+
        </View>      
        
     );
