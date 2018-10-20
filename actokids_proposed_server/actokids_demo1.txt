@@ -1,1 +1,73 @@
-asdasdfadf
+use actokids_demo1;
+
+
+CREATE TABLE Accessibility (
+    Access_id INT unsigned auto_increment primary key,
+    Access_name text,
+    Acess_description text
+);
+
+
+CREATE TABLE Picture (
+    Pic_id INT unsigned auto_increment primary key,
+    pic_url text
+);
+
+
+CREATE TABLE Contact (
+    contact_id INT unsigned auto_increment primary key,
+    cont_name text,
+    cont_phone int,
+    cont_email text
+);
+CREATE TABLE Location (
+	location_id INT unsigned auto_increment primary key,
+    loc_name TEXT,
+    loc_phone int,
+    loc_email TEXT,
+    loc_address TEXT
+);
+
+CREATE TABLE Org (
+	org_id INT unsigned auto_increment primary key,
+    location_id INT unsigned,
+    FOREIGN KEY (location_id) references Location(location_id),
+    org_name TEXT,
+    Date_Formed datetime
+);
+
+CREATE TABLE Activity (
+	act_id INT unsigned auto_increment primary key,
+    
+    location_id INT unsigned,
+    FOREIGN KEY (location_id) references Location(location_id),
+    org_id int unsigned,
+    FOREIGN KEY (org_id) references Org(org_id),
+    contact_id int unsigned,
+    FOREIGN KEY (contact_id) references Contact(contact_id),
+    pic_id int unsigned,
+    FOREIGN KEY (pic_id) references Picture(pic_id),
+    
+    act_name TEXT,
+    act_date datetime,
+    cost int
+);
+
+Create Table Act_Access(
+	act_id int unsigned,
+    FOREIGN KEY (act_id) references Activity(act_id),
+    access_id int unsigned,
+    FOREIGN KEY (access_id) references Accessibility(access_id)
+);
+Create Table Pic_Location(
+	Pic_id int unsigned,
+    FOREIGN KEY (pic_id) references Picture(Pic_id),
+    location_id int unsigned,
+    FOREIGN KEY (location_id) references Location(location_id)
+);
+
+CREATE TABLE Organization (
+	org_id INT unsigned auto_increment primary key,
+    location_id INT foreign key references Location(location_id),
+    
+);
