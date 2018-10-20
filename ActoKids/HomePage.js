@@ -61,10 +61,9 @@ get_events() {
           </Text>
 
         </View>
-            <Text style={styles.inputText} >
-              This app was created to help connect children with disabilites to community events that are suitable for them.
-            </Text>
-
+        <Text style={styles.inputText} >
+          This app is under construction.
+        </Text>
         <View style = {{height: 100, justifyContent: 'center'}}>
               <TouchableOpacity
                 style={styles.button}
