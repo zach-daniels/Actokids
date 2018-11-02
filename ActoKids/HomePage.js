@@ -1,6 +1,6 @@
 /**Home page for our app */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+
 import {
   AppRegistry,
   StyleSheet,
@@ -17,8 +17,6 @@ import {
 } from 'react-native';
 
 
-
-import {Navigator} from 'react-native-deprecated-custom-components';
 import SearchPage from './SearchPage';
 import EnterEvent from './EnterEvent';
 
@@ -35,74 +33,59 @@ export default class HomePage extends Component {
             style = {[{width: 26}, {height: 26}, {tintColor: tintColor}]}
             />
     )
-};
+  };
 
-state = {
-  data: []
-};
-componentWillMount(){
-  this.fetchData();
-}
-
-/// get image from json
-fetchData = async () => {
-  const response = await fetch('https://web6.seattle.gov/Travelers/api/Map/Data?zoomId=18&type=2');
-  const json = await response.json();
-  this.setState({ data: json.Features });
-};
-
-//process image return 
-cameraType(camera) {
-    if(camera.Type == 'sdot'){
-          return  "http://www.seattle.gov/trafficcams/images/"+camera.ImageUrl;
-    }else{
-          return "http://images.wsdot.wa.gov/nw/"+camera.ImageUrl;
+    state = {
+      data: []
+    };
+    componentWillMount(){
+      this.fetchData();
     }
-}
 
+    /// get image from json
+    fetchData = async () => {
+      const response = await fetch('https://web6.seattle.gov/Travelers/api/Map/Data?zoomId=18&type=2');
+      const json = await response.json();
+      this.setState({ data: json.Features });
+    };
 
-//     constructor(props) {
-//     super(props);
-//       this.state = {id: 1, text: '',
-//         dataSource: null
-//       } 
-//   }
-// //brings user to search page
-// _navigateSearch(info){
-//   this.props.navigator.push({title: 'Search Page', index: 2, 
-//     passProps : { data: info.data }
-//   })
-// }
-// //brings user to enter an event 
-// _navigateEvent (){
-//   this.props.navigator.push({title: 'Add Event', index: 1})
-// }
-// //retrieves all event to pass into search page display
-// get_events() { 
-//   var url = 'http://10.0.2.2:3000/api/activities/getAllActivities'
-//      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    //process image return 
+    cameraType(camera) {
+        if(camera.Type == 'sdot'){
+              return  "http://www.seattle.gov/trafficcams/images/"+camera.ImageUrl;
+        }else{
+              return "http://images.wsdot.wa.gov/nw/"+camera.ImageUrl;
+        }
+    }
 
-//       fetch(url)
-//         .then((res) => res.json())
-//         .then((resJson) => {
-//           this._navigateSearch(resJson);
-//         })
-//         .catch((error) => {
-//           console.error(error);
-//         });
-// }
-//displays search page
   render() {
-    const { navigate } = this.props.navigation;
     return (     
     <View style={styles.container}>
-            <View style={styles.outerApp}>
+            {/* <View style={styles.outerApp}>
                 <Text style={styles.titleText}>
-                  Welcome to ActoKids!
+                  Acto Kids
                 </Text>
-            </View> 
-            
-  
+            </View>  */}
+            <View style={styles.toolbar}>
+                <Text style={styles.toolbarTitle}>Acto Kids</Text>
+                
+                {/*Filter: icon */}
+                <TouchableOpacity 
+                    style={styles.toolbarButton}>
+                      <Image
+                        source={require('./images/filter.png')}
+                        />
+                </TouchableOpacity>
+
+                {/**Location: icon*/}
+                <TouchableOpacity 
+                    style={styles.toolbarButton}>
+                      <Image
+                        source={require('./images/location.png')}
+                        />
+                  </TouchableOpacity>
+            </View>
+
     <FlatList
         data={this.state.data}
         keyExtractor={(x, i) => i.toString()}
@@ -125,7 +108,6 @@ cameraType(camera) {
                 <Image
                   source = {require('./images/search.png')}
                   />
-             
             </TouchableHighlight>
          
        </View>      
@@ -140,17 +122,44 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
   },
 
-  statusBar:{
-    height:24,
-  },
+  toolbar:{
+    backgroundColor: '#FF4500',
+    paddingTop: 8,
+    paddingBottom: 8,
+    flexDirection: 'row'
+   },
+   toolbarTitle:{
+     color: '#fff',
+     width: 150,
+     fontSize: 25,
+     textAlign: 'center',
+     //flex: 1,
+   },
 
-  toolbarContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 8,
-    height: 56,
-    flex: 1,
-  },
+   toolbarButton:{
+     width: 50,
+     justifyContent: 'center',
+     flex: 2,
+   },
+
+  
+  // outerApp: {
+  //   justifyContent: 'flex-start',
+  //   //justifyContent: 'space-between',
+  //   alignItems: 'center',
+  //   backgroundColor: '#FF4500',
+  //  // backgroundColor: '#A9A9A9',
+  // //backgroundColor: 'red',
+  // },
+
+ 
+  // toolbarContainer: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   marginHorizontal: 8,
+  //   height: 56,
+  //   flex: 1,
+  // },
 
   searchButton:{
     backgroundColor: '#ff5722',
@@ -179,17 +188,10 @@ const styles = StyleSheet.create({
     padding: 20
   },
 
-   outerApp: {
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-   // backgroundColor: '#FF4500',
-    backgroundColor: '#A9A9A9',
-  //backgroundColor: 'red',
-  },
+   
   titleText:{
     fontFamily: 'serif',
     fontSize: 32, 
-    //color:'white',
     color: 'black',
   },
   headerText: { 

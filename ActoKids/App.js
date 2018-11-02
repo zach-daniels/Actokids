@@ -24,18 +24,17 @@ const App = createBottomTabNavigator({
 },
  {
 
-  //Tab Texts navigation
+  // Buttom Tab Texts navigation
 tabBarOptions: {
-  activeTintColor: 'blue', 
-  //#F8F8FF
+  activeTintColor: '#F8F8FF', 
   
   labelStyle: {
     fontSize: 16,
     fontWeight: '600',
   },
   style: {
-    backgroundColor: 'white',
-    //#FF4500
+    backgroundColor: '#FF4500',
+  
   }
 }
 
