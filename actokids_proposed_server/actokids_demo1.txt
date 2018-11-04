@@ -25,7 +25,11 @@ CREATE TABLE Location (
     loc_name TEXT,
     loc_phone int,
     loc_email TEXT,
-    loc_address TEXT
+    loc_address TEXT,
+    street TEXT,
+    city TEXT,
+    ZIP INT,
+    state VARCHAR(2)
 );
 
 CREATE TABLE Org (
