@@ -8,6 +8,7 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  Image,
   TextInput,
   ListView,
   TouchableOpacity,
@@ -20,6 +21,21 @@ import {Navigator} from 'react-native-deprecated-custom-components';
 
 
 export default class DetailsPage extends Component {
+
+  //Added Tab Bottom Navigation 
+  static navigationOptions = {
+    title: 'Welcome',
+    tabBarLabel: 'Favorite',
+    tabBarIcon: ({tintColor })=>(
+        <Image
+            source = {require('./images/favorite.png')}
+            // stylee = {[styles.icon, {tintColor: tintColor}]}
+            style = {[{width: 26}, {height: 26}, {shadowColor: 'white'},{tintColor: tintColor}]}
+            />
+    )
+}
+
+
     constructor(props) {
       var dat = props.data == undefined? {'activity_name': 'none'} : props.data; 
       super(props);

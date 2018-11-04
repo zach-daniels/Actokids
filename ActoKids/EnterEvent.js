@@ -5,6 +5,7 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  Image,
   TextInput,
   ListView,
   ScrollView,
@@ -20,6 +21,20 @@ import CheckBox from 'react-native-check-box';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class EnterEvent extends Component {
+
+  ////Added Tab Bottom Navigation 
+  static navigationOptions = {
+    title: 'Welcome',
+    tabBarLabel: 'Account',
+    tabBarIcon: ({tintColor })=>(
+        <Image
+            source = {require('./images/user.png')}
+            // stylee = {[styles.icon, {tintColor: tintColor}]}
+            style = {[{width: 26}, {height: 26}, {shadowColor: 'white'},{tintColor: tintColor}]}
+            />
+    )
+}
+
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
