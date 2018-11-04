@@ -79,3 +79,10 @@ CREATE TABLE urls (
     url_id INT primary key,
     url_link TEXT
 );
+
+SELECT act_name, act_date, cost, org_name, loc_name, loc_address, cont_name, pic_url
+FROM Activity JOIN Org ON Activity.org_id = Org.org_id
+JOIN Location ON Activity.location_id = Location.location_id
+JOIN Contact ON Activity.contact_id = Contact.contact_id
+JOIN Picture ON Activity.pic_id = Picture.pic_id
+FOR JSON PATH, ROOT('Data')
