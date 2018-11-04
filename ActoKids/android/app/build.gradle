@@ -1,7 +1,6 @@
 apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
-
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -17,6 +16,7 @@ import com.android.build.OutputFile
  *
  *   // the entry file for bundle generation
  *   entryFile: "index.android.js",
+ *
  *
  *   // whether to bundle JS and assets in debug mode
  *   bundleInDebug: false,
@@ -65,6 +65,9 @@ import com.android.build.OutputFile
  * ]
  */
 
+project.ext.react = [
+    entryFile: "index.js"
+]
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -84,7 +87,7 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.3"
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.actokids"

@@ -2,50 +2,54 @@ use actokids_demo1;
 
 
 CREATE TABLE Accessibility (
-    Access_id INT unsigned auto_increment primary key,
+    Access_id INT primary key,
     Access_name text,
     Acess_description text
 );
 
 
 CREATE TABLE Picture (
-    Pic_id INT unsigned auto_increment primary key,
+    Pic_id INT primary key,
     pic_url text
 );
 
 
 CREATE TABLE Contact (
-    contact_id INT unsigned auto_increment primary key,
+    contact_id INT primary key,
     cont_name text,
     cont_phone int,
     cont_email text
 );
 CREATE TABLE Location (
-	location_id INT unsigned auto_increment primary key,
+	location_id INT primary key,
     loc_name TEXT,
     loc_phone int,
     loc_email TEXT,
-    loc_address TEXT
+    loc_address TEXT,
+    street TEXT,
+    city TEXT,
+    ZIP INT,
+    state VARCHAR(2)
 );
 
 CREATE TABLE Org (
-	org_id INT unsigned auto_increment primary key,
-    location_id INT unsigned,
+	org_id INT primary key,
+    location_id INT,
     FOREIGN KEY (location_id) references Location(location_id),
     org_name TEXT,
     Date_Formed datetime
 );
 
 CREATE TABLE Activity (
-	act_id INT unsigned auto_increment primary key,
+	act_id INT primary key,
     
-    location_id INT unsigned,
+    location_id INT,
     FOREIGN KEY (location_id) references Location(location_id),
-    org_id int unsigned,
+    org_id int,
     FOREIGN KEY (org_id) references Org(org_id),
-    contact_id int unsigned,
+    contact_id int,
     FOREIGN KEY (contact_id) references Contact(contact_id),
-    pic_id int unsigned,
+    pic_id int,
     FOREIGN KEY (pic_id) references Picture(pic_id),
     
     act_name TEXT,
@@ -54,20 +58,24 @@ CREATE TABLE Activity (
 );
 
 Create Table Act_Access(
-	act_id int unsigned,
+	act_id int,
     FOREIGN KEY (act_id) references Activity(act_id),
-    access_id int unsigned,
+    access_id int,
     FOREIGN KEY (access_id) references Accessibility(access_id)
 );
 Create Table Pic_Location(
-	Pic_id int unsigned,
+	Pic_id int,
     FOREIGN KEY (pic_id) references Picture(Pic_id),
-    location_id int unsigned,
+    location_id int,
     FOREIGN KEY (location_id) references Location(location_id)
 );
 
 CREATE TABLE Organization (
-	org_id INT unsigned auto_increment primary key,
+	org_id INT primary key,
     location_id INT foreign key references Location(location_id),
-    
+);
+
+CREATE TABLE urls (
+    url_id INT primary key,
+    url_link TEXT
 );
