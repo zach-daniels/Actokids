@@ -51,6 +51,8 @@ CREATE TABLE Activity (
     FOREIGN KEY (contact_id) references Contact(contact_id),
     pic_id int,
     FOREIGN KEY (pic_id) references Picture(pic_id),
+    url_id in,
+    FOREIGN KEY (url_id) references urls(url_id)
     
     act_name TEXT,
     act_date datetime,
@@ -73,6 +75,8 @@ Create Table Pic_Location(
 CREATE TABLE Organization (
 	org_id INT primary key,
     location_id INT foreign key references Location(location_id),
+    url_id INT,
+    FOREIGN KEY references urls(url_id)
 );
 
 CREATE TABLE urls (
