@@ -93,7 +93,7 @@ cameraType(camera) {
 // }
 //displays search page
   render() {
-    const { navigate } = this.props.navigation;
+    //const { navigate } = this.props.navigation;
     return (     
     <View style={styles.container}>
             <View style={styles.outerApp}>
