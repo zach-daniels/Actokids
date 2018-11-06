@@ -28,13 +28,10 @@ export default class FilterPage extends Component {
     tabBarIcon: ({tintColor })=>(
         <Image
             source = {require('./images/calendar.png')}
-            // stylee = {[styles.icon, {tintColor: tintColor}]}
             style = {[{width: 26}, {height: 26}, {shadowColor: 'white'},{tintColor: tintColor}]}
             />
     )
 }
-
-
 
     constructor(props) {
     super(props);

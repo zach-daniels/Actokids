@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   Button,
@@ -19,6 +18,7 @@ import {
 
 import SearchPage from './SearchPage';
 import EnterEvent from './EnterEvent';
+import FilterPage from './FilterPage';
 
 
 
@@ -35,6 +35,11 @@ export default class HomePage extends Component {
     )
   };
 
+  constructor(props){
+    super(props)
+    new FilterPage();
+  }
+//----------------------------
     state = {
       data: []
     };
@@ -61,53 +66,67 @@ export default class HomePage extends Component {
   render() {
     return (     
     <View style={styles.container}>
-            {/* <View style={styles.outerApp}>
-                <Text style={styles.titleText}>
-                  Acto Kids
-                </Text>
-            </View>  */}
+            
             <View style={styles.toolbar}>
                 <Text style={styles.toolbarTitle}>Acto Kids</Text>
                 
                 {/*Filter: icon */}
                 <TouchableOpacity 
-                    style={styles.toolbarButton}>
+                    style={styles.toolbarFilter}
+                    onPress={()=><FilterPage />}>
+                    {/**
+                      onPress={()=>{console.log("Filter icon pressed")}}  
+                    */}
                       <Image
                         source={require('./images/filter.png')}
                         />
                 </TouchableOpacity>
 
+
+
                 {/**Location: icon*/}
                 <TouchableOpacity 
-                    style={styles.toolbarButton}>
+                    style={styles.toolbarLocation}
+                    onPress = {() => {console.log('location icon pressed')}}>
+                    {/**
+                      onPress = {() => {console.log('location icon pressed')}}
+                    */}
                       <Image
                         source={require('./images/location.png')}
                         />
                   </TouchableOpacity>
             </View>
 
+
+
+    {/**Traffic Camera View
+        Title: title of the image
+        Image: Image for camera*/}
     <FlatList
         data={this.state.data}
         keyExtractor={(x, i) => i.toString()}
         renderItem={ ({item}) =>
         <View style={{marginBotton: 30}}>
-              <Text style={{fontSize: 20, color: 'black'}}>
-                {`${item.Cameras[0].Description}`}
-              </Text>
-              <Image
+            <Image
                 source = {{ uri: this.cameraType(item.Cameras[0]) }}
                 style = {{height: 250, margin: 3}}
                 />
+
+              <Text style={{fontSize: 20, color: 'black'}}>
+                {`${item.Cameras[0].Description}`}
+              </Text>
+              
               </View>
         }/>
 
 
+            {/**Search Icon */}
             <TouchableHighlight style={styles.searchButton}
-             underlayColor='#ff7043' 
-             onPress={()=>{console.log('pressed')}}> 
-                <Image
-                  source = {require('./images/search.png')}
-                  />
+              underlayColor='#ff7043' 
+              onPress={()=>{console.log('pressed')}}> 
+                  <Image
+                    source = {require('./images/search.png')}
+                    />
             </TouchableHighlight>
          
        </View>      
@@ -135,12 +154,31 @@ const styles = StyleSheet.create({
      textAlign: 'center',
      //flex: 1,
    },
-
-   toolbarButton:{
+   toolbarFilter:{
      width: 50,
-     justifyContent: 'center',
-     flex: 2,
+     position: 'absolute',
+     bottom: 10,
+     right: 50,
    },
+   toolbarLocation: {
+      width: 50,
+      position: 'absolute',
+      bottom: 10,
+      right: 0,
+      
+   },
+
+
+  //  toolbarButton:{
+  //    width: 50,
+  //    //justifyContent: 'center',
+  //    //flex: -2,
+  //     position: "absolute",
+  //     bottom: 10,
+  //     right: 0,
+  //     //justifyContent: 'flex-end',
+  //     //alignSelf: 'flex-end',
+  //  },
 
   
   // outerApp: {
