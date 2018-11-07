@@ -1,3 +1,4 @@
+
 /**Home page for our app */
 import React, { Component } from 'react';
 
@@ -9,7 +10,6 @@ import {
   ListView,
   Image,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   TouchableHighlight,
   View,
   FlatList
@@ -35,11 +35,7 @@ export default class HomePage extends Component {
     )
   };
 
-  constructor(props){
-    super(props)
-    new FilterPage();
-  }
-//----------------------------
+
     state = {
       data: []
     };
@@ -73,10 +69,8 @@ export default class HomePage extends Component {
                 {/*Filter: icon */}
                 <TouchableOpacity 
                     style={styles.toolbarFilter}
-                    onPress={()=><FilterPage />}>
-                    {/**
-                      onPress={()=>{console.log("Filter icon pressed")}}  
-                    */}
+
+                      onPress={()=>{console.log("Filter icon pressed")}}>
                       <Image
                         source={require('./images/filter.png')}
                         />
@@ -88,9 +82,7 @@ export default class HomePage extends Component {
                 <TouchableOpacity 
                     style={styles.toolbarLocation}
                     onPress = {() => {console.log('location icon pressed')}}>
-                    {/**
-                      onPress = {() => {console.log('location icon pressed')}}
-                    */}
+                   
                       <Image
                         source={require('./images/location.png')}
                         />
@@ -167,37 +159,6 @@ const styles = StyleSheet.create({
       right: 0,
       
    },
-
-
-  //  toolbarButton:{
-  //    width: 50,
-  //    //justifyContent: 'center',
-  //    //flex: -2,
-  //     position: "absolute",
-  //     bottom: 10,
-  //     right: 0,
-  //     //justifyContent: 'flex-end',
-  //     //alignSelf: 'flex-end',
-  //  },
-
-  
-  // outerApp: {
-  //   justifyContent: 'flex-start',
-  //   //justifyContent: 'space-between',
-  //   alignItems: 'center',
-  //   backgroundColor: '#FF4500',
-  //  // backgroundColor: '#A9A9A9',
-  // //backgroundColor: 'red',
-  // },
-
- 
-  // toolbarContainer: {
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  //   marginHorizontal: 8,
-  //   height: 56,
-  //   flex: 1,
-  // },
 
   searchButton:{
     backgroundColor: '#ff5722',
