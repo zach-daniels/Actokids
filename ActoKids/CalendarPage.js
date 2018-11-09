@@ -57,14 +57,12 @@ const styles = StyleSheet.create({
      outerApp: {
       justifyContent: 'flex-start',
       alignItems: 'center',
-     // backgroundColor: '#FF4500',
       backgroundColor: '#A9A9A9',
-    //backgroundColor: 'red',
+  
     },
     titleText:{
       fontFamily: 'serif',
       fontSize: 32, 
-      //color:'white',
       color: 'black',
     },
   });
