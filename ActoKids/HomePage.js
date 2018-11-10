@@ -45,18 +45,15 @@ export default class HomePage extends Component {
 
     /// get image from json
     fetchData = async () => {
+      const doubt = await fetch('http://demodude1.azurewebsites.net/');
       const response = await fetch('https://web6.seattle.gov/Travelers/api/Map/Data?zoomId=18&type=2');
-      const json = await response.json();
-      this.setState({ data: json.Features });
+        const json = await doubt.json();
+      this.setState({ data: json });
     };
 
     //process image return 
-    cameraType(camera) {
-        if(camera.Type == 'sdot'){
-              return  "http://www.seattle.gov/trafficcams/images/"+camera.ImageUrl;
-        }else{
-              return "http://images.wsdot.wa.gov/nw/"+camera.ImageUrl;
-        }
+    cameraType() {
+        return "https://hhp-blog.s3.amazonaws.com/2018/05/iStock-494239087-300x200.jpg"
     }
 
   render() {
@@ -100,12 +97,12 @@ export default class HomePage extends Component {
         renderItem={ ({item}) =>
         <View style={{marginBotton: 30}}>
             <Image
-                source = {{ uri: this.cameraType(item.Cameras[0]) }}
+                source = {{ uri: item.pic_url }}
                 style = {{height: 250, margin: 3}}
                 />
 
               <Text style={{fontSize: 20, color: 'black'}}>
-                {`${item.Cameras[0].Description}`}
+                    {`${item.act_name}`}
               </Text>
               
               </View>
