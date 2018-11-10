@@ -45,16 +45,10 @@ export default class HomePage extends Component {
 
     /// get image from json
     fetchData = async () => {
-      const doubt = await fetch('http://demodude1.azurewebsites.net/');
-      const response = await fetch('https://web6.seattle.gov/Travelers/api/Map/Data?zoomId=18&type=2');
-        const json = await doubt.json();
+      const response = await fetch('http://demodude1.azurewebsites.net/');
+      const json = await response.json();
       this.setState({ data: json });
     };
-
-    //process image return 
-    cameraType() {
-        return "https://hhp-blog.s3.amazonaws.com/2018/05/iStock-494239087-300x200.jpg"
-    }
 
   render() {
     return (     
@@ -103,7 +97,20 @@ export default class HomePage extends Component {
 
               <Text style={{fontSize: 20, color: 'black'}}>
                     {`${item.act_name}`}
+                </Text>
+                <Text style={{ fontSize: 20, color: 'black' }}>
+                    {`${item.loc_name}`}
+                </Text>
+              <Text style={{ fontSize: 20, color: 'black' }}>
+                    {`${item.loc_address}`}
               </Text>
+              <Text style={{ fontSize: 20, color: 'black' }}>
+                    {`${item.act_date}`}
+              </Text>
+              <Text style={{ fontSize: 20, color: 'black' }}>
+                    {`Contact: ${item.cont_name}`}
+                </Text>
+                
               
               </View>
         }/>
