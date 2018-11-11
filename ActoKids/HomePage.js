@@ -71,6 +71,9 @@ export default class HomePage extends Component {
                     style={styles.toolbarFilter}
 
                       onPress={()=>{console.log("Filter icon pressed")}}>
+                      {/**
+                        onePress = {( => activityStarter.navigateToExample())}
+                      */}
                       <Image
                         source={require('./images/filter.png')}
                         />
