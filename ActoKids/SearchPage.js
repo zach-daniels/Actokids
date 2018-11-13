@@ -9,17 +9,36 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  Button,
   ListView,
   TouchableOpacity,
   TouchableHighlight,
-  View
+  TouchableWithoutFeedback,
+  View,
+  Image,
 } from 'react-native';
+
+
 import {Navigator} from 'react-native-deprecated-custom-components';
 import events from './events.json';
 
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-export default class HomePage extends Component {
+export default class SearchPage extends Component {
+    //Added Tab Bottom Navigation 
+    static navigationOptions = {
+      title: 'Search',
+      //tabBarLabel: 'Search',
+      // tabBarIcon: ({tintColor })=>(
+      //     <Image
+      //         source = {require('./images/activity.png')}
+      //         style = {[{width: 26}, {height: 26}, {tintColor: tintColor}]}
+      //         />
+      // )
+  };
+  
+
+
     constructor(props) {
       var dat = props.data == undefined? JSON.stringify({'activity_name': 'none'}) : JSON.stringify(props.data); 
       var obj = JSON.parse(dat);
@@ -41,6 +60,9 @@ export default class HomePage extends Component {
   }
 //displays page
   render() {
+
+    const { navigate } = this.props.navigation;
+    
     return (     
      <View style={styles.outerApp}>  
        <View style={{ justifyContent: 'flex-start', flexDirection: 'row',}}>
