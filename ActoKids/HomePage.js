@@ -25,7 +25,7 @@ import FilterPage from './FilterPage';
 export default class HomePage extends Component {
   //Added Tab Bottom Navigation 
   static navigationOptions = {
-    title: 'Welcome',
+    //title: 'Welcome',
     tabBarLabel: 'Activities',
     tabBarIcon: ({tintColor })=>(
         <Image
@@ -34,6 +34,12 @@ export default class HomePage extends Component {
             />
     )
   };
+
+
+  _Filter(){
+    
+  }
+
 
 
     state = {
@@ -60,17 +66,14 @@ export default class HomePage extends Component {
                 {/*Filter: icon */}
                 <TouchableOpacity 
                     style={styles.toolbarFilter}
-
-                      onPress={()=>{console.log("Filter icon pressed")}}>
+                      onPress={()=>{FilterPage.onPress.bind(this)}}>
                       {/**
-                        onePress = {( => activityStarter.navigateToExample())}
+                        onePress = {() => {console.log("Filter icon pressed")}}
                       */}
                       <Image
                         source={require('./images/filter.png')}
                         />
                 </TouchableOpacity>
-
-
 
                 {/**Location: icon*/}
                 <TouchableOpacity 
@@ -83,11 +86,7 @@ export default class HomePage extends Component {
                   </TouchableOpacity>
             </View>
 
-
-
-    {/**Traffic Camera View
-        Title: title of the image
-        Image: Image for camera*/}
+    
     <FlatList
         data={this.state.data}
         keyExtractor={(x, i) => i.toString()}
@@ -95,12 +94,12 @@ export default class HomePage extends Component {
         <View style={{marginBotton: 30}}>
             <Image
                 source = {{ uri: item.pic_url }}
-                style = {{height: 250, margin: 3}}
-                />
+                style = {{height: 250, margin: 3}}/>
 
               <Text style={{fontSize: 20, color: 'black'}}>
                     {`${item.act_name}`}
-                </Text>
+              </Text>
+
                 <Text style={{ fontSize: 20, color: 'black' }}>
                     {`${item.loc_name}`}
                 </Text>
@@ -151,7 +150,7 @@ const styles = StyleSheet.create({
      width: 150,
      fontSize: 25,
      textAlign: 'center',
-     //flex: 1,
+     
    },
    toolbarFilter:{
      width: 50,

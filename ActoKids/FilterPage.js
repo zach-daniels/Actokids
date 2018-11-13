@@ -17,21 +17,10 @@ import {
   View,
   DatePickerAndroid
 } from 'react-native';
-import {Navigator} from 'react-native-deprecated-custom-components';
+
 import ModalDropdown from 'react-native-modal-dropdown'
 
 export default class FilterPage extends Component {
-  //Added Tab Bottom Navigation 
-  static navigationOptions = {
-    title: 'Welcome',
-    tabBarLabel: 'Calendar',
-    tabBarIcon: ({tintColor })=>(
-        <Image
-            source = {require('./images/calendar.png')}
-            style = {[{width: 26}, {height: 26}, {shadowColor: 'white'},{tintColor: tintColor}]}
-            />
-    )
-}
 
     constructor(props) {
     super(props);
