@@ -19,17 +19,6 @@ export class Activity extends Component {
   state = {
     data: []
   };
-  
-  componentWillMount(){
-    this.fetchData();
-  }
-  
-  /// get image from json
-  fetchData = async () => {
-    const response = await fetch('http://demodude1.azurewebsites.net/');
-    const json = await response.json();
-    this.setState({ data: json });
-  };
 
   render() {
     const { navigation } = this.props;
