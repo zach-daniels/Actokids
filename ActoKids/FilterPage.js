@@ -96,10 +96,14 @@ export default class FilterPage extends Component {
   }
   //brings user back to search page
   _onBack () { 
-    this.props.navigator.pop();
+    //this.props.navigator.pop();
+    this.props.navigation.goBack();
   }
 //displays the page
   render() {
+
+    const { navigate } = this.props.navigation;
+
     return (   
     <View style={styles.outerApp}>  
       <View style={{ justifyContent: 'flex-start', flexDirection: 'row',}}>

@@ -2,6 +2,8 @@
 /**Home page for our app */
 import React, { Component } from 'react';
 
+import CardView from 'react-native-cardview';
+
 import {
   StyleSheet,
   Text,
@@ -20,6 +22,7 @@ import SearchPage from './SearchPage';
 import EnterEvent from './EnterEvent';
 import FilterPage from './FilterPage';
 
+import App from './App';
 
 
 export default class HomePage extends Component {
@@ -35,11 +38,7 @@ export default class HomePage extends Component {
     )
   };
 
-
-  _Filter(){
-    
-  }
-
+ 
 
 
     state = {
@@ -56,7 +55,10 @@ export default class HomePage extends Component {
       this.setState({ data: json });
     };
 
+  
+
   render() {
+    const { navigate } = this.props.navigation;
     return (     
     <View style={styles.container}>
             
@@ -66,10 +68,8 @@ export default class HomePage extends Component {
                 {/*Filter: icon */}
                 <TouchableOpacity 
                     style={styles.toolbarFilter}
-                      onPress={()=>{FilterPage.onPress.bind(this)}}>
-                      {/**
-                        onePress = {() => {console.log("Filter icon pressed")}}
-                      */}
+                      //onPress={()=>{this.FilterPage}}
+                        onPress= {() => navigate('FilterPage')}>
                       <Image
                         source={require('./images/filter.png')}
                         />
@@ -86,36 +86,56 @@ export default class HomePage extends Component {
                   </TouchableOpacity>
             </View>
 
+
+              {/**CardView */}
+             <View style={styles.MainContainer}>
+              <CardView
+                cardElevation={2}
+                cardMaxElevation={2}
+                cornerRadius={5}
+                paddingBottom={10}
+                style={styles.cardViewStyle}>
+                   <Image
+                        source={require('./images/kids.jpg')}
+                        style={{width: 300,height: 100}}
+                        />
+                      <Text style={styles.cardView_InsideText}> Simple CardView </Text>
+                      <Text style={styles.cardView_InsideText}> Simple CardView #2 </Text>
+                     
+              </CardView>   
+          </View>
+
+            
+  
     
-    <FlatList
-        data={this.state.data}
-        keyExtractor={(x, i) => i.toString()}
-        renderItem={ ({item}) =>
-        <View style={{marginBotton: 30}}>
-            <Image
-                source = {{ uri: item.pic_url }}
-                style = {{height: 250, margin: 3}}/>
+         {/* <FlatList
+            data={this.state.data}
+            keyExtractor={(x, i) => i.toString()}
+            renderItem={ ({item}) =>
+            <View style={{marginBotton: 30}}>
+                <Image
+                    source = {{ uri: item.pic_url }}
+                    style = {{height: 250, margin: 3}}/>
 
-              <Text style={{fontSize: 20, color: 'black'}}>
-                    {`${item.act_name}`}
-              </Text>
+                  <Text style={{fontSize: 20, color: 'black'}}>
+                        {`${item.act_name}`}
+                  </Text>
 
-                <Text style={{ fontSize: 20, color: 'black' }}>
-                    {`${item.loc_name}`}
-                </Text>
-              <Text style={{ fontSize: 20, color: 'black' }}>
-                    {`${item.loc_address}`}
-              </Text>
-              <Text style={{ fontSize: 20, color: 'black' }}>
-                    {`${item.act_date}`}
-              </Text>
-              <Text style={{ fontSize: 20, color: 'black' }}>
-                    {`Contact: ${item.cont_name}`}
-                </Text>
-                
-              
-              </View>
-        }/>
+                    <Text style={{ fontSize: 20, color: 'black' }}>
+                        {`${item.loc_name}`}
+                    </Text>
+                  <Text style={{ fontSize: 20, color: 'black' }}>
+                        {`${item.loc_address}`}
+                  </Text>
+                  <Text style={{ fontSize: 20, color: 'black' }}>
+                        {`${item.act_date}`}
+                  </Text>
+                  <Text style={{ fontSize: 20, color: 'black' }}>
+                        {`Contact: ${item.cont_name}`}
+                    </Text>
+                  </View>}/> */}
+
+        
 
 
             {/**Search Icon */}
@@ -134,6 +154,31 @@ export default class HomePage extends Component {
 }
 
 const styles = StyleSheet.create({
+
+  MainContainer: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+ 
+  },
+ 
+  cardViewStyle:{
+    width: 350, 
+    height: 250,
+ 
+  },
+ 
+  cardView_InsideText:{
+ 
+    fontSize: 20, 
+    color: '#000', 
+    textAlign: 'center', 
+    marginTop: 50,  
+  },
+
+
+  //------------------------------
   container: {
     flex: 1, 
     backgroundColor: 'lightgray',

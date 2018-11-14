@@ -13,31 +13,37 @@ import HomePage from './HomePage';
 import CalendarPage from './CalendarPage';
 import DetailsPage from './DetailsPage';
 import EnterEvent from './EnterEvent';
+import FilterPage from './FilterPage';
 
 
 const App = createBottomTabNavigator({
-    HomePage: {screen: HomePage  },
-    CalendarPage: {screen: CalendarPage},
-    DetailsPage: {screen: DetailsPage},
-    EnterEvent: {screen: EnterEvent}
-
+   HomePage: {screen: HomePage  },
+   CalendarPage: {screen: CalendarPage},
+   DetailsPage: {screen: DetailsPage},
+   EnterEvent: {screen: EnterEvent},  
 },
- {
+{
+  FilterPage: {screen: FilterPage},
+},
 
-  // Buttom Tab Texts navigation
+
+{
+
+// Buttom Tab Texts navigation
 tabBarOptions: {
-  activeTintColor: '#F8F8FF', 
-  
-  labelStyle: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  style: {
-    backgroundColor: '#FF4500',
-  
-  }
+activeTintColor: '#F8F8FF', 
+
+labelStyle: {
+  fontSize: 16,
+  fontWeight: '600',
+},
+style: {
+  backgroundColor: '#FF4500',
+}
 }
 
 });
+
+
 
 export default App;
