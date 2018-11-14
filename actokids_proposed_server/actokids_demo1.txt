@@ -59,7 +59,9 @@ CREATE TABLE Activity (
     act_name TEXT,
     act_date datetime,
     cost int,
-    act_desc TEXT
+    act_desc TEXT,   
+    lowest_age int,
+    highest_age int
 );
 
 Create Table Act_Access(
