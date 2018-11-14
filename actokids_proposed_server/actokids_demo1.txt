@@ -1,0 +1,87 @@
+use actokids_demo1;
+
+
+CREATE TABLE Accessibility (
+    Access_id INT IDENTITY(1,1) primary key,
+    Access_name text,
+    Acess_description text
+);
+
+
+CREATE TABLE Picture (
+    Pic_id INT IDENTITY(1,1) primary key,
+    pic_url text
+);
+
+
+CREATE TABLE Contact (
+    contact_id INT IDENTITY(1,1) primary key,
+    cont_name text,
+    cont_phone int,
+    cont_email text
+);
+CREATE TABLE Location (
+    location_id INT IDENTITY(1,1) primary key,
+    loc_name TEXT,
+    loc_phone DOUBLE PERCISION,
+    loc_email TEXT,
+    loc_address TEXT,
+    street TEXT,
+    city TEXT,
+    ZIP INT,
+    state VARCHAR(2)
+);
+
+CREATE TABLE Org (
+    org_id INT IDENTITY(1,1) primary key,
+    location_id INT,
+    FOREIGN KEY (location_id) references Location(location_id),
+    org_name TEXT,
+    Date_Formed datetime,
+    url_id INT,
+    FOREIGN KEY (url_id) references urls(url_id)
+);
+
+CREATE TABLE Activity (
+	act_id INT IDENTITY(1,1) primary key,
+    
+    location_id INT,
+    FOREIGN KEY (location_id) references Location(location_id),
+    org_id int,
+    FOREIGN KEY (org_id) references Org(org_id),
+    contact_id int,
+    FOREIGN KEY (contact_id) references Contact(contact_id),
+    pic_id int,
+    FOREIGN KEY (pic_id) references Picture(pic_id),
+    url_id int,
+    FOREIGN KEY (url_id) references urls(url_id),
+    
+    act_name TEXT,
+    act_date datetime,
+    cost int
+);
+
+Create Table Act_Access(
+    act_id int,
+    FOREIGN KEY (act_id) references Activity(act_id),
+    access_id int,
+    FOREIGN KEY (access_id) references Accessibility(access_id)
+);
+Create Table Pic_Location(
+    Pic_id int,
+    FOREIGN KEY (pic_id) references Picture(Pic_id),
+    location_id int,
+    FOREIGN KEY (location_id) references Location(location_id)
+);
+
+CREATE TABLE urls (
+    url_id INT IDENTITY(1,1) primary key,
+    url_link TEXT
+);
+
+SELECT act_name, act_date, cost, org_name, loc_name, loc_address, cont_name, pic_url
+FROM Activity JOIN Org ON Activity.org_id = Org.org_id
+JOIN Location ON Activity.location_id = Location.location_id
+JOIN Contact ON Activity.contact_id = Contact.contact_id
+JOIN Picture ON Activity.pic_id = Picture.pic_id
+FOR JSON PATH, ROOT('Data')
