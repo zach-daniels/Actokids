@@ -58,7 +58,8 @@ CREATE TABLE Activity (
     
     act_name TEXT,
     act_date datetime,
-    cost int
+    cost int,
+    act_desc TEXT
 );
 
 Create Table Act_Access(
