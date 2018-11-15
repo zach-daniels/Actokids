@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 
+
 import com.kishanjvaghela.cardview.RNCardViewPackage;
 
 import com.facebook.react.ReactInstanceManager;
@@ -29,8 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-              new RNCardViewPackage()
 
+            new RNCardViewPackage()
       );
     }
     @Override
