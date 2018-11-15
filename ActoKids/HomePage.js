@@ -88,7 +88,7 @@ export default class HomePage extends Component {
 
 
               {/**CardView */}
-             <View style={styles.MainContainer}>
+             {/* <View style={styles.MainContainer}>
               <CardView
                 cardElevation={2}
                 cardMaxElevation={2}
@@ -103,37 +103,61 @@ export default class HomePage extends Component {
                       <Text style={styles.cardView_InsideText}> Simple CardView #2 </Text>
                      
               </CardView>   
-          </View>
+          </View> */}
 
             
   
     
-         {/* <FlatList
-            data={this.state.data}
-            keyExtractor={(x, i) => i.toString()}
-            renderItem={ ({item}) =>
-            <View style={{marginBotton: 30}}>
-                <Image
-                    source = {{ uri: item.pic_url }}
-                    style = {{height: 250, margin: 3}}/>
+            <FlatList
+        data={this.state.data}
+        keyExtractor={(x, i) => i.toString()}
+        renderItem={({ item }) =>
+            <View style={{ marginBotton: 30 }}>
+                <TouchableHighlight
+                    onPress={() => {
+                        this.props.navigation.navigate('CalendarPage', {
+                            activity_name: `${item.act_name}`,
 
-                  <Text style={{fontSize: 20, color: 'black'}}>
-                        {`${item.act_name}`}
-                  </Text>
+                            activity_date: `${item.act_date}`,
+                            cost: `${item.cost}`,
+                            org_name: `${item.org_name}`,
+                            location_name: `${item.loc_name}`,
+                            location_address: `${item.loc_address}`,
+                            contact_name: `${item.cont_name}`,
+                            picture_url: `${item.pic_url}`,
+                            activity_description: `${item.act_desc}`,
+                            lowest_age: `${item.lowest_age}`,
+                            highest_age: `${item.highest_age}`,
+                            otherParam: 'anything you want here',
+                        });
+                    }}>
+            <Image
+                source = {{ uri: item.pic_url }}
+                style={{ height: 250, margin: 3 }}
+                    />
+                </TouchableHighlight>
 
-                    <Text style={{ fontSize: 20, color: 'black' }}>
-                        {`${item.loc_name}`}
-                    </Text>
-                  <Text style={{ fontSize: 20, color: 'black' }}>
-                        {`${item.loc_address}`}
-                  </Text>
-                  <Text style={{ fontSize: 20, color: 'black' }}>
-                        {`${item.act_date}`}
-                  </Text>
-                  <Text style={{ fontSize: 20, color: 'black' }}>
-                        {`Contact: ${item.cont_name}`}
-                    </Text>
-                  </View>}/> */}
+              <Text style={{fontSize: 20, color: 'black'}}>
+                    {`${item.act_name}`}
+                </Text>
+                <Text style={{ fontSize: 20, color: 'black' }}>
+                    {`${item.loc_name}`}
+                </Text>
+              <Text style={{ fontSize: 20, color: 'black' }}>
+                    {`${item.loc_address}`}
+              </Text>
+              <Text style={{ fontSize: 20, color: 'black' }}>
+                    {`${item.act_date}`}
+              </Text>
+              <Text style={{ fontSize: 20, color: 'black' }}>
+                    {`Contact: ${item.cont_name}`}
+                </Text>
+              
+                
+              
+              </View>
+        }/>
+
 
         
 

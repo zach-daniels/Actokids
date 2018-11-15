@@ -33,6 +33,14 @@ export default class CalendarPage extends Component {
     )
 }
 
+constructor(props) {
+  super(props);
+  this.state = {};
+  this.onDayPress = this.onDayPress.bind(this);
+}
+
+
+
 
   render() {
     const { navigate } = this.props.navigation;
@@ -63,55 +71,41 @@ export default class CalendarPage extends Component {
                         </TouchableOpacity>
             </View>
 
-
-
-
-
-
             <View>
 
                 <Calendar 
-                      // Initially visible month. Default = Date()
-                      current={'2018-11-01'}
-                      // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                      minDate={'2012-05-10'}
-                      // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-                      maxDate={'2020-05-30'}
-                      // Handler which gets executed on day press. Default = undefined
-                      onDayPress={(day) => {console.log('selected day', day)}}
-                      // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-                      monthFormat={'yyyy MM'}
-                      // Handler which gets executed when visible month changes in calendar. Default = undefined
-                      onMonthChange={(month) => {console.log('month changed', month)}}
-                      // Hide month navigation arrows. Default = false
-                      hideArrows={true}
-                      // Replace default arrows with custom ones (direction can be 'left' or 'right')
-                      renderArrow={(direction) => (<Arrow />)}
-                      // Do not show days of other months in month page. Default = false
-                      hideExtraDays={true}
-                      // If hideArrows=false and hideExtraDays=false do not swich month when tapping on greyed out
-                      // day from another month that is visible in calendar page. Default = false
-                      disableMonthChange={true}
-                      // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-                      firstDay={1}
-                    />
-
+                      onDayPress = {this.onDayPress}
+                      //style={styles.calendar}
+                       hideExtraDays
+                       markedDates={{[this.state.selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}}}
+                      />                      
 
             </View>
-
-
-
-
-
         </View>
     );
   }
+
+
+  onDayPress(day) {
+    this.setState({
+      selected: day.dateString
+    });
+  }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
     backgroundColor: 'lightgray',
+  },
+  calendar: {
+    borderTopWidth: 1,
+    paddingTop: 5,
+    borderBottomWidth: 1,
+    borderColor: '#eee',
+    height: 350
   },
 
   toolbar:{
