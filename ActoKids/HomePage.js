@@ -1,5 +1,6 @@
 /**Home page for our app */
 import React, { Component } from 'react';
+import { Card } from 'react-native-elements';
 
 import {
     StyleSheet,
@@ -22,7 +23,7 @@ import FilterPage from './FilterPage';
 
 
 export default class HomePage extends Component {
-    //Added Tab Bottom Navigation 
+    //Added Tab Bottom Navigation
     static navigationOptions = {
         title: 'Welcome',
         tabBarLabel: 'Activities',
@@ -85,48 +86,46 @@ export default class HomePage extends Component {
                     keyExtractor={(x, i) => i.toString()}
                     renderItem={({ item }) =>
                         <View style={{ marginBotton: 30 }}>
-                            <TouchableHighlight
-                                onPress={() => {
-                                    this.props.navigation.navigate('DetailsPage', {
-                                        activity_name: `${item.act_name}`,
+                          <TouchableHighlight
+                              onPress={() => {
+                                  this.props.navigation.navigate('CalendarPage', {
+                                      activity_name: `${item.act_name}`,
 
-                                        activity_date: `${item.act_date}`,
-                                        cost: `${item.cost}`,
-                                        org_name: `${item.org_name}`,
-                                        location_name: `${item.loc_name}`,
-                                        location_address: `${item.loc_address}`,
-                                        contact_name: `${item.cont_name}`,
-                                        picture_url: `${item.pic_url}`,
-                                        activity_description: `${item.act_desc}`,
-                                        lowest_age: `${item.lowest_age}`,
-                                        highest_age: `${item.highest_age}`,
-                                        otherParam: 'anything you want here',
-                                    });
-                                }}>
-                                <Image
-                                    source={{ uri: item.pic_url }}
-                                    style={{ height: 250, margin: 3 }}
-                                />
-                            </TouchableHighlight>
-
-                            <Text style={{ fontSize: 20, color: 'black' }}>
-                                {`${item.act_name}`}
-                            </Text>
-                            <Text style={{ fontSize: 20, color: 'black' }}>
-                                {`${item.loc_name}`}
-                            </Text>
-                            <Text style={{ fontSize: 20, color: 'black' }}>
-                                {`${item.loc_address}`}
-                            </Text>
-                            <Text style={{ fontSize: 20, color: 'black' }}>
-                                {`${item.act_date}`}
-                            </Text>
-                            <Text style={{ fontSize: 20, color: 'black' }}>
-                                {`Contact: ${item.cont_name}`}
-                            </Text>
-
-
-
+                                      activity_date: `${item.act_date}`,
+                                      cost: `${item.cost}`,
+                                      org_name: `${item.org_name}`,
+                                      location_name: `${item.loc_name}`,
+                                      location_address: `${item.loc_address}`,
+                                      contact_name: `${item.cont_name}`,
+                                      picture_url: `${item.pic_url}`,
+                                      activity_description: `${item.act_desc}`,
+                                      lowest_age: `${item.lowest_age}`,
+                                      highest_age: `${item.highest_age}`,
+                                      otherParam: 'anything you want here',
+                                  });
+                              }}>
+                                <Card
+                                image={{
+                                  uri: item.pic_url
+                                }}
+                              >
+                                  <Text style={{ fontSize: 20, color: 'black' }}>
+                                      {`${item.act_name}`}
+                                  </Text>
+                                  <Text style={{ fontSize: 20, color: 'black' }}>
+                                      {`${item.loc_name}`}
+                                  </Text>
+                                  <Text style={{ fontSize: 20, color: 'black' }}>
+                                      {`${item.loc_address}`}
+                                  </Text>
+                                  <Text style={{ fontSize: 20, color: 'black' }}>
+                                      {`${item.act_date}`}
+                                  </Text>
+                                  <Text style={{ fontSize: 20, color: 'black' }}>
+                                      {`Contact: ${item.cont_name}`}
+                                  </Text>
+                                  </Card>
+                          </TouchableHighlight>
                         </View>
                     } />
 
