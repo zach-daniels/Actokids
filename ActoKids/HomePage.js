@@ -87,7 +87,7 @@ export default class HomePage extends Component {
                         <View style={{ marginBotton: 30 }}>
                             <TouchableHighlight
                                 onPress={() => {
-                                    this.props.navigation.navigate('CalendarPage', {
+                                    this.props.navigation.navigate('DetailsPage', {
                                         activity_name: `${item.act_name}`,
 
                                         activity_date: `${item.act_date}`,
