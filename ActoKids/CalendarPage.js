@@ -18,7 +18,6 @@ import {
   DatePickerAndroid
 } from 'react-native';
 
-import {Calendar, LocaleConfig, CalendarList, Agenda} from 'react-native-calendars';
 
 
 

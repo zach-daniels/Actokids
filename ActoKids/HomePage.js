@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Card } from 'react-native-elements';
 
-import CardView from 'react-native-cardview';
 
 import {
     StyleSheet,
@@ -72,24 +71,6 @@ export default class HomePage extends Component {
                         />
                     </TouchableOpacity>
 
-
-              {/**CardView */}
-             {/* <View style={styles.MainContainer}>
-              <CardView
-                cardElevation={2}
-                cardMaxElevation={2}
-                cornerRadius={5}
-                paddingBottom={10}
-                style={styles.cardViewStyle}>
-                   <Image
-                        source={require('./images/kids.jpg')}
-                        style={{width: 300,height: 100}}
-                        />
-                      <Text style={styles.cardView_InsideText}> Simple CardView </Text>
-                      <Text style={styles.cardView_InsideText}> Simple CardView #2 </Text>
-                     
-              </CardView>   
-          </View> */}
 
                     {/**Location: icon*/}
                     <TouchableOpacity
