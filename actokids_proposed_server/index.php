@@ -58,6 +58,21 @@ header("Content-Type: application/json");
                 //var_dump($resultz);
                 http_response_code(200);
                 echo $resultz;
+            }else if(isset($_GET['org_name'])){
+                $org_name = $_GET['org_name'];
+                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age
+                            FROM Activity JOIN Org ON Activity.org_id = Org.org_id
+                            JOIN Location ON Activity.location_id = Location.location_id
+                            JOIN Contact ON Activity.contact_id = Contact.contact_id
+                            JOIN Picture ON Activity.pic_id = Picture.pic_id
+                            WHERE org_name LIKE '%$org_name%'";
+                $statement = $conn->prepare($query);
+                $statement->execute();
+                $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
+                $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
+                //var_dump($resultz);
+                http_response_code(200);
+                echo $resultz;
             }else{
                 $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age
                 FROM Activity JOIN Org ON Activity.org_id = Org.org_id
