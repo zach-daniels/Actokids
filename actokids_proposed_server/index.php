@@ -1,6 +1,7 @@
 <?php      
         json_query();
-       // load_csv();        
+       // load_csv(); 
+        //assembleQuery();
         ?>
 <?php 
 header("Content-Type: application/json");
@@ -12,25 +13,9 @@ header("Content-Type: application/json");
             catch (PDOException $e) {
                 print("Error connecting to SQL Server.");
                 die(print_r($e));
-            }      
+            }   
             
-            if(isset($_GET['city']))
-            {
-                $city = $_GET['city'];
-                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age
-                        FROM Activity JOIN Org ON Activity.org_id = Org.org_id
-                            JOIN Location ON Activity.location_id = Location.location_id
-                            JOIN Contact ON Activity.contact_id = Contact.contact_id
-                            JOIN Picture ON Activity.pic_id = Picture.pic_id
-                        WHERE city LIKE '$city';";
-                $statement = $conn->prepare($query);
-                $statement->execute();
-                $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
-                $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
-                //var_dump($resultz);
-                http_response_code(200);
-                echo $resultz;
-            }else if(isset($_GET['org_id'])){
+            if(isset($_GET['org_id'])){
                 $organizationID = $_GET['org_id'];
                 $query = "SELECT org_id, Org.location_id, org_name, url_link, loc_phone, loc_email
                             FROM Org JOIN Location ON Org.location_id = Location.location_id
@@ -73,6 +58,10 @@ header("Content-Type: application/json");
                 //var_dump($resultz);
                 http_response_code(200);
                 echo $resultz;
+            }else if(isset($_GET['filter'])){
+                
+                assembleQuery($conn);
+                
             }else{
                 $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age
                 FROM Activity JOIN Org ON Activity.org_id = Org.org_id
@@ -164,6 +153,74 @@ function String2Int($String2Int){
     //$output = (Int)$String2Int;
     //echo "<br> '$output' </br>";
     return $String2Int;
+}
+
+function assembleQuery($conn){
+    $subquery = 'Activity.act_id IN (SELECT Activity.act_id
+                                                FROM Activity JOIN Act_Access ON Activity.act_id = Act_Access.act_id
+                                                JOIN Accessibility ON Act_Access.access_id = Accessibility.access_id
+                                                WHERE';
+                $enablesubquery = false;
+                $city = $_GET['city'];
+                $zip = $_GET['zip'];
+               
+                if(isset($_GET['Cognitive'])){
+                    $enablesubquery = true;
+                    $subquery = $subquery . " (access_name LIKE 'Cognitive')";
+                }
+                if(isset($_GET['Mobility'])){
+                    if($enablesubquery){
+                        $subquery = $subquery . ' OR';
+                    }
+                    $enablesubquery = true;
+                    $subquery = $subquery . " (access_name LIKE 'Mobility')";
+                }
+                if(isset($_GET['Hearing'])){
+                    if($enablesubquery){
+                        $subquery = $subquery . ' OR';
+                    }
+                    $enablesubquery = true;
+                    $subquery = $subquery . " (access_name LIKE 'Hearing')";
+                }
+                if(isset($_GET['Vision'])){
+                    if($enablesubquery){
+                        $subquery = $subquery . ' OR';
+                    }
+                    $enablesubquery = true;
+                    $subquery = $subquery . " (access_name LIKE 'Vision')";
+                }
+                if(isset($_GET['Sensory'])){
+                    if($enablesubquery){
+                        $subquery = $subquery . ' OR';
+                    }
+                    $enablesubquery = true;
+                    $subquery = $subquery . " (access_name LIKE 'Sensory')";
+                }
+                if(isset($_GET['Others'])){
+                    if($enablesubquery){
+                        $subquery = $subquery . ' OR';
+                    }
+                    $enablesubquery = true;
+                    $subquery = $subquery . " (access_name LIKE 'Others')";
+                }
+                
+                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age
+                            FROM Activity JOIN Org ON Activity.org_id = Org.org_id
+                            JOIN Location ON Activity.location_id = Location.location_id
+                            JOIN Contact ON Activity.contact_id = Contact.contact_id
+                            JOIN Picture ON Activity.pic_id = Picture.pic_id
+                            WHERE city LIKE '%$city%' AND ZIP LIKE '%$zip%'"; 
+                if($enablesubquery){
+                    $query = $query . 'AND (' . $subquery . '))';
+                }
+                
+                $statement = $conn->prepare($query);
+                $statement->execute();
+                $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
+                $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
+                //var_dump($resultz);
+                http_response_code(200);
+                echo $resultz;
 }
 
 ?>
