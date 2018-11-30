@@ -82,9 +82,33 @@ CREATE TABLE urls (
     url_link TEXT
 );
 
-SELECT act_name, act_date, cost, org_name, loc_name, loc_address, cont_name, pic_url
+CREATE TABLE Type(
+    type_id INT IDENTITY(1,1) primary key,
+    type_name VARCHAR(10)
+);
+
+Create Table Act_Type(
+    act_id int,
+    FOREIGN KEY (act_id) references Activity(act_id),
+    type_id int,
+    FOREIGN KEY (type_id) references Type(type_id)
+);
+
+SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age
 FROM Activity JOIN Org ON Activity.org_id = Org.org_id
 JOIN Location ON Activity.location_id = Location.location_id
 JOIN Contact ON Activity.contact_id = Contact.contact_id
 JOIN Picture ON Activity.pic_id = Picture.pic_id
-FOR JSON PATH, ROOT('Data')
+WHERE ZIP = 98155 AND (Activity.act_id IN (SELECT Activity.act_id
+        FROM Activity JOIN Act_Access ON Activity.act_id = Act_Access.act_id
+                    JOIN Accessibility ON Act_Access.access_id = Accessibility.access_id
+        WHERE access_name LIKE 'Mobility' OR access_name LIKE 'Hearing'))
+
+
+INSERT INTO Type (type_name)
+VALUES('Sports'),
+('Art'),
+('Music'),
+('Zoo'),
+('Museum'),
+('Camp')
