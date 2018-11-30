@@ -6,7 +6,7 @@
 /** @format */
 
 import React, {Component} from 'react';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 
 import HomePage from './HomePage';
@@ -20,7 +20,9 @@ const App = createBottomTabNavigator({
    HomePage: {screen: HomePage  },
    CalendarPage: {screen: CalendarPage},
    DetailsPage: {screen: DetailsPage},
-   EnterEvent: {screen: EnterEvent},  
+   //EnterEvent: {screen: EnterEvent},  
+   FilterPage: {screen: FilterPage},
+
 },
 {
   FilterPage: {screen: FilterPage},
@@ -43,7 +45,6 @@ style: {
 }
 
 });
-
 
 
 export default App;
