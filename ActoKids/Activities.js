@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, Image, TouchableOpacity, ScrollView, View} from 'react-native';
-// import { TabView, TabBar, SceneMap, Dimensions } from 'react-native-tab-view';
-
+import {StyleSheet, Text, Image, TouchableOpacity, ScrollView, View, Dimensions} from 'react-native';
+import { TabView, TabBar, SceneMap} from 'react-native-tab-view';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 
 class Activity extends Component {
@@ -10,7 +9,7 @@ class Activity extends Component {
     const activity_name = navigation.getParam('activity_name', 'NO-NAME');
     const activity_date = navigation.getParam('activity_date', 'NO-NAME');
     const cost = navigation.getParam('cost', 'NO-NAME');
-    //const org_name = navigation.getParam('org_name', 'NO-NAME');
+    const org_name = navigation.getParam('org_name', 'NO-NAME');
     const location_name = navigation.getParam('location_name', 'NO-NAME');
     const location_address = navigation.getParam('location_address', 'NO-NAME');
     const contact_name = navigation.getParam('contact_name', 'NO-NAME');
