@@ -45,7 +45,7 @@ export default class HomePage extends Component {
 
     /// get image from json
     fetchData = async () => {
-        const response = await fetch('http://demodude1.azurewebsites.net/');
+        const response = await fetch('http://actokids2.azurewebsites.net/');
         const json = await response.json();
         this.setState({ data: json });
     };
