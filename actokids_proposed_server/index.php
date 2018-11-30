@@ -30,7 +30,7 @@ header("Content-Type: application/json");
                 echo $resultz;
             }else if(isset($_GET['act_name'])){
                 $act_name = $_GET['act_name'];
-                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age
+                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
                         FROM Activity JOIN Org ON Activity.org_id = Org.org_id
                             JOIN Location ON Activity.location_id = Location.location_id
                             JOIN Contact ON Activity.contact_id = Contact.contact_id
@@ -45,7 +45,7 @@ header("Content-Type: application/json");
                 echo $resultz;
             }else if(isset($_GET['org_name'])){
                 $org_name = $_GET['org_name'];
-                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age
+                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
                             FROM Activity JOIN Org ON Activity.org_id = Org.org_id
                             JOIN Location ON Activity.location_id = Location.location_id
                             JOIN Contact ON Activity.contact_id = Contact.contact_id
@@ -63,7 +63,7 @@ header("Content-Type: application/json");
                 assembleQuery($conn);
                 
             }else{
-                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age
+                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
                 FROM Activity JOIN Org ON Activity.org_id = Org.org_id
                 JOIN Location ON Activity.location_id = Location.location_id
                 JOIN Contact ON Activity.contact_id = Contact.contact_id
@@ -267,7 +267,7 @@ function assembleQuery($conn){
                 }
                 
                 
-                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age
+                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
                             FROM Activity JOIN Org ON Activity.org_id = Org.org_id
                             JOIN Location ON Activity.location_id = Location.location_id
                             JOIN Contact ON Activity.contact_id = Contact.contact_id
