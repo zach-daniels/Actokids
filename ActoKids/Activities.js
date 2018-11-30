@@ -1,31 +1,16 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  Button,
-  TextInput,
-  ListView,
-  Image,
-  TouchableOpacity,
-  TouchableHighlight,
-  View,
-  FlatList
-} from 'react-native';
+import {StyleSheet, Text, Image, TouchableOpacity, ScrollView, View} from 'react-native';
+// import { TabView, TabBar, SceneMap, Dimensions } from 'react-native-tab-view';
 
 import { createMaterialTopTabNavigator } from 'react-navigation';
 
-export class Activity extends Component {
-
-  state = {
-    data: []
-  };
-
+class Activity extends Component {
   render() {
     const { navigation } = this.props;
     const activity_name = navigation.getParam('activity_name', 'NO-NAME');
     const activity_date = navigation.getParam('activity_date', 'NO-NAME');
     const cost = navigation.getParam('cost', 'NO-NAME');
-    const org_name = navigation.getParam('org_name', 'NO-NAME');
+    //const org_name = navigation.getParam('org_name', 'NO-NAME');
     const location_name = navigation.getParam('location_name', 'NO-NAME');
     const location_address = navigation.getParam('location_address', 'NO-NAME');
     const contact_name = navigation.getParam('contact_name', 'NO-NAME');
@@ -33,52 +18,112 @@ export class Activity extends Component {
     const activity_description = navigation.getParam('activity_description', 'NO-NAME');
     const lowest_age = navigation.getParam('lowest_age', 'NO-NAME');
     const highest_age = navigation.getParam('highest_age', 'NO-NAME');
+
     return (     
-      <View style={styles.container}>
-    <FlatList
-        data={this.state.data}
-        keyExtractor={(x, i) => i.toString()}
-        renderItem={ ({item}) =>
-        <View style={{marginBotton: 30}}>
-
-    <Text style={styles.titleText}>
-           picture_url: {JSON.stringify(picture_url)}
+      <ScrollView style={styles.container}>
+        <Text>
+          <Image style={styles.mainImage}
+          source={{uri: picture_url}}
+          />
        </Text>
-              <Text style={styles.body}>
-              act_name: {JSON.stringify(activity_name)}
-              activity_date: {JSON.stringify(activity_date)}
-              location_name: {JSON.stringify(location_name)}
-              location_address: {JSON.stringify(location_address)}
-              </Text>
-              <TouchableOpacity style={styles.buttonContainer}>
-                <Text style={styles.buttonText}>REGISTER:</Text>
-              </TouchableOpacity>
-              <Text style={styles.subTitles}>DESCRIPTION:</Text>
-              <Text style={styles.activityInfo}>{JSON.stringify(activity_description)}</Text>
-              <Text style={styles.subTitles}>ACCESSIBILITY:</Text>
-              <Text style={styles.subTitles}>DISABILITY:</Text>
-              <Text style={styles.subTitles}>AGE RANGE:</Text>
-              <Text style={styles.activityInfo}>{JSON.stringify(lowest_age)} - {JSON.stringify(highest_age)}</Text>
-              <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
-              <Text style={styles.subTitles}>COST:</Text>
-              <Text style={styles.activityInfo}>{JSON.stringify(cost)}</Text>
-              <Text style={styles.subTitles}>CONTACT:</Text>
-              <Text style={styles.activityInfo}>{JSON.stringify(contact_name)}</Text>
-              <Text style={styles.subTitles}>MAP:</Text>
-
-        </View>
-    }/>
-
+       <View style={{flex: 1, flexDirection:'row', justifyContent:'space-between', paddingVertical:15}}>
+          <Text style={{fontSize: 20, textAlign:'left', color:'black'}}>
+            {(activity_name)} 
+          </Text>
+          <Text style={{fontSize: 15, textAlign:"right", color:'black'}}>
+            {(cost)} 
+          </Text>
       </View>
+        <View style={{flex: 1, flexDirection:'row', alignItems:'center', paddingBottom:15}}>
+          <Image
+           source={require('./images/clock.png')}
+          />
+          <Text style={{ fontSize: 15, textAlign:"left", paddingLeft:5, color:'black'}}>
+            {(activity_date)}
+          </Text>
+        </View>
+        <View style={{flex: 1, flexDirection:'row', alignItems:'center', paddingBottom:15}}>
+          <Image
+           source={require('./images/location_clean.png')}
+          />
+        <View style={{flex: 1, textAlign:'left', paddingLeft:5}}>
+        <Text style={{ fontSize: 15, color: 'black'}}>
+            {(location_address)}
+          </Text>
+          <Text style={{ fontSize: 15, color: 'black'}}>
+            {(location_name)}
+        </Text>
+        </View>
+        </View>
+        <View style={{flex: 1, flexDirection:'row', alignItems:'center', paddingBottom:15}}>
+          <Image
+           source={require('./images/call.png')}
+          />
+          <Text style={{ fontSize: 15, color: 'black', paddingLeft:5}}>
+          (206) 475 - 7364 
+          </Text>
+        </View>
+          <TouchableOpacity style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>REGISTER</Text>
+          </TouchableOpacity>
+        <View style={{paddingVertical:5}} >
+          <View style={{borderBottomColor: 'gray',borderBottomWidth: 1, paddingVertical:10}}/>
+        <View style={{flex: 1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', paddingLeft:20}}>
+        <View style={{flex: 1, flexDirection:'row', alignItems:'center', paddingTop:12}}>
+        <TouchableOpacity style={{flex: 1, flexDirection:'row', paddingTop:12}}>
+          <Image
+           source={require('./images/favorite.png')}
+          />
+          <Text style={{ fontSize: 15, color: 'black', textAlign:"center", paddingLeft:5, paddingTop:5}}>
+            Add to Favorite
+          </Text>
+        </TouchableOpacity>
+        </View>
+        <View style={{flex: 1, flexDirection:'row', alignItems:'center', paddingTop:12, paddingLeft:15}}>
+        <TouchableOpacity style={{flex: 1, flexDirection:'row', paddingTop:12}}>
+          <Image
+           source={require('./images/share.png')}
+          />
+          <Text style={{ fontSize: 15, color: 'black', textAlign:"center", paddingLeft:5}}>
+            Share
+          </Text>
+        </TouchableOpacity>
+        </View>
+        </View>
+          <View style={{borderBottomColor: 'gray',borderBottomWidth: 1, paddingVertical:10}}/>
+        </View>
+          <Text style={styles.subTitles}>DESCRIPTION</Text>
+          <Text style={styles.activityInfo}>
+            {(activity_description)}
+          </Text>
+          <Text style={styles.subTitles}>ACCESSIBILITY</Text>
+          <Text style={styles.subTitles}>DISABILITY</Text>
+          <Text style={styles.subTitles}>AGE RANGE</Text>
+          <Text style={styles.activityInfo}>
+            {(lowest_age)} - {(highest_age)}
+          </Text>
+          <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
+          <Text style={styles.subTitles}>COST</Text>
+          <Text style={styles.activityInfo}>
+            {(cost)}
+          </Text>
+          <Text style={styles.subTitles}>CONTACT</Text>
+          <Text style={styles.activityInfo}>
+            {(contact_name)}
+          </Text>
+          <Text style={styles.subTitles}>MAP</Text>
+        </ScrollView>
     );
   }
 }
 
-export class Organization extends Component {
+class Organization extends Component {
   render() {
+    const { navigation } = this.props;
+    const org_name = navigation.getParam('org_name', 'NO-NAME');
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>ORGANIZATION Information</Text>
+        <Text style={styles.welcome}>{(org_name)}</Text>
       </View>
     );
   }
@@ -86,7 +131,8 @@ export class Organization extends Component {
 
 export default createMaterialTopTabNavigator({
   Activity: Activity,
-  Organization: Organization},
+  Organization: Organization
+},
   {
     swipeEnabled: true,
     tabBarOptions: {
@@ -103,10 +149,11 @@ export default createMaterialTopTabNavigator({
     },
 );
 
+
 const styles = StyleSheet.create({
   activityInfo: {
     textAlign: 'left',
-    fontSize: 20,
+    fontSize: 15,
     paddingBottom: 10,
   },
   subTitles: {
@@ -116,7 +163,8 @@ const styles = StyleSheet.create({
     paddingVertical: 15
   },
   container: {
-    padding: 10,
+    margin: 0,
+    paddingHorizontal: 15
   },
   buttonContainer: {
     backgroundColor: '#F35A3A',
@@ -126,5 +174,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     color: 'white'
+  },
+  mainImage: {
+  width: 400,
+  height: 150,
+  resizeMode: 'contain'
+  },
+  scene: {
+    flex: 1,
   }
 });

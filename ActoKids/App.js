@@ -10,17 +10,17 @@ import { createBottomTabNavigator } from 'react-navigation';
 
 
 import HomePage from './HomePage';
-import Activities from './Activities';
+import CalendarPage from './CalendarPage';
 import DetailsPage from './DetailsPage';
 import EnterEvent from './EnterEvent';
-
+import Activities from './Activities';
 
 const App = createBottomTabNavigator({
     HomePage: {screen: HomePage  },
-    Activities: {screen: Activities},
+    CalendarPage: {screen: CalendarPage},
     DetailsPage: {screen: DetailsPage},
-    EnterEvent: {screen: EnterEvent}
-
+    EnterEvent: {screen: EnterEvent},
+    Activities: {screen: Activities}
 },
  {
 
