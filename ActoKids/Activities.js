@@ -43,17 +43,17 @@ class Activity extends Component {
           </Text>
         </View>
         <View style={{flex: 1, flexDirection:'row', alignItems:'center', paddingBottom:15}}>
-          <Image
-           source={require('./images/location_clean.png')}
-          />
-        <View style={{flex: 1, textAlign:'left', paddingLeft:5}}>
-        <Text style={{ fontSize: 15, color: 'black'}}>
-            {(location_address)}
-          </Text>
-          <Text style={{ fontSize: 15, color: 'black'}}>
-            {(location_name)}
-        </Text>
-        </View>
+            <Image
+            source={require('./images/location_clean.png')}
+            />
+          <View style={{flex: 1, textAlign:'left', paddingLeft:5}}>
+            <Text style={{ fontSize: 15, color: 'black'}}>
+                {(location_address)}
+            </Text>
+            <Text style={{ fontSize: 15, color: 'black'}}>
+                {(location_name)}
+            </Text>
+          </View>
         </View>
         <View style={{flex: 1, flexDirection:'row', alignItems:'center', paddingBottom:15}}>
           <Image
@@ -68,28 +68,28 @@ class Activity extends Component {
           </TouchableOpacity>
         <View style={{paddingVertical:5}} >
           <View style={{borderBottomColor: 'gray',borderBottomWidth: 1, paddingVertical:10}}/>
-        <View style={{flex: 1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', paddingLeft:20}}>
-        <View style={{flex: 1, flexDirection:'row', alignItems:'center', paddingTop:12}}>
-        <TouchableOpacity style={{flex: 1, flexDirection:'row', paddingTop:12}}>
-          <Image
-           source={require('./images/favorite.png')}
-          />
-          <Text style={{ fontSize: 15, color: 'black', textAlign:"center", paddingLeft:5, paddingTop:5}}>
-            Add to Favorite
-          </Text>
-        </TouchableOpacity>
-        </View>
-        <View style={{flex: 1, flexDirection:'row', alignItems:'center', paddingTop:12, paddingLeft:15}}>
-        <TouchableOpacity style={{flex: 1, flexDirection:'row', paddingTop:12}}>
-          <Image
-           source={require('./images/share.png')}
-          />
-          <Text style={{ fontSize: 15, color: 'black', textAlign:"center", paddingLeft:5}}>
-            Share
-          </Text>
-        </TouchableOpacity>
-        </View>
-        </View>
+          <View style={{flex: 1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', paddingLeft:20}}>
+              <View style={{flex: 1, flexDirection:'row', alignItems:'center', paddingTop:12}}>
+                <TouchableOpacity style={{flex: 1, flexDirection:'row', paddingTop:12}}>
+                  <Image
+                  source={require('./images/favorite.png')}
+                  />
+                  <Text style={{ fontSize: 15, color: 'black', textAlign:"center", paddingLeft:5, paddingTop:5}}>
+                    Add to Favorite
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{flex: 1, flexDirection:'row', alignItems:'center', paddingTop:12, paddingLeft:15}}>
+                <TouchableOpacity style={{flex: 1, flexDirection:'row', paddingTop:12}}>
+                  <Image
+                  source={require('./images/share.png')}
+                  />
+                  <Text style={{ fontSize: 15, color: 'black', textAlign:"center", paddingLeft:5}}>
+                    Share
+                  </Text>
+                </TouchableOpacity>
+              </View>
+          </View>
           <View style={{borderBottomColor: 'gray',borderBottomWidth: 1, paddingVertical:10}}/>
         </View>
           <Text style={styles.subTitles}>DESCRIPTION</Text>
