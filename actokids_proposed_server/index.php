@@ -156,53 +156,116 @@ function String2Int($String2Int){
 }
 
 function assembleQuery($conn){
-    $subquery = 'Activity.act_id IN (SELECT Activity.act_id
+    $disabilitysubquery = 'Activity.act_id IN (SELECT Activity.act_id
                                                 FROM Activity JOIN Act_Access ON Activity.act_id = Act_Access.act_id
                                                 JOIN Accessibility ON Act_Access.access_id = Accessibility.access_id
                                                 WHERE';
-                $enablesubquery = false;
+    
+    $typesubquery = 'Activity.act_id IN (SELECT Activity.act_id
+                                           FROM Activity JOIN Act_Access ON Activity.act_id = Act_Access.act_id
+                                           JOIN Accessibility ON Act_Access.access_id = Accessibility.access_id
+                                           WHERE';
+    
+                $enabledisabilitysubquery = false;
+                $enabletypesubquery = false;
+
                 $city = $_GET['city'];
                 $zip = $_GET['zip'];
                
                 if(isset($_GET['Cognitive'])){
-                    $enablesubquery = true;
-                    $subquery = $subquery . " (access_name LIKE 'Cognitive')";
+                    $enabledisabilitysubquery = true;
+                    $disabilitysubquery = $disabilitysubquery . " (access_name LIKE 'Cognitive')";
                 }
                 if(isset($_GET['Mobility'])){
-                    if($enablesubquery){
-                        $subquery = $subquery . ' OR';
+                    if($enabledisabilitysubquery){
+                        $disabilitysubquery = $disabilitysubquery . ' OR';
                     }
-                    $enablesubquery = true;
-                    $subquery = $subquery . " (access_name LIKE 'Mobility')";
+                    $enabledisabilitysubquery = true;
+                    $disabilitysubquery = $disabilitysubquery . " (access_name LIKE 'Mobility')";
                 }
                 if(isset($_GET['Hearing'])){
-                    if($enablesubquery){
-                        $subquery = $subquery . ' OR';
+                    if($enabledisabilitysubquery){
+                        $disabilitysubquery = $disabilitysubquery . ' OR';
                     }
-                    $enablesubquery = true;
-                    $subquery = $subquery . " (access_name LIKE 'Hearing')";
+                    $enabledisabilitysubquery = true;
+                    $disabilitysubquery = $disabilitysubquery . " (access_name LIKE 'Hearing')";
                 }
                 if(isset($_GET['Vision'])){
-                    if($enablesubquery){
-                        $subquery = $subquery . ' OR';
+                    if($enabledisabilitysubquery){
+                        $disabilitysubquery = $disabilitysubquery . ' OR';
                     }
-                    $enablesubquery = true;
-                    $subquery = $subquery . " (access_name LIKE 'Vision')";
+                    $enabledisabilitysubquery = true;
+                    $disabilitysubquery = $disabilitysubquery . " (access_name LIKE 'Vision')";
                 }
                 if(isset($_GET['Sensory'])){
-                    if($enablesubquery){
-                        $subquery = $subquery . ' OR';
+                    if($enabledisabilitysubquery){
+                        $disabilitysubquery = $disabilitysubquery . ' OR';
                     }
-                    $enablesubquery = true;
-                    $subquery = $subquery . " (access_name LIKE 'Sensory')";
+                    $enabledisabilitysubquery = true;
+                    $disabilitysubquery = $disabilitysubquery . " (access_name LIKE 'Sensory')";
                 }
                 if(isset($_GET['Others'])){
-                    if($enablesubquery){
-                        $subquery = $subquery . ' OR';
+                    if($enabledisabilitysubquery){
+                        $disabilitysubquery = $disabilitysubquery . ' OR';
                     }
-                    $enablesubquery = true;
-                    $subquery = $subquery . " (access_name LIKE 'Others')";
+                    $enabledisabilitysubquery = true;
+                    $disabilitysubquery = $disabilitysubquery . " (access_name LIKE 'Others')";
                 }
+                
+                if(isset($_GET['Sports'])){
+                    $enabletypesubquery = true;
+                    $typesubquery = $typesubquery . " (type_name LIKE 'Sports')";
+                }
+                if(isset($_GET['Art'])){
+                    if($enabletypesubquery){
+                        $typesubquery = $typesubquery . ' OR';
+                    }
+                    $enabletypesubquery = true;
+                    $typesubquery = $typesubquery . " (type_name LIKE 'Art')";
+                }
+                if(isset($_GET['Music'])){
+                    if($enabletypesubquery){
+                        $typesubquery = $typesubquery . ' OR';
+                    }
+                    $enabletypesubquery = true;
+                    $typesubquery = $typesubquery . " (type_name LIKE 'Music')";
+                }
+                if(isset($_GET['Zoo'])){
+                    if($enabletypesubquery){
+                        $typesubquery = $typesubquery . ' OR';
+                    }
+                    $enabletypesubquery = true;
+                    $typesubquery = $typesubquery . " (type_name LIKE 'Zoo')";
+                }
+                if(isset($_GET['Museum'])){
+                    if($enabletypesubquery){
+                        $typesubquery = $typesubquery . ' OR';
+                    }
+                    $enabletypesubquery = true;
+                    $typesubquery = $typesubquery . " (type_name LIKE 'Museum')";
+                }
+                if(isset($_GET['Camp'])){
+                    if($enabletypesubquery){
+                        $typesubquery = $typesubquery . ' OR';
+                    }
+                    $enabletypesubquery = true;
+                    $typesubquery = $typesubquery . " (type_name LIKE 'Camp')";
+                }
+                if(isset($_GET['Others'])){
+                    if($enabletypesubquery){
+                        $typesubquery = $typesubquery . ' OR';
+                    }
+                    $enabletypesubquery = true;
+                    $typesubquery = $typesubquery . " (type_name LIKE 'Others')";
+                }
+                if(isset($_GET['Outdoors & Nature'])){
+                    if($enabletypesubquery){
+                        $typesubquery = $typesubquery . ' OR';
+                    }
+                    $enabletypesubquery = true;
+                    $typesubquery = $typesubquery . " (type_name LIKE 'Outdoors & Nature')";
+                }
+                
                 
                 $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age
                             FROM Activity JOIN Org ON Activity.org_id = Org.org_id
@@ -210,8 +273,11 @@ function assembleQuery($conn){
                             JOIN Contact ON Activity.contact_id = Contact.contact_id
                             JOIN Picture ON Activity.pic_id = Picture.pic_id
                             WHERE city LIKE '%$city%' AND ZIP LIKE '%$zip%'"; 
-                if($enablesubquery){
-                    $query = $query . 'AND (' . $subquery . '))';
+                if($enabledisabilitysubquery){
+                    $query = $query . 'AND (' . $disabilitysubquery . '))';
+                }
+                if($enabledtypesubquery){
+                    $query = $query . 'AND (' . $typesubquery . '))';
                 }
                 
                 $statement = $conn->prepare($query);
