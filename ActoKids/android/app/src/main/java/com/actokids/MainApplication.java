@@ -1,11 +1,8 @@
 package com.actokids;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.facebook.react.ReactApplication;
-import com.kishanjvaghela.cardview.RNCardViewPackage;
-import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -25,12 +22,14 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new RNCardViewPackage()
+          new MainReactPackage()
       );
     }
+
     @Override
-    protected String getJSMainModuleName(){return "index";}
+    protected String getJSMainModuleName() {
+      return "index";
+    }
   };
 
   @Override
@@ -43,6 +42,4 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
   }
-
-
 }

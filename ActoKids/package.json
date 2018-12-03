@@ -7,8 +7,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "moment": "^2.22.2",
     "react": "16.6.0-alpha.8af6728",
-    "react-native": "^0.57.5",
+    "react-native": "^0.57.7",
     "react-native-cardview": "^2.0.2",
     "react-native-check-box": "^2.1.6",
     "react-native-checkbox": "^2.0.0",
@@ -18,7 +19,7 @@
     "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-modal-dropdown": "^0.6.2",
     "react-native-searchbar": "^1.6.0",
-    "react-navigation": "^2.18.2"
+    "react-navigation": "^2.18.3"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",

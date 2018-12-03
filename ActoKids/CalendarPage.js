@@ -54,7 +54,7 @@ export default class CalendarPage extends Component {
 
     return (   
         <Text style={styles.titleText}>
-            act_name: {JSON.stringify(activity_name)}
+            act_name: {activity_name}
             activity_date: {JSON.stringify(activity_date)}
             cost: {JSON.stringify(cost)}
             org_name: {JSON.stringify(org_name)}

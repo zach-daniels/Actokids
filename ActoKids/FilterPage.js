@@ -5,234 +5,236 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  TextInput,
-  ListView,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  TouchableHighlight,
-  View,
-  DatePickerAndroid
+    AppRegistry,
+    StyleSheet,
+    Text,
+    TextInput,
+    ListView,
+    Image,
+    TouchableOpacity,
+    ScrollView,
+    TouchableHighlight,
+    View,
+    FlatList,
+    DatePickerAndroid
 } from 'react-native';
-import {Navigator} from 'react-native-deprecated-custom-components';
-import ModalDropdown from 'react-native-modal-dropdown'
+
+import { CheckBox, Slider, Button, ThemeProvider } from 'react-native-elements';
+
 
 export default class FilterPage extends Component {
-  //Added Tab Bottom Navigation 
-  static navigationOptions = {
-    title: 'Welcome',
-    tabBarLabel: 'Calendar',
-    tabBarIcon: ({tintColor })=>(
-        <Image
-            source = {require('./images/calendar.png')}
-            style = {[{width: 26}, {height: 26}, {shadowColor: 'white'},{tintColor: tintColor}]}
+
+    //Added Tab Bottom Navigation
+    static navigationOptions = {
+        tabBarLabel: 'Filter',
+        tabBarIcon: ({ tintColor }) => (
+            <Image
+                source={require('./images/filter.png')}
+                style={[{ width: 26 }, { height: 26 }, { tintColor: tintColor }]}
             />
-    )
-}
+        )
+    };
 
     constructor(props) {
-    super(props);
-    this.state= { activity_types: undefined, 
-      disability_types: undefined,
-      dateDate: undefined,
-      dateText: 'Select Date...',
-      cost: undefined,
-      wheelchair_accessible: undefined
-      }
-  }
-
-  showDatePicker = async (stateKey, options) => {
-    try {
-      var newState = {};
-      const {action, year, month, day} = await DatePickerAndroid.open(options);
-      if (action === DatePickerAndroid.dismissedAction) {
-        newState[stateKey + 'Text'] = 'Not selected';
-      } else {
-        var date = new Date(year, month, day);
-        newState[stateKey + 'Text'] = date.toLocaleDateString();
-        newState[stateKey + 'Date'] = date;
-      }
-      this.setState(newState);
-    } catch ({code, message}) {
-      console.warn(`Error in example '${stateKey}': `, message);
+        super(props);
+        this.state = {
+            value: 100
+        };
     }
-  };
 
-//brings user back to the search page with only events that match the filters applied
-  _navigateSearch(info){
-    this.props.navigator.push({title: 'Search Page', index: 2, 
-    passProps : { data: info.data }
-    })
-  }
+    render() {
+        return (
+            <ScrollView>
+                <Text style={styles.headTitle}>
+                    Activity Types</Text>
+                <View>
+                    <CheckBox
+                        title="Outdoors & Nature"
+                        checked={this.state.checked}
+                    />
+                    <CheckBox
+                        title="Music"
 
-//finds the events that match the filters
- get_events() {
-    var body_dic = {}
-    if (typeof this.state.activity_types !== 'undefined')
-        body_dic['activity_type'] = this.state.activity_types
-    if (typeof this.state.disability_types !== 'undefined')
-        body_dic['disability_type'] = this.state.disability_types
-    if (typeof this.state.dateDate !== 'undefined')
-        body_dic['date'] = this.state.dateDate.getFullYear() + '-' + (this.state.dateDate.getMonth()+1) + '-' + this.state.dateDate.getDate(); 
-    if (typeof this.state.cost !== 'undefined')
-        body_dic['cost'] = this.state.cost
-    if (typeof this.state.wheelchair_accessible !== 'undefined')
-        body_dic['wheelchair_accessible'] = this.state.wheelchair_accessible
-    var body = JSON.stringify(body_dic);
 
-    fetch('http://10.0.2.2:3000/api/activities/findFilteredActivities', {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'},
-        body: body
-      })
-       .then( (res)=> res.json() )
-       .then( (resData) => { 
-          this._navigateSearch(resData); }) 
-      //   console.log("Response Body -> " + JSON.stringify(resData.body) );
-      // } )
-      .done();
-  }
-//converts 'yes'/'no' text to boolean values
-   yesNo(v) { 
-    if(v == 'Yes') { 
-      return true;
-    } else { 
-      return false;
+                    />
+                    <CheckBox
+                        title="Art"
+                    />
+                    <CheckBox
+                        title="Museum"
+                    />
+                    <CheckBox
+                        title="Sports"
+                    />
+                    <CheckBox
+                        title="Zoo"
+                    />
+                    <CheckBox
+                        title="Camp"
+                    />
+                    <CheckBox
+                        title="Others"
+                    />
+                </View>
+
+                <Text style={styles.textLine}>
+                    _________________________________________________________
+                    </Text>
+
+                <View>
+                    <Text style={styles.headTitle}>
+                        Disability Types
+             </Text>
+
+                    <CheckBox
+                        title="Cognitive"
+                    />
+                    <CheckBox
+                        title="Sensory"
+                    />
+                    <CheckBox
+                        title="Vision"
+                    />
+                    <CheckBox
+                        title="Mobility"
+                    />
+                    <CheckBox
+                        title="Hearing"
+                    />
+                    <Text style={styles.textLine}>
+                        _________________________________________________________
+           </Text>
+                </View>
+
+                <View>
+                    <Text style={styles.headTitle}>Frequency</Text>
+
+                    <CheckBox
+                        title="One-time"
+                    />
+                    <CheckBox
+                        title="Reoccuring"
+                    />
+
+
+                    <Text style={styles.textLine}>
+                        _________________________________________________________
+           </Text>
+                </View>
+
+
+                <View>
+                    <Text style={styles.headTitle}>
+                        Day of Week
+             </Text>
+
+                    <CheckBox
+                        title="Monday"
+                    />
+                    <CheckBox
+                        title="Tuesday"
+                    />
+                    <CheckBox
+                        title="Wednesday"
+                    />
+                    <CheckBox
+                        title="Thursday"
+                    />
+                    <CheckBox
+                        title="Friday"
+                    />
+                    <CheckBox
+                        title="Saturday"
+                    />
+                    <CheckBox
+                        title="Sunday"
+                    />
+                    <Text style={styles.textLine}>
+                        _________________________________________________________
+           </Text>
+                </View>
+
+
+
+                <View>
+                    <Text style={styles.headTitle}>
+                        Time of Day
+             </Text>
+
+                    <CheckBox
+                        title="Morning (Before 12pm)"
+                    />
+                    <CheckBox
+                        title="Evening (After 6pm)"
+                    />
+                    <CheckBox
+                        title="Afternoon"
+                    />
+
+                    <Text style={styles.textLine}>
+                        _________________________________________________________
+           </Text>
+                </View>
+
+
+                <View style={{ flex: 1, marginLeft: 10, marginRight: 10, alignItems: 'stretch', justifyContent: 'center' }}>
+                    <Text style={styles.headTitle}>
+                        Cost (US Dollars)
+             </Text>
+
+                    <Slider
+                        value={this.state.value}
+                        onValueChange={value => this.setState({ value })}
+                    />
+                    <Text>
+                        Value: {this.state.value}
+                    </Text>
+
+                </View>
+
+
+                <View style={{ flex: 1, marginLeft: 10, marginRight: 10, alignItems: 'stretch', justifyContent: 'center' }}>
+                    <Text style={styles.headTitle}>
+                        Distance ( Milies )
+             </Text>
+
+                    <Slider
+                        value={this.state.value}
+                        onValueChange={value => this.setState({ value })}
+                    />
+                    <Text>
+                        Value: {this.state.value}
+                    </Text>
+                </View>
+                <Button onPress={() => {
+                    this.props.navigation.navigate('HomePage', { url: `http://actokids2.azurewebsites.net/?filter=true&zip=98052&Hearing=true&Zoo=true&Mobility=true&Camp=true`});
+                }} title="APPLY FILTER" />
+                <Button onPress={() => {
+                    this.props.navigation.navigate('HomePage', {url: 'http://actokids2.azurewebsites.net/' });
+                }} title="RESET FILTER" />
+                   
+
+            </ScrollView>
+
+        );
     }
-  }
-  //brings user back to search page
-  _onBack () { 
-    this.props.navigator.pop();
-  }
-//displays the page
-  render() {
-    return (   
-    <View style={styles.outerApp}>  
-      <View style={{ justifyContent: 'flex-start', flexDirection: 'row',}}>
-         <TouchableOpacity 
-           onPress={() => this._onBack()}
-           title="Back"
-           color="darkgray"
-           accessibilityLabel="Back"
-        />
-        </View>
-      <View style={styles.headerView} > 
-        <Text style={styles.titleText}>
-          Filter Events
-        </Text>
-      </View>
-      <ScrollView style={styles.container}>
-        <Text style ={{fontSize: 18, textAlign:'center', fontFamily: 'serif'}}>
-            Fill in the following options and click 'submit' to find activities that match your needs
-        </Text>
-        <Text style={ styles.headerText }>
-          Activity Type
-        </Text>
-        <ModalDropdown
-          textStyle ={styles.itemText}
-          renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
-          options={['Outdoors&Nature', 'Sports', 'Music', 'Zoo', 'Art', 'Camps', 'Museum', 'Others']}
-          onSelect={(i,v) =>this.setState({activity_types : v}) }
-        />
-        <Text style={ styles.headerText }>
-          Disability Type
-        </Text>
-        <ModalDropdown
-          textStyle ={styles.itemText}
-          renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
-          options={['Cognitive', 'Mobility', 'Hearing', 'Vision', 'Sensory']}
-          onSelect={(i,v) =>this.setState({disability_types : v}) }
-        />
-        <Text style={ styles.headerText }>
-          Date
-        </Text>
-        <TouchableHighlight
-          onPress={this.showDatePicker.bind(this, 'date', {
-              date: this.state.dateDate,
-              minDate: new Date(),
-          })}>
-          <Text style={styles.itemText}>{this.state.dateText}</Text>
-        </TouchableHighlight>
-        <Text style={ styles.headerText }>
-          Cost: $
-        </Text>
-        <TextInput
-          keyboardType = 'numeric'
-          style={styles.inputText}
-          placeholder="e.g 15.00"
-          onChangeText={(cost) => this.setState({ cost })}
-        />
-        <Text style={ styles.headerText }>
-          Wheelchair Accessible
-        </Text>
-        <ModalDropdown 
-          textStyle ={styles.itemText}
-          renderRow = {(text)=><Text style={styles.itemText}> {text} </Text> }
-          options={['Yes', 'No']}
-          onSelect={(i,v) => this.setState({wheelchair_accessible : this.yesNo(v) }) } 
-        />
-        <TouchableOpacity
-            onPress={ this.get_events.bind(this)} 
-            color="purple" 
-            title="Submit"
-            accessibilityLabel="Submit"
-         />
-       </ScrollView>
-      </View>
-    );
-  }
+
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'lightgray',
-  },
-   outerApp: {
-    flex: 1,
-    backgroundColor: 'green',
-  },
-  titleText:{
-    flex: 2,
-    fontSize: 32, 
-    color:'white',
-    fontFamily: 'serif',
-    textAlign: 'center'
+    container: {
+        flex: 1,
+        backgroundColor: 'lightgray',
+    },
 
-  },
-  headerText: { 
-    fontSize: 27,
-    color: 'black',    
-    fontFamily: 'serif',
-  },
-  itemText: { 
-    color:'black',    
-    fontFamily: 'serif',
-    fontSize:22,
-  },
-  backButton: {
-    flex:1,
-    width:75,
-    fontSize: 20,
-    fontFamily: 'serif',
-    color:'white'
-  },
-  inputText: { 
-    height: 40, 
-    width: 200, 
-    fontFamily: 'serif',
-    fontSize: 18,
-  }, 
-  headerView: {         
-    flexDirection:'row',
-    alignItems: 'center',
-    justifyContent: "center",
-}, 
+    headTitle: {
+        textAlign: 'center',
+        color: 'red',
+        fontSize: 25,
+    },
+
+    textLine: {
+        textAlign: 'center',
+    },
 
 });
-

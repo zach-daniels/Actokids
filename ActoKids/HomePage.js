@@ -15,10 +15,11 @@ import {
     FlatList
 } from 'react-native';
 
+import moment from 'moment';
 
-import SearchPage from './SearchPage';
-import EnterEvent from './EnterEvent';
+
 import FilterPage from './FilterPage';
+
 
 
 
@@ -45,12 +46,15 @@ export default class HomePage extends Component {
 
     /// get image from json
     fetchData = async () => {
-        const response = await fetch('http://demodude1.azurewebsites.net/');
+        const { navigation } = this.props;
+        const api_call = navigation.getParam('url', 'http://actokids2.azurewebsites.net/');
+        const response = await fetch(api_call);
         const json = await response.json();
         this.setState({ data: json });
     };
 
     render() {
+
         return (
             <View style={styles.container}>
 
@@ -61,7 +65,9 @@ export default class HomePage extends Component {
                     <TouchableOpacity
                         style={styles.toolbarFilter}
 
-                        onPress={() => { console.log("Filter icon pressed") }}>
+                        onPress={() => {
+                            this.props.navigation.navigate('FilterPage', {});
+                        }}>
                         <Image
                             source={require('./images/filter.png')}
                         />
@@ -119,7 +125,7 @@ export default class HomePage extends Component {
                                       {`${item.loc_address}`}
                                   </Text>
                                   <Text style={{ fontSize: 20, color: 'black' }}>
-                                      {`${item.act_date}`}
+                                        {moment(`${item.act_date}`).format('dddd') + ', ' + moment(`${item.act_date}`).format('MMMM Do YYYY, h:mm:ss a')}
                                   </Text>
                                   <Text style={{ fontSize: 20, color: 'black' }}>
                                       {`Contact: ${item.cont_name}`}
