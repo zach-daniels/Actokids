@@ -24,24 +24,40 @@ import FilterPage from './FilterPage';
 
 
 export default class HomePage extends Component {
-    //Added Tab Bottom Navigation
-    static navigationOptions = {
-        title: 'Welcome',
-        tabBarLabel: 'Activities',
-        tabBarIcon: ({ tintColor }) => (
-            <Image
-                source={require('./images/activity.png')}
-                style={[{ width: 26 }, { height: 26 }, { tintColor: tintColor }]}
-            />
-        )
-    };
+    //Add Top Navigation
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerRight: (
+                <TouchableOpacity
+                    style={{ marginRight: 30 }}
+                    onPress={() => { console.log('location icon pressed') }}>
 
+                    <Image
+                        source={require('./images/location.png')}
+                    />
+                </TouchableOpacity>
+            ),
+            headerLeft: (
+                <TouchableOpacity
+                    style={{ marginLeft: 310 }}
+
+                    onPress={() => {
+                        navigation.navigate('FilterPage', {});
+                    }}>
+                    <Image
+                        source={require('./images/filter.png')}
+                    />
+                </TouchableOpacity>
+            ),
+        };
+    };
 
     state = {
         data: []
     };
     componentWillMount() {
         this.fetchData();
+       // AppNavigator.navigationOptions = { tabBarLabel: 'Home!' };
     }
 
     /// get image from json
@@ -57,36 +73,6 @@ export default class HomePage extends Component {
 
         return (
             <View style={styles.container}>
-
-                <View style={styles.toolbar}>
-                    <Text style={styles.toolbarTitle}>Acto Kids</Text>
-
-                    {/*Filter: icon */}
-                    <TouchableOpacity
-                        style={styles.toolbarFilter}
-
-                        onPress={() => {
-                            this.props.navigation.navigate('FilterPage', {});
-                        }}>
-                        <Image
-                            source={require('./images/filter.png')}
-                        />
-                    </TouchableOpacity>
-
-
-
-                    {/**Location: icon*/}
-                    <TouchableOpacity
-                        style={styles.toolbarLocation}
-                        onPress={() => { console.log('location icon pressed') }}>
-
-                        <Image
-                            source={require('./images/location.png')}
-                        />
-                    </TouchableOpacity>
-                </View>
-
-
                 <FlatList
                     data={this.state.data}
                     keyExtractor={(x, i) => i.toString()}

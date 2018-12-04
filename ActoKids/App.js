@@ -4,10 +4,8 @@
  */
 
 /** @format */
-
-import React, {Component} from 'react';
 import { createBottomTabNavigator } from 'react-navigation';
-import { createMaterialTopTabNavigator } from 'react-navigation';
+import { createStackNavigator, createAppContainer } from "react-navigation";
 
 
 import HomePage from './HomePage';
@@ -17,52 +15,49 @@ import EnterEvent from './EnterEvent';
 import FilterPage from './FilterPage';
 
 
-
-
-const bottomNav = createBottomTabNavigator({
-    HomePage: {screen: HomePage  },
-    CalendarPage: {screen: CalendarPage},
-    FilterPage: { screen: FilterPage },
-    About: { screen: DetailsPage }
-},
- {
-
-  // Buttom Tab Texts navigation
-tabBarOptions: {
-  activeTintColor: '#F8F8FF', 
-  
-  labelStyle: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  style: {
-    backgroundColor: '#FF4500',
-  
-  }
-}
-
-    });
-
-const topNav = createMaterialTopTabNavigator ({
-    FilterPage: { screen: FilterPage }
-},
+const HomeStack = createStackNavigator(
     {
-
-        // Buttom Tab Texts navigation
-        tabBarOptions: {
-            activeTintColor: '#F8F8FF',
-
-            labelStyle: {
-                fontSize: 16,
-                fontWeight: '600',
+        Activities: { screen: HomePage },
+        FilterPage: { screen: FilterPage }
+    },
+    {
+        defaultNavigationOptions: {
+            title: 'Actokids',
+            headerTintColor: '#F8F8FF',
+            headerStyle: {
+                backgroundColor: '#FF4500',
             },
+        }
+    }
+);
+
+const CalandarStack = createStackNavigator({
+    Calendar: { screen: CalendarPage }
+});
+
+const EventStack = createStackNavigator({
+    Event: { screen: EnterEvent }
+});
+
+const AboutStack = createStackNavigator({
+    About: { screen: DetailsPage }
+});
+
+const Tabs = createBottomTabNavigator({
+    Activities: HomeStack,
+    Calendar: CalandarStack,
+    Event: EventStack,
+    About: AboutStack,
+    },
+    {
+        tabBarOptions: {
+            activeTintColor: 'white',
+            inactiveTintColor: 'white',
             style: {
                 backgroundColor: '#FF4500',
-
             }
         }
+    }
+);
 
-    });
-
-
-export default bottomNav;
+export default createAppContainer(Tabs);
