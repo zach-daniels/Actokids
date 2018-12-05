@@ -18,12 +18,12 @@ import {
 import moment from 'moment';
 
 
-import FilterPage from './FilterPage';
-
-
 
 
 export default class HomePage extends Component {
+
+
+
     //Add Top Navigation
     static navigationOptions = ({ navigation }) => {
         return {
@@ -48,16 +48,23 @@ export default class HomePage extends Component {
                         source={require('./images/filter.png')}
                     />
                 </TouchableOpacity>
-            ),
+            )
         };
     };
 
     state = {
-        data: []
+        data: [],
     };
-    componentWillMount() {
+
+    //ComponentDidMount checks to see if the screen mounted, and if so 
+    componentDidMount() {
+        this.load()
+        this.props.navigation.addListener('willFocus', this.load)
+    }
+
+    load = () => {
+         alert('True');
         this.fetchData();
-       // AppNavigator.navigationOptions = { tabBarLabel: 'Home!' };
     }
 
     /// get image from json
@@ -69,8 +76,8 @@ export default class HomePage extends Component {
         this.setState({ data: json });
     };
 
-    render() {
 
+    render() {
         return (
             <View style={styles.container}>
                 <FlatList
@@ -80,7 +87,7 @@ export default class HomePage extends Component {
                         <View style={{ marginBotton: 30 }}>
                           <TouchableHighlight
                               onPress={() => {
-                                  this.props.navigation.navigate('CalendarPage', {
+                                  this.props.navigation.navigate('Calendar', {
                                       activity_name: `${item.act_name}`,
 
                                       activity_date: `${item.act_date}`,

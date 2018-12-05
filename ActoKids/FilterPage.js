@@ -19,27 +19,29 @@ import {
     DatePickerAndroid
 } from 'react-native';
 
+import HomePage from './HomePage';
+
 import { CheckBox, Slider, Button, ThemeProvider } from 'react-native-elements';
 
 
 export default class FilterPage extends Component {
-
-    //Added Tab Bottom Navigation
-    static navigationOptions = {
-        tabBarLabel: 'Filter',
-        tabBarIcon: ({ tintColor }) => (
-            <Image
-                source={require('./images/filter.png')}
-                style={[{ width: 26 }, { height: 26 }, { tintColor: tintColor }]}
-            />
-        )
-    };
 
     constructor(props) {
         super(props);
         this.state = {
             value: 100
         };
+    }
+
+    state = {
+        outdoors: false,
+        music: false,
+        art: false,
+        museum: false,
+        sports: false,
+        zoo: false,
+        camp: false,
+        othersAct: false,
     }
 
     render() {
@@ -51,10 +53,18 @@ export default class FilterPage extends Component {
                     <CheckBox
                         title="Outdoors & Nature"
                         checked={this.state.checked}
+                        onPress={() => {
+                            this.state.outdoors = !this.state.outdoors;
+                            alert('Outdoors & Nature')
+                        }}
                     />
                     <CheckBox
                         title="Music"
-
+                        checked={this.state.checked}
+                        onPress={() => {
+                            this.state.outdoors = !this.state.outdoors;
+                            alert('Outdoors & Nature')
+                        }}
 
                     />
                     <CheckBox
@@ -207,10 +217,17 @@ export default class FilterPage extends Component {
                     </Text>
                 </View>
                 <Button onPress={() => {
-                    this.props.navigation.navigate('HomePage', { url: `http://actokids2.azurewebsites.net/?filter=true&zip=98052&Hearing=true&Zoo=true&Mobility=true&Camp=true`});
+                    this.props.navigation.navigate('Activities', {
+                        url: 'http://actokids2.azurewebsites.net/?filter=true&zip=98052&Hearing=true&Zoo=true&Mobility=true&Camp=true',
+                        call: true,
+                    });
+
                 }} title="APPLY FILTER" />
                 <Button onPress={() => {
-                    this.props.navigation.navigate('HomePage', {url: 'http://actokids2.azurewebsites.net/' });
+                    this.props.navigation.navigate('Activities', {
+                        url: 'http://actokids2.azurewebsites.net/',
+                        call: true,
+                    });
                 }} title="RESET FILTER" />
                    
 
@@ -218,6 +235,7 @@ export default class FilterPage extends Component {
 
         );
     }
+
 
 }
 
