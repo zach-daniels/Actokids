@@ -33,15 +33,68 @@ export default class FilterPage extends Component {
         };
     }
 
-    state = {
-        outdoors: false,
-        music: false,
-        art: false,
-        museum: false,
-        sports: false,
-        zoo: false,
-        camp: false,
-        othersAct: false,
+ static navigationOptions = ({ navigation }) => {
+        return {
+            headerRight: (
+                <TouchableOpacity
+                    style={{ marginRight: 30 }}
+                    onPress={() => { /*applyfilter()*/ }}>
+
+                    <Text>Apply</Text>
+                </TouchableOpacity>
+            )
+        };
+    };
+
+    applyfilter = () => {
+        let curl = 'http://actokids2.azurewebsites.net/?filter=true';
+        if (this.state.outdoor_checked) {
+            curl = curl + '&Outdoors=true';
+        }
+        if (this.state.music_checked) {
+            curl = curl + '&Music=true';
+        }
+        if (this.state.art_checked) {
+            curl = curl + '&Art=true';
+        }
+        if (this.state.museum_checked) {
+            curl = curl + '&Museum=true';
+        }
+        if (this.state.sports_checked) {
+            curl = curl + '&Sports=true';
+        }
+        if (this.state.zoo_checked) {
+            curl = curl + '&Zoo=true';
+        }
+        if (this.state.camp_checked) {
+            curl = curl + '&Camp=true';
+        }
+        if (this.state.otherstype_checked) {
+            curl = curl + '&TypeOthers=true';
+        }
+        if (this.state.cognitive_checked) {
+            curl = curl + '&Cognitive=true';
+        }
+        if (this.state.sensory_checked) {
+            curl = curl + '&Sensory=true';
+        }
+        if (this.state.vision_checked) {
+            curl = curl + '&Vision=true';
+        }
+        if (this.state.mobility_checked) {
+            curl = curl + '&Mobility=true';
+        }
+        if (this.state.hearing_checked) {
+            curl = curl + '&Hearing=true';
+        }
+        if (this.state.otherdisb_checked) {
+            curl = curl + '&Others=true';
+        }
+        //alert(curl);
+        this.props.navigation.navigate('Activities', {
+            url: curl,
+            call: true,
+        });
     }
 
     render() {
@@ -52,38 +105,76 @@ export default class FilterPage extends Component {
                 <View>
                     <CheckBox
                         title="Outdoors & Nature"
-                        checked={this.state.checked}
+                        checked={this.state.outdoor_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
                         onPress={() => {
-                            this.state.outdoors = !this.state.outdoors;
-                            alert('Outdoors & Nature')
+                            this.setState({ outdoor_checked: !this.state.outdoor_checked })
                         }}
                     />
                     <CheckBox
                         title="Music"
-                        checked={this.state.checked}
+                        checked={this.state.music_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
                         onPress={() => {
-                            this.state.outdoors = !this.state.outdoors;
-                            alert('Outdoors & Nature')
+                            this.setState({ music_checked: !this.state.music_checked })
                         }}
 
                     />
                     <CheckBox
                         title="Art"
+                        checked={this.state.art_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ art_checked: !this.state.art_checked })
+                        }}
                     />
                     <CheckBox
                         title="Museum"
+                        checked={this.state.museum_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ museum_checked: !this.state.museum_checked})
+                        }}
                     />
                     <CheckBox
                         title="Sports"
+                        checked={this.state.sports_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ sports_checked: !this.state.sports_checked})
+                        }}
                     />
                     <CheckBox
                         title="Zoo"
+                        checked={this.state.zoo_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ zoo_checked: !this.state.zoo_checked })
+                        }}
                     />
                     <CheckBox
                         title="Camp"
+                        checked={this.state.camp_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ camp_checked: !this.state.camp_checked })
+                        }}
                     />
                     <CheckBox
                         title="Others"
+                        checked={this.state.otherstype_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ otherstype_checked: !this.state.otherstype_checked})
+                        }}
                     />
                 </View>
 
@@ -98,18 +189,57 @@ export default class FilterPage extends Component {
 
                     <CheckBox
                         title="Cognitive"
+                        checked={this.state.cognitive_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ cognitive_checked: !this.state.cognitive_checked})
+                        }}
                     />
                     <CheckBox
                         title="Sensory"
+                        checked={this.state.sensory_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ sensory_checked: !this.state.sensory_checked })
+                        }}
                     />
                     <CheckBox
                         title="Vision"
+                        checked={this.state.vision_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ vision_checked: !this.state.vision_checked })
+                        }}
                     />
                     <CheckBox
                         title="Mobility"
+                        checked={this.state.mobility_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ mobility_checked: !this.state.mobility_checked })
+                        }}
                     />
                     <CheckBox
                         title="Hearing"
+                        checked={this.state.hearing_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ hearing_checked: !this.state.hearing_checked })
+                        }}
+                    />
+                    <CheckBox
+                        title="Other"
+                        checked={this.state.otherdisb_checked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                            this.setState({ otherdisb_checked: !this.state.otherdisb_checked })
+                        }}
                     />
                     <Text style={styles.textLine}>
                         _________________________________________________________
@@ -217,10 +347,7 @@ export default class FilterPage extends Component {
                     </Text>
                 </View>
                 <Button onPress={() => {
-                    this.props.navigation.navigate('Activities', {
-                        url: 'http://actokids2.azurewebsites.net/?filter=true&zip=98052&Hearing=true&Zoo=true&Mobility=true&Camp=true',
-                        call: true,
-                    });
+                    this.applyfilter()
 
                 }} title="APPLY FILTER" />
                 <Button onPress={() => {

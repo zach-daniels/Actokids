@@ -63,7 +63,7 @@ export default class HomePage extends Component {
     }
 
     load = () => {
-         alert('True');
+        //alert('True');
         this.fetchData();
     }
 
