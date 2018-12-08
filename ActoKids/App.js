@@ -13,9 +13,9 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import HomePage from './HomePage';
 import CalendarPage from './CalendarPage';
 import DetailsPage from './DetailsPage';
-import AddEvent from './AddEvent';
+import EnterEvent from './EnterEvent';
 import FilterPage from './FilterPage';
-
+import AddEvent from './AddEvent';
 
 const HomeStack = createStackNavigator(
     {
@@ -40,8 +40,8 @@ const CalandarStack = createStackNavigator({
     Calendar: { screen: CalendarPage }
 });
 
-const EventStack = createStackNavigator({
-    Add: { screen: AddEvent }
+const AddStack = createStackNavigator({
+    AddEvent: { screen: AddEvent }
 });
 
 const AboutStack = createStackNavigator({
@@ -51,7 +51,7 @@ const AboutStack = createStackNavigator({
 const Tabs = createBottomTabNavigator({
     Activities: HomeStack,
     Calendar: CalandarStack,
-    Add: EventStack,
+    Add: AddStack,
     About: AboutStack,
     },
     {
