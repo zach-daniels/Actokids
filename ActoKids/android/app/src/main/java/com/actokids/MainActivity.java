@@ -2,12 +2,11 @@ package com.actokids;
 
 import com.facebook.react.ReactActivity;
 
-<<<<<<< HEAD
-=======
+
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
->>>>>>> master
+
 
 public class MainActivity extends ReactActivity {
 

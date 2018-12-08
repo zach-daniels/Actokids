@@ -132,13 +132,9 @@ android {
 
 dependencies {
     implementation project(':react-native-vector-icons')
-<<<<<<< HEAD
-=======
-    implementation project(':react-native-gesture-handler')
-    implementation project(':react-native-cardview')
 
-    implementation project(':react-native-vector-icons')
->>>>>>> master
+    implementation project(':react-native-gesture-handler')
+
     implementation project(':react-native-cardview')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:27.1.0"
