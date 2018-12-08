@@ -13,7 +13,7 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import HomePage from './HomePage';
 import CalendarPage from './CalendarPage';
 import DetailsPage from './DetailsPage';
-import EnterEvent from './EnterEvent';
+import AddEvent from './AddEvent';
 import FilterPage from './FilterPage';
 
 
@@ -41,7 +41,7 @@ const CalandarStack = createStackNavigator({
 });
 
 const EventStack = createStackNavigator({
-    Event: { screen: EnterEvent }
+    Add: { screen: AddEvent }
 });
 
 const AboutStack = createStackNavigator({
@@ -51,7 +51,7 @@ const AboutStack = createStackNavigator({
 const Tabs = createBottomTabNavigator({
     Activities: HomeStack,
     Calendar: CalandarStack,
-    Event: EventStack,
+    Add: EventStack,
     About: AboutStack,
     },
     {
@@ -77,7 +77,7 @@ const Tabs = createBottomTabNavigator({
                         source={require('./images/calendar.png')}
                         style={[{ width: 26 }, { height: 26 }]}
                     />
-                } else if (routeName === 'Event') {
+                } else if (routeName === 'Add') {
                     return <Image
                         source={require('./images/favorite.png')}
                         style={[{ width: 26 }, { height: 26 }]}
