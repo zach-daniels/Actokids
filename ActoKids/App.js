@@ -15,7 +15,7 @@ import CalendarPage from './CalendarPage';
 import DetailsPage from './DetailsPage';
 import EnterEvent from './EnterEvent';
 import FilterPage from './FilterPage';
-
+import AddEvent from './AddEvent';
 
 const HomeStack = createStackNavigator(
     {
@@ -40,8 +40,8 @@ const CalandarStack = createStackNavigator({
     Calendar: { screen: CalendarPage }
 });
 
-const EventStack = createStackNavigator({
-    Event: { screen: EnterEvent }
+const AddStack = createStackNavigator({
+    AddEvent: { screen: AddEvent }
 });
 
 const AboutStack = createStackNavigator({
@@ -51,7 +51,7 @@ const AboutStack = createStackNavigator({
 const Tabs = createBottomTabNavigator({
     Activities: HomeStack,
     Calendar: CalandarStack,
-    Event: EventStack,
+    Add: AddStack,
     About: AboutStack,
     },
     {
@@ -77,7 +77,7 @@ const Tabs = createBottomTabNavigator({
                         source={require('./images/calendar.png')}
                         style={[{ width: 26 }, { height: 26 }]}
                     />
-                } else if (routeName === 'Event') {
+                } else if (routeName === 'Add') {
                     return <Image
                         source={require('./images/favorite.png')}
                         style={[{ width: 26 }, { height: 26 }]}
