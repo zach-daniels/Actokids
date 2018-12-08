@@ -15,72 +15,71 @@ import {
     FlatList
 } from 'react-native';
 
+import moment from 'moment';
 
-import SearchPage from './SearchPage';
-import EnterEvent from './EnterEvent';
-import FilterPage from './FilterPage';
 
 
 
 export default class HomePage extends Component {
-    //Added Tab Bottom Navigation
-    static navigationOptions = {
-        title: 'Welcome',
-        tabBarLabel: 'Activities',
-        tabBarIcon: ({ tintColor }) => (
-            <Image
-                source={require('./images/activity.png')}
-                style={[{ width: 26 }, { height: 26 }, { tintColor: tintColor }]}
-            />
-        )
-    };
 
+
+
+    //Add Top Navigation
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerRight: (
+                <TouchableOpacity
+                    style={{ marginRight: 30 }}
+                    onPress={() => { console.log('location icon pressed') }}>
+
+                    <Image
+                        source={require('./images/location.png')}
+                    />
+                </TouchableOpacity>
+            ),
+            headerLeft: (
+                <TouchableOpacity
+                    style={{ marginLeft: 310 }}
+
+                    onPress={() => {
+                        navigation.navigate('FilterPage', {});
+                    }}>
+                    <Image
+                        source={require('./images/filter.png')}
+                    />
+                </TouchableOpacity>
+            )
+        };
+    };
 
     state = {
-        data: []
+        data: [],
     };
-    componentWillMount() {
+
+    //ComponentDidMount checks to see if the screen mounted, and if so 
+    componentDidMount() {
+        this.load()
+        this.props.navigation.addListener('willFocus', this.load)
+    }
+
+    load = () => {
+        //alert('True');
         this.fetchData();
     }
 
     /// get image from json
     fetchData = async () => {
-        const response = await fetch('http://actokids2.azurewebsites.net/');
+        const { navigation } = this.props;
+        const api_call = navigation.getParam('url', 'http://actokids2.azurewebsites.net/');
+        const response = await fetch(api_call);
         const json = await response.json();
         this.setState({ data: json });
     };
 
+
     render() {
         return (
             <View style={styles.container}>
-
-                <View style={styles.toolbar}>
-                    <Text style={styles.toolbarTitle}>Acto Kids</Text>
-
-                    {/*Filter: icon */}
-                    <TouchableOpacity
-                        style={styles.toolbarFilter}
-
-                        onPress={() => { console.log("Filter icon pressed") }}>
-                        <Image
-                            source={require('./images/filter.png')}
-                        />
-                    </TouchableOpacity>
-
-
-
-                    {/**Location: icon*/}
-                    <TouchableOpacity
-                        style={styles.toolbarLocation}
-                        onPress={() => { console.log('location icon pressed') }}>
-
-                        <Image
-                            source={require('./images/location.png')}
-                        />
-                    </TouchableOpacity>
-                </View>
-
-
                 <FlatList
                     data={this.state.data}
                     keyExtractor={(x, i) => i.toString()}
@@ -88,7 +87,7 @@ export default class HomePage extends Component {
                         <View style={{ marginBotton: 30 }}>
                           <TouchableHighlight
                               onPress={() => {
-                                  this.props.navigation.navigate('CalendarPage', {
+                                  this.props.navigation.navigate('Calendar', {
                                       activity_name: `${item.act_name}`,
 
                                       activity_date: `${item.act_date}`,
@@ -119,7 +118,7 @@ export default class HomePage extends Component {
                                       {`${item.loc_address}`}
                                   </Text>
                                   <Text style={{ fontSize: 20, color: 'black' }}>
-                                      {`${item.act_date}`}
+                                        {moment(`${item.act_date}`).format('dddd') + ', ' + moment(`${item.act_date}`).format('MMMM Do YYYY, h:mm:ss a')}
                                   </Text>
                                   <Text style={{ fontSize: 20, color: 'black' }}>
                                       {`Contact: ${item.cont_name}`}

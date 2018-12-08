@@ -16,52 +16,13 @@ import { createMaterialTopTabNavigator } from 'react-navigation';
 
 //const { navigation } = this.props.navigate;
 
-export default class DetailsPage extends Component {
+class DetailsPage extends Component {
 
     render() {
-        const { navigation } = this.props;
-        const activity_name = navigation.getParam('activity_name', 'NO-NAME');
-        const activity_date = navigation.getParam('activity_date', 'NO-NAME');
-        const cost = navigation.getParam('cost', 'NO-NAME');
-        const org_name = navigation.getParam('org_name', 'NO-NAME');
-        const location_name = navigation.getParam('location_name', 'NO-NAME');
-        const location_address = navigation.getParam('location_address', 'NO-NAME');
-        const contact_name = navigation.getParam('contact_name', 'NO-NAME');
-        const picture_url = navigation.getParam('picture_url', 'NO-NAME');
-        const activity_description = navigation.getParam('activity_description', 'NO-NAME');
-        const lowest_age = navigation.getParam('lowest_age', 'NO-NAME');
-        const highest_age = navigation.getParam('highest_age', 'NO-NAME');
         return (
             <View style={styles.container}>
-                <View style={{ marginBotton: 30 }}>
-
-                    <Text style={styles.titleText}>
-                        picture_url: {JSON.stringify(picture_url)}
-                    </Text>
-                    <Text style={styles.body}>
-                        act_name: {JSON.stringify(activity_name)}
-                        activity_date: {JSON.stringify(activity_date)}
-                        location_name: {JSON.stringify(location_name)}
-                        location_address: {JSON.stringify(location_address)}
-                    </Text>
-                    <TouchableOpacity style={styles.buttonContainer}>
-                        <Text style={styles.buttonText}>REGISTER:</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.subTitles}>DESCRIPTION:</Text>
-                    <Text style={styles.body}>{JSON.stringify(activity_description)}</Text>
-                    <Text style={styles.subTitles}>ACCESSIBILITY:</Text>
-                    <Text style={styles.subTitles}>DISABILITY:</Text>
-                    <Text style={styles.subTitles}>AGE RANGE:</Text>
-                    <Text style={styles.body}>{JSON.stringify(lowest_age)} - {JSON.stringify(highest_age)}</Text>
-                    <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
-                    <Text style={styles.subTitles}>COST:</Text>
-                    <Text style={styles.body}>{JSON.stringify(cost)}</Text>
-                    <Text style={styles.subTitles}>CONTACT:</Text>
-                    <Text style={styles.body}>{JSON.stringify(contact_name)}</Text>
-                    <Text style={styles.subTitles}>MAP:</Text>
-
-                </View>
-
+                <Text style={styles.welcome}>About Us Information</Text>
+                <Text style={styles.welcome}>TODO, 1) Actokids mission statement 2) Briefs about the organizations memebers</Text>
             </View>
         );
     }
@@ -71,33 +32,17 @@ export class Organization extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>ORGANIZATION Information</Text>
+                <Text style={styles.welcome}>Terms of Service Information</Text>
+                <Text style={styles.welcome}>TODO, 1) User expectations 2) Actokids expectations 3) Boilerplate 4) marketplace specific text</Text>
             </View>
         );
     }
 }
 
 
-
-/*const Tabs = createMaterialTopTabNavigator({
-    Activity: DetailsPage,
-    Organization: Organization
-}, {
-        tabBarOptions: {
-            activeTintColor: '#000',
-            inactiveTintColor: 'gray',
-            style: {
-                backgroundColor: '#fff',
-            },
-            indicatorStyle: {
-                backgroundColor: '#000',
-            },
-        }
-    });*/
-
-/*export default createMaterialTopTabNavigator({
-    Activity: DetailsPage,
-    Organization: Organization
+export default createMaterialTopTabNavigator({
+    About: DetailsPage,
+    Terms: Organization
 }, 
     {
         swipeEnabled: true,
@@ -113,7 +58,7 @@ export class Organization extends Component {
             }
         }
     },
-);*/
+);
 
 const styles = StyleSheet.create({
     activityInfo: {
