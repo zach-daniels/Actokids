@@ -1,15 +1,17 @@
 /**Home page for our app */
 import React, { Component } from 'react';
-import { Card } from 'react-native-elements';
+import { Card, SearchBar, Header} from 'react-native-elements';
 
 
 import {
     StyleSheet,
     Text,
+    SafeAreaView,
     Button,
     TextInput,
     ListView,
     Image,
+    Alert,
     TouchableOpacity,
     TouchableHighlight,
     View,
@@ -24,20 +26,37 @@ import FilterPage from './FilterPage';
 import App from './App';
 
 
+
 export default class HomePage extends Component {
     //Added Tab Bottom Navigation
     static navigationOptions = {
-        title: 'Welcome',
-        tabBarLabel: 'Activities',
-        tabBarIcon: ({ tintColor }) => (
-            <Image
-                source={require('./images/activity.png')}
-                style={[{ width: 26 }, { height: 26 }, { tintColor: tintColor }]}
-            />
-        )
+        title: 'Acto Kids',
+            headerStyle: {
+             backgroundColor: '#f4511e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                fontSize: 25,
+            },
+    //         headerRight: (
+    //             <Button
+    //                 onPress={() => alert('This is a button!')}
+    //                 title="Info"
+    //                 color="green"
+    //   />
+
+           // ),
     };
 
  
+
+
+
+    _searchpage(){
+        Alert.alert("Search Page coming soon");
+
+    }
+
 
 
     state = {
@@ -49,15 +68,17 @@ export default class HomePage extends Component {
 
     /// get image from json
     fetchData = async () => {
-
-       
         const response = await fetch('http://actokids2.azurewebsites.net/');
         const json = await response.json();
         this.setState({ data: json });
     };
 
+    
+
     render() {
+        const { navigate } = this.props.navigation;
         return (
+            
             <View style={styles.container}>
 
                 <View style={styles.toolbar}>
@@ -67,7 +88,7 @@ export default class HomePage extends Component {
                     <TouchableOpacity
                         style={styles.toolbarFilter}
 
-                        onPress={() =>  <FilterPage />}>
+                        onPress={() => { navigate('Filter')}}>
                         <Image
                             source={require('./images/filter.png')}
                             
@@ -137,13 +158,17 @@ export default class HomePage extends Component {
 
 
                 {/**Search Icon */}
-                <TouchableHighlight style={styles.searchButton}
+                <TouchableOpacity style={styles.searchButton}
                     underlayColor='#ff7043'
-                    onPress={() => { console.log('pressed') }}>
+                    onPress={() => { 
+                        //Alert.alert("Coming soon");
+                        this._searchpage();
+                    
+                         }}>
                     <Image
                         source={require('./images/search.png')}
                     />
-                </TouchableHighlight>
+                </TouchableOpacity>
 
             </View>
 

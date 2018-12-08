@@ -19,7 +19,11 @@ import {
   DatePickerAndroid
 } from 'react-native';
 
-import { CheckBox, Slider, Button, ThemeProvider } from 'react-native-elements';
+
+
+import { CheckBox, Slider, Button, ThemeProvider, Header } from 'react-native-elements';
+
+import CalendarPage from './CalendarPage';
 
 
 export default class FilterPage extends Component{
@@ -27,44 +31,63 @@ export default class FilterPage extends Component{
   //Added Tab Bottom Navigation
   static navigationOptions = {
     tabBarLabel: 'Filter',
+    title: 'Filter',
     tabBarIcon: ({ tintColor }) => (
         <Image
             source={require('./images/filter.png')}
             style={[{ width: 26 }, { height: 26 }, { tintColor: tintColor }]}
         />
-    )
+    ),
+  
 };
+
 
 constructor(props){
   super(props);
     this.state={
-      value: 100
+      value: 100,
+      checked: false
     };
 }
 
-
-
- 
-
-
-
  render() {
+   const { checked } = this.state;
    return (
      <ScrollView>
+
+       {/* <Header
+            placement="left"
+            backgroundColor = '#fff'
+            leftComponent={{ icon: 'arrow-back', onPress:() => this.props.navigation.goBack(),  color: '#000', }}
+            centerComponent={
+              { text: 'Filter', 
+                style: { textAlign: 'left', color: '#000', fontSize: 25, fontWeight: 'bold'},
+               
+              }
+              
+            }
+            rightComponent={{ icon: 'check', color: '#000' }}
+        /> */}
+
+        
+      
        <Text style={styles.headTitle}>
        Activity Types</Text>
-     <View>
+     <View style={{marginLeft: 20, marginTop: 20}}>
          <CheckBox
            title="Outdoors & Nature"
-           checked = {this.state.checked}
+           checked = {checked}
+           onPress = {() => this.setState ({ checked: !checked})}
            />
            <CheckBox
              title="Music"
-        
-             
+             checked = {checked}
+             onPress = {() => this.setState ({ checked: !checked})}
+           
              />
              <CheckBox
                title="Art"
+               checked = {checked}
                />
                <CheckBox
                  title="Museum"
@@ -226,6 +249,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'lightgray',
+    marginLeft: 20, 
+    marginTop: 20,
   },
 
   headTitle:{

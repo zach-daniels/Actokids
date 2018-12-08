@@ -5,9 +5,16 @@ import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
+<<<<<<< HEAD
 import com.kishanjvaghela.cardview.RNCardViewPackage;
 
 
+=======
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.kishanjvaghela.cardview.RNCardViewPackage;
+//import com.oblador.vectoricons.VectorIconsPackage;
+//import com.oblador.vectoricons.VectorIconsPackage;
+>>>>>>> master
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -31,7 +38,13 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new VectorIconsPackage(),
+<<<<<<< HEAD
+=======
+            new RNGestureHandlerPackage(),
+>>>>>>> master
             new RNCardViewPackage()
+//            new VectorIconsPackage(),
+//            new VectorIconsPackage()
       );
     }
     @Override
