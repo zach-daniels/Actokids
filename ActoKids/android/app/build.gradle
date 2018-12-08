@@ -129,7 +129,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-cardview')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:26.1.0"
     implementation "com.facebook.react:react-native:+"  // From node_modules
@@ -141,4 +140,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
-

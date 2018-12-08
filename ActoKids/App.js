@@ -12,29 +12,28 @@ import { createBottomTabNavigator } from 'react-navigation';
 import HomePage from './HomePage';
 import CalendarPage from './CalendarPage';
 import DetailsPage from './DetailsPage';
-import EnterEvent from './EnterEvent';
+import AddEvent from './AddEvent';
 
 
 const App = createBottomTabNavigator({
     HomePage: {screen: HomePage  },
     CalendarPage: {screen: CalendarPage},
     DetailsPage: {screen: DetailsPage},
-    EnterEvent: {screen: EnterEvent}
-
+    AddEvent: {screen: AddEvent}
 },
  {
 
   // Buttom Tab Texts navigation
 tabBarOptions: {
-  activeTintColor: '#F8F8FF', 
-  
+  activeTintColor: '#F8F8FF',
+
   labelStyle: {
     fontSize: 16,
     fontWeight: '600',
   },
   style: {
     backgroundColor: '#FF4500',
-  
+
   }
 }
 
