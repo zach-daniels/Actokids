@@ -21,7 +21,22 @@ import Organization from './Organization';
 const ActivityStack = createMaterialTopTabNavigator({
     Activities: { screen: Activities },
     Organization: { screen: Organization }
-});
+},
+    {
+        swipeEnabled: true,
+        tabBarOptions: {
+            activeTintColor: 'white',
+            inactiveTintColor: 'grey',
+            style: {
+                backgroundColor: '#FF4500'
+            },
+            indicatorStyle: {
+                height: 1,
+                backgroundColor: 'white'
+            }
+        }
+    }
+);
 
 const HomeStack = createStackNavigator(
     {

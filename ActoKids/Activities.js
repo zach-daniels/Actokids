@@ -5,7 +5,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation';
 
 export default class Activity extends Component {
 
-    static navigationOptions = ({ navigation }) => {
+   /* static navigationOptions = ({ navigation }) => {
         return {
             headerRight: (
                 <TouchableOpacity
@@ -16,7 +16,7 @@ export default class Activity extends Component {
                 </TouchableOpacity>
             )
         };
-    };
+    };*/
 
 
   render() {
