@@ -235,9 +235,35 @@ const options = {
 export default class App extends Component {
   handleSubmit = () => {
     var value = this._form.getValue();
-    console.log('value: ', value);
+      console.log('value: ', value);
     if (value) {
-      this.validate_submission(value);
+        if (this.validate_submission(value)) {
+            fetch('http://actokids2.azurewebsites.net/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    act_name: 'Play for All',
+                    act_date: '12/12/2018',
+                    cost: 15,
+                    act_desc: '',
+                    lowest_age: 6,
+                    highest_age: 12,
+                    duration: 3,
+                    org_name: 'Shims training for all',
+                    url_link: 'www.google.com',
+                    cont_email: 'rshim@email.com',
+                    cont_phone: 4255552222,
+                    cont_name: 'Riley Shim',
+                    loc_email: 'rshim@email.com',
+                    state: 'WA',
+                    zip: 98115,
+                    city: 'Seattle',
+                    street: '7448 63rd Ave NE',
+                    loc_address: '7448 63rd Ave NE, Seattle, WA, 98115',
+                    loc_phone: 4255551111,
+                    loc_name: 'Shims Gym'
+                }),
+            });
+        }
     }
   }
 
@@ -246,32 +272,35 @@ export default class App extends Component {
   validate_submission(value) {
     var currentDate = moment();
     var submittedDate = moment(value.date);
-    if (submittedDate.year() < currentDate.year()) {
-      Alert.alert(
-        'Date Error',
-        'Submitted year is in the past'
-      );
-    } else if (submittedDate.year() <= currentDate.year() && submittedDate.month() < currentDate.month()) {
-      Alert.alert(
-        'Date Error',
-        'Submitted month is in the past'
-      );
-    } else if (submittedDate.year() <= currentDate.year() && submittedDate.month() <= currentDate.month() && submittedDate.date() < currentDate.date()) {
-      Alert.alert(
-        'Date Error',
-        'Submitted day of month is in the past'
-      );
-    } else if (moment(value.startTime).hour() > moment(value.endTime).hour()) {
-      Alert.alert(
-        'Time Error',
-        'The end time must come after the start time'
-      );
-    } else if (value.youngestAge > value.oldestAge) {
-      Alert.alert(
-        'Ages Range Error',
-        'Oldest age allowed must be greater than or equal to youngest age'
-      );
-    }
+      if (submittedDate.year() < currentDate.year()) {
+          Alert.alert(
+              'Date Error',
+              'Submitted year is in the past'
+          );
+      } else if (submittedDate.year() <= currentDate.year() && submittedDate.month() < currentDate.month()) {
+          Alert.alert(
+              'Date Error',
+              'Submitted month is in the past'
+          );
+      } else if (submittedDate.year() <= currentDate.year() && submittedDate.month() <= currentDate.month() && submittedDate.date() < currentDate.date()) {
+          Alert.alert(
+              'Date Error',
+              'Submitted day of month is in the past'
+          );
+      } else if (moment(value.startTime).hour() > moment(value.endTime).hour()) {
+          Alert.alert(
+              'Time Error',
+              'The end time must come after the start time'
+          );
+      } else if (value.youngestAge > value.oldestAge) {
+          Alert.alert(
+              'Ages Range Error',
+              'Oldest age allowed must be greater than or equal to youngest age'
+          );
+      } else {
+          return true;
+      }
+      return false;
   }
 
   render() {
