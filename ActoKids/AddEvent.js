@@ -243,9 +243,10 @@ const options = {
 };
 
 export default class App extends Component {
+
   handleSubmit = () => {
     var value = this._form.getValue();
-    console.log('value: ', value);
+      console.log('value: ', value);
     if (value) {
       /* Test to strip the time out of the startTime field
       Alert.alert(value.startTime);
@@ -253,41 +254,73 @@ export default class App extends Component {
       var testTime = stripTime.hour() + ':' + stripTime.minutes();
       Alert.alert(testTime);
       */
-      this.validate_submission(value);
+        if (this.validate_submission(value)) {
+            fetch('http://actokids2.azurewebsites.net/', {
+                method: 'POST',
+                body: this.bind_form_data(value)
+            });
+        }
     }
-  }
+    }
+
+    bind_form_data(value) {
+        let api_data = new FormData();
+        api_data.append("act_name", "Play for All");
+        api_data.append("act_date", "12/12/2018");
+        api_data.append("cost", value.cost);
+        api_data.append("act_desc", " ");
+        api_data.append("lowest_age", value.youngestAge);
+        api_data.append("highest_age", value.oldestAge);
+        api_data.append("duration", "3");
+        api_data.append("org_name", value.organization);
+        api_data.append("url_link", "www.google.com");
+        api_data.append("cont_email", "rshim@email.com");
+        api_data.append("cont_phone", value.contactNumber);
+        api_data.append("cont_name", "Riley Shim");
+        api_data.append("loc_email", "rshim@email.com");
+        api_data.append("state", value.state);
+        api_data.append("zip", value.zipCode);
+        api_data.append("city", value.city);
+        api_data.append("street", "7448 63rd Ave NE");
+        api_data.append("loc_address", value.address);
+        api_data.append("loc_phone", "4255551111");
+        api_data.append("loc_name", "Shims Gym");
+
+        return api_data;
+    }
 
   validate_submission(value) {
     var currentDate = moment();
     var submittedDate = moment(value.date);
-    if (submittedDate.year() < currentDate.year()) {
-      Alert.alert(
-        'Date Error',
-        'Submitted year is in the past'
-      );
-    } else if (submittedDate.year() <= currentDate.year() && submittedDate.month() < currentDate.month()) {
-      Alert.alert(
-        'Date Error',
-        'Submitted month is in the past'
-      );
-    } else if (submittedDate.year() <= currentDate.year() && submittedDate.month() <= currentDate.month() && submittedDate.date() < currentDate.date()) {
-      Alert.alert(
-        'Date Error',
-        'Submitted day of month is in the past'
-      );
-    } else if (moment(value.startTime).hour() > moment(value.endTime).hour()) {
-      Alert.alert(
-        'Time Error',
-        'The end time must come after the start time'
-      );
-    } else if (value.youngestAge > value.oldestAge) {
-      Alert.alert(
-        'Ages Range Error',
-        'Oldest age allowed must be greater than or equal to youngest age'
-      );
-    } else {
-      // sendToDatabase(value) goes here
-    }
+      if (submittedDate.year() < currentDate.year()) {
+          Alert.alert(
+              'Date Error',
+              'Submitted year is in the past'
+          );
+      } else if (submittedDate.year() <= currentDate.year() && submittedDate.month() < currentDate.month()) {
+          Alert.alert(
+              'Date Error',
+              'Submitted month is in the past'
+          );
+      } else if (submittedDate.year() <= currentDate.year() && submittedDate.month() <= currentDate.month() && submittedDate.date() < currentDate.date()) {
+          Alert.alert(
+              'Date Error',
+              'Submitted day of month is in the past'
+          );
+      } else if (moment(value.startTime).hour() > moment(value.endTime).hour()) {
+          Alert.alert(
+              'Time Error',
+              'The end time must come after the start time'
+          );
+      } else if (value.youngestAge > value.oldestAge) {
+          Alert.alert(
+              'Ages Range Error',
+              'Oldest age allowed must be greater than or equal to youngest age'
+          );
+      } else {
+          return true;
+      }
+      return false;
   }
 
   render() {
