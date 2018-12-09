@@ -3,43 +3,23 @@ import {Platform, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 
 
-export default class Activity extends Component {
+
+export default class Organization extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
             headerRight: (
                 <TouchableOpacity
                     style={{ marginRight: 30 }}
-                    onPress={() => { navigation.navigate('Organization', {}); }}>
+                    onPress={() => { navigation.navigate('Activities', {}); }}>
 
-                    <Text style={styles.buttonText}>See Organization</Text>
+                    <Text style={styles.buttonText}>See Activity</Text>
                 </TouchableOpacity>
             )
         };
     };
 
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.activityInfo}>Activity Info</Text>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>REGISTER</Text>
-        </TouchableOpacity>
-        <Text style={styles.subTitles}>DESCRIPTION</Text>
-        <Text style={styles.subTitles}>ACCESSBILITY</Text>
-        <Text style={styles.subTitles}>DISABILITY</Text>
-        <Text style={styles.subTitles}>AGE RANGE</Text>
-        <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
-        <Text style={styles.subTitles}>COST</Text>
-        <Text style={styles.subTitles}>CONTACT</Text>
-        <Text style={styles.subTitles}>MAP</Text>
-      </View>
-    );
-  }
-}
-
-export class Organization extends Component {
   render() {
     return (
       <View style={styles.container}>

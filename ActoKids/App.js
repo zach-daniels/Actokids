@@ -7,21 +7,27 @@
 import React from 'react';
 import {Image} from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { createStackNavigator, createAppContainer, createMaterialTopTabNavigator } from "react-navigation";
 
 
 import HomePage from './HomePage';
 import CalendarPage from './CalendarPage';
 import DetailsPage from './DetailsPage';
-import EnterEvent from './EnterEvent';
 import FilterPage from './FilterPage';
 import AddEvent from './AddEvent';
+import Activities from './Activities';
+import Organization from './Organization';
+
+const ActivityStack = createMaterialTopTabNavigator({
+    Activities: { screen: Activities },
+    Organization: { screen: Organization }
+});
 
 const HomeStack = createStackNavigator(
     {
-        Activities: { screen: HomePage },
+        HomePage: { screen: HomePage },
         FilterPage: { screen: FilterPage },
-        Calendar: { screen: CalendarPage }
+        ActivityStack: ActivityStack
     },
     {
         defaultNavigationOptions: {
@@ -36,10 +42,6 @@ const HomeStack = createStackNavigator(
     }
 );
 
-const CalandarStack = createStackNavigator({
-    Calendar: { screen: CalendarPage }
-});
-
 const AddStack = createStackNavigator({
     AddEvent: { screen: AddEvent }
 });
@@ -50,7 +52,7 @@ const AboutStack = createStackNavigator({
 
 const Tabs = createBottomTabNavigator({
     Activities: HomeStack,
-    Calendar: CalandarStack,
+    Calendar: { screen: CalendarPage},
     Add: AddStack,
     About: AboutStack,
     },
