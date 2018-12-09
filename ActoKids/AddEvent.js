@@ -241,8 +241,6 @@ export default class App extends Component {
     }
   }
 
-
-
   validate_submission(value) {
     var currentDate = moment();
     var submittedDate = moment(value.date);
@@ -271,6 +269,8 @@ export default class App extends Component {
         'Ages Range Error',
         'Oldest age allowed must be greater than or equal to youngest age'
       );
+    } else {
+      // sendToDatabase(value) goes here
     }
   }
 
