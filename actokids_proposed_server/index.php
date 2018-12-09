@@ -1,84 +1,275 @@
 <?php      
-        json_query();
+    header("Content-Type: application/json");
+           
+    $method = $_SERVER['REQUEST_METHOD'];
+    $request = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
+    
+    //echo "Hello";
+
+    switch ($method) {
+      case 'GET':
+        //echo "get";
+        json_query();  
+        break;
+    case 'POST':
+        //echo "POST";
+        submit_info();  
+        break;
+      default:
+        echo "Error has occured."; 
+        http_response_code(500);
+        break;
+    }
+        
        // load_csv(); 
         //assembleQuery();
         ?>
 <?php 
-header("Content-Type: application/json");
-        function json_query(){
-            try {
-                $conn = new PDO("sqlsrv:server = tcp:actotestdb.database.windows.net,1433; Database = acto_test_db", "acto", "B@n1shthem");
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            }
-            catch (PDOException $e) {
-                print("Error connecting to SQL Server.");
-                die(print_r($e));
-            }   
-            
-            if(isset($_GET['org_id'])){
-                $organizationID = $_GET['org_id'];
-                $query = "SELECT org_id, Org.location_id, org_name, url_link, loc_phone, loc_email
-                            FROM Org JOIN Location ON Org.location_id = Location.location_id
-                                    JOIN urls ON Org.url_id = urls.url_id
-                            WHERE org_id = $organizationID";
-                $statement = $conn->prepare($query);
-                $statement->execute();
-                $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
-                $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
-                //var_dump($resultz);
-                http_response_code(200);
-                echo $resultz;
-            }else if(isset($_GET['act_name'])){
-                $act_name = $_GET['act_name'];
-                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
-                        FROM Activity JOIN Org ON Activity.org_id = Org.org_id
-                            JOIN Location ON Activity.location_id = Location.location_id
-                            JOIN Contact ON Activity.contact_id = Contact.contact_id
-                            JOIN Picture ON Activity.pic_id = Picture.pic_id
-                        WHERE act_name LIKE '%$act_name%';";
-                $statement = $conn->prepare($query);
-                $statement->execute();
-                $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
-                $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
-                //var_dump($resultz);
-                http_response_code(200);
-                echo $resultz;
-            }else if(isset($_GET['org_name'])){
-                $org_name = $_GET['org_name'];
-                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
-                            FROM Activity JOIN Org ON Activity.org_id = Org.org_id
-                            JOIN Location ON Activity.location_id = Location.location_id
-                            JOIN Contact ON Activity.contact_id = Contact.contact_id
-                            JOIN Picture ON Activity.pic_id = Picture.pic_id
-                            WHERE org_name LIKE '%$org_name%'";
-                $statement = $conn->prepare($query);
-                $statement->execute();
-                $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
-                $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
-                //var_dump($resultz);
-                http_response_code(200);
-                echo $resultz;
-            }else if(isset($_GET['filter'])){
-                
-                assembleQuery($conn);
-                
-            }else{
-                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
+
+function connection(){
+    try {
+        $conn = new PDO("sqlsrv:server = tcp:actotestdb.database.windows.net,1433; Database = acto_test_db", "acto", "B@n1shthem");
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    catch (PDOException $e) {
+        print("Error connecting to SQL Server.");
+        die(print_r($e));
+    }
+    
+    return $conn;
+    
+}
+
+
+function submit_info(){
+    
+    $select_organization_query = "SELECT org_id
+                                  FROM Org JOIN urls ON Org.url_id = urls.url_id
+                                  WHERE org_name LIKE :org_name AND url_link LIKE :url_link_1";   
+    
+    $insert_location_query = "INSERT INTO Location(loc_name, loc_phone, loc_email, loc_address, street, city, zip, state)
+                   VALUES(:loc_name, :loc_phone, :loc_email, :loc_address, :street, :city, :zip, :state)";
+    
+    $select_location_query = "SELECT location_id
+                              FROM Location
+                              WHERE loc_name LIKE :loc_name AND street LIKE :street";
+    
+    $insert_contact_query = "INSERT INTO contact (cont_name, cont_phone, cont_email)
+                       VALUES(:cont_name, :cont_phone, :cont_email)";
+    
+    $select_contact_query = "SELECT contact_id
+                            FROM Contact 
+                            WHERE cont_name LIKE :cont_name AND cont_phone = :cont_phone";
+    
+    $insert_url_query = "INSERT INTO urls (url_link)
+                        VALUES(:url_link)";
+    
+    $select_url_query = "SELECT url_id
+                        FROM urls
+                        WHERE url_link LIKE :url_link";
+    
+    $org_name = $_REQUEST['org_name'];
+    $url_link = $_REQUEST['url_link'];
+    
+    
+    $insert_location_bindings = array(":loc_name", ":loc_phone", ":loc_email", 
+                    ":loc_address", ":street", ":city", ":zip", ":state");
+    
+    $insert_location_info = array($_REQUEST['loc_name'], $_REQUEST['loc_phone'],
+        $_REQUEST['loc_email'], $_REQUEST['loc_address'], $_REQUEST['street'],
+        $_REQUEST['city'], $_REQUEST['zip'], $_REQUEST['state']);
+   
+    $insert_contact_bindings = array(":cont_name", ":cont_phone", ":cont_email");
+    
+    $insert_contact_info = array($_REQUEST['cont_name'], $_REQUEST['cont_phone'], 
+        $_REQUEST['cont_email']);   
+    
+    $insert_activity_bindings = array(
+        ":loc_name", 
+        ":street", 
+        ":org_name", 
+        ":url_link_1", 
+        ":cont_name", 
+        ":cont_phone", 
+        ":url_link",
+        ":act_name", 
+        ":act_date", 
+        ":cost", 
+        ":act_desc", 
+        ":lowest_age", 
+        ":highest_age", 
+        ":duration");
+    
+    $insert_activity_info = array(
+        $insert_location_info[0], 
+        $insert_location_info[4], 
+        $org_name, 
+        $url_link, 
+        $insert_contact_info[0], 
+        $insert_contact_info[1], 
+        $url_link,
+        $_REQUEST['act_name'], 
+        $_REQUEST['act_date'], 
+        $_REQUEST['cost'], 
+        $_REQUEST['act_desc'], 
+        $_REQUEST['lowest_age'], 
+        $_REQUEST['highest_age'], 
+        $_REQUEST['duration']);
+     
+    $insert_organization_bindings = array(":loc_name", ":street", ":org_name", ":url_link");
+    
+    $insert_organization_info = array($insert_location_info[0], $insert_location_info[4], $org_name, $url_link);
+    
+    $insert_organization_query = "INSERT INTO Org (location_id, org_name, url_id)
+                        VALUES(($select_location_query), :org_name, ($select_url_query))";
+    
+    $insert_activity_query = "INSERT INTO Activity(location_id, org_id, contact_id, pic_id, url_id, act_name, act_date, cost, act_desc, lowest_age, highest_age, duration)
+                        VALUES(($select_location_query), ($select_organization_query), ($select_contact_query), 1, ($select_url_query), :act_name, :act_date, :cost, :act_desc, :lowest_age, :highest_age, :duration)";
+    
+    
+    
+    
+    //run_insert_query($insert_location_query, $insert_location_bindings, $insert_location_info);
+    
+    //run_insert_query($insert_contact_query, $insert_contact_bindings, $insert_contact_info);
+    
+    //run_insert_query($insert_url_query, array(":url_link"), array($url_link));
+    
+    //run_insert_query($insert_organization_query, $insert_organization_bindings, $insert_organization_info);
+    
+    run_insert_query($insert_activity_query, $insert_activity_bindings, $insert_activity_info);
+    
+    
+    
+    
+    /*$act_name = $_REQUEST['act_name'];
+    $act_date = $_REQUEST['act_date'];
+    $act_desc = $_REQUEST['act_desc'];
+    $cost = $_REQUEST['cost'];   
+    $lowest_age = $_REQUEST['lowest_age'];
+    $highest_age = $_REQUEST['highest_age'];
+    $duration = $_REQUEST['duration'];*/
+    
+    /*$cont_name = $_REQUEST['cont_name'];
+    $cont_phone = $_REQUEST['cont_phone'];
+    $cont_email = $_REQUEST['cont_email'];*/
+    
+    /*$loc_name = $_REQUEST['loc_name'];
+    $loc_phone = $_REQUEST['loc_phone'];
+    $loc_email = $_REQUEST['loc_email'];
+    $loc_address = $_REQUEST['loc_address'];   
+    $street = $_REQUEST['street'];
+    $city = $_REQUEST['city'];
+    $zip = $_REQUEST['zip'];
+    $state = $_REQUEST['state'];*/
+    
+    http_response_code(200);
+    
+    
+    //echo $insert_location_info[0];
+    
+    
+}
+
+function run_insert_query($query, $binding, $info){
+    $conn = connection();
+    $statement = $conn->prepare($query);
+    
+    echo($query);
+   
+    
+    for($i = 0; $i < count($binding); $i++){
+        echo($binding[$i] . " -> " . $info[$i] . "<br>");
+        $statement->bindValue($binding[$i], $info[$i]);
+    }
+    try{
+        $statement->execute();
+    }catch(Exception $e) {
+        echo 'Exception -> ';
+        var_dump($e->getMessage());
+    }
+    echo("END");
+    $conn = null;
+}
+
+
+function json_query(){
+    try {
+        $conn = new PDO("sqlsrv:server = tcp:actotestdb.database.windows.net,1433; Database = acto_test_db", "acto", "B@n1shthem");
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    catch (PDOException $e) {
+        print("Error connecting to SQL Server.");
+        die(print_r($e));
+    }   
+
+    if(isset($_GET['org_id'])){
+        $organizationID = $_GET['org_id'];
+        $query = "SELECT org_id, Org.location_id, org_name, url_link, loc_phone, loc_email
+                    FROM Org JOIN Location ON Org.location_id = Location.location_id
+                            JOIN urls ON Org.url_id = urls.url_id
+                    WHERE org_id = $organizationID";
+        $statement = $conn->prepare($query);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
+        $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
+        //var_dump($resultz);
+        http_response_code(200);
+        echo $resultz;
+    }else if(isset($_GET['act_name'])){
+        $act_name = $_GET['act_name'];
+        $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
                 FROM Activity JOIN Org ON Activity.org_id = Org.org_id
-                JOIN Location ON Activity.location_id = Location.location_id
-                JOIN Contact ON Activity.contact_id = Contact.contact_id
-                JOIN Picture ON Activity.pic_id = Picture.pic_id";
-                $statement = $conn->prepare($query);
-                $statement->execute();
-                $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
-                $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
-                //var_dump($resultz);
-                http_response_code(200);
-                echo $resultz;
-            }
-            
-  
-        }      
+                    JOIN Location ON Activity.location_id = Location.location_id
+                    JOIN Contact ON Activity.contact_id = Contact.contact_id
+                    JOIN Picture ON Activity.pic_id = Picture.pic_id
+                WHERE act_name LIKE '%$act_name%';";
+        $statement = $conn->prepare($query);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
+        $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
+        //var_dump($resultz);
+        http_response_code(200);
+        echo $resultz;
+    }else if(isset($_GET['org_name'])){
+        $org_name = $_GET['org_name'];
+        $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
+                    FROM Activity JOIN Org ON Activity.org_id = Org.org_id
+                    JOIN Location ON Activity.location_id = Location.location_id
+                    JOIN Contact ON Activity.contact_id = Contact.contact_id
+                    JOIN Picture ON Activity.pic_id = Picture.pic_id
+                    WHERE org_name LIKE '%$org_name%'";
+        $statement = $conn->prepare($query);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
+        $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
+        //var_dump($resultz);
+        http_response_code(200);
+        echo $resultz;
+    }else if(isset($_GET['filter'])){
+
+        assembleQuery($conn);
+
+    }else{
+        $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
+        FROM Activity JOIN Org ON Activity.org_id = Org.org_id
+        JOIN Location ON Activity.location_id = Location.location_id
+        JOIN Contact ON Activity.contact_id = Contact.contact_id
+        JOIN Picture ON Activity.pic_id = Picture.pic_id";
+        $statement = $conn->prepare($query);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
+        $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
+        //var_dump($resultz);
+        http_response_code(200);
+        echo $resultz;
+    }
+
+
+}   
+ 
+
+        
 function load_csv(){
     $csvFile = file('actolist.csv');
     $data = [];
@@ -162,9 +353,9 @@ function assembleQuery($conn){
                                                 WHERE';
     
     $typesubquery = 'Activity.act_id IN (SELECT Activity.act_id
-                                           FROM Activity JOIN Act_Access ON Activity.act_id = Act_Access.act_id
-                                           JOIN Accessibility ON Act_Access.access_id = Accessibility.access_id
-                                           WHERE';
+                           FROM Activity JOIN Act_Type ON Activity.act_id = Act_Type.act_id
+                                         JOIN Type ON Act_Type.type_id = Type.type_id
+                           WHERE';
     
                 $enabledisabilitysubquery = false;
                 $enabletypesubquery = false;
@@ -251,14 +442,14 @@ function assembleQuery($conn){
                     $enabletypesubquery = true;
                     $typesubquery = $typesubquery . " (type_name LIKE 'Camp')";
                 }
-                if(isset($_GET['Others'])){
+                if(isset($_GET['TypeOthers'])){
                     if($enabletypesubquery){
                         $typesubquery = $typesubquery . ' OR';
                     }
                     $enabletypesubquery = true;
                     $typesubquery = $typesubquery . " (type_name LIKE 'Others')";
                 }
-                if(isset($_GET['Outdoors & Nature'])){
+                if(isset($_GET['Outdoors'])){
                     if($enabletypesubquery){
                         $typesubquery = $typesubquery . ' OR';
                     }
@@ -276,7 +467,7 @@ function assembleQuery($conn){
                 if($enabledisabilitysubquery){
                     $query = $query . 'AND (' . $disabilitysubquery . '))';
                 }
-                if($enabledtypesubquery){
+                if($enabletypesubquery){
                     $query = $query . 'AND (' . $typesubquery . '))';
                 }
                 
