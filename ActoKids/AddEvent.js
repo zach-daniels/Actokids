@@ -175,7 +175,7 @@ const options = {
       label: 'Wheelchair Accesible Restroom'
     },
     disabilityType: {
-      label: 'Disability Types*',
+      label: 'Add 1 or more Disability Types*',
       disableOrder: true,
       item: {
         label: 'Options'
