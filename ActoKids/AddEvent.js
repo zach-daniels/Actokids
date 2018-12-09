@@ -62,12 +62,14 @@ const DisabilityType = t.enums({
 
 const Event = t.struct({
   eventName: t.String,
+  eventDescription: t.String,
   organization: t.String,
   date: t.Date,
   startTime: t.Date,
   endTime: t.Date,
   contactNumber: Contact,
   cost: t.Number,
+  locationName: t.String,
   address: t.String,
   city: t.String,
   state: t.String,
@@ -96,6 +98,10 @@ const options = {
     eventName: {
       label: 'Event Name*',
       error: 'Event field empty'
+    },
+    eventDescription: {
+      label: 'Event Description*',
+      error: 'Description field empty'
     },
     organization: {
       label: 'Organization*',
@@ -137,8 +143,12 @@ const options = {
       placeholder: '15.00',
       error: 'Cost field empty'
     },
+    locationName: {
+      label: 'Location Name*',
+      error: 'Location name field empty'
+    },
     address: {
-      label: 'Location*',
+      label: 'Location Address*',
       placeholder: 'Street Address',
       error: 'Address field empty'
     },
@@ -237,6 +247,12 @@ export default class App extends Component {
     var value = this._form.getValue();
     console.log('value: ', value);
     if (value) {
+      /* Test to strip the time out of the startTime field
+      Alert.alert(value.startTime);
+      var stripTime = moment(value.startTime);
+      var testTime = stripTime.hour() + ':' + stripTime.minutes();
+      Alert.alert(testTime);
+      */
       this.validate_submission(value);
     }
   }
