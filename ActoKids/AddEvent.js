@@ -4,7 +4,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableHighlight,
-  Text
+  Text,
+  Alert
 } from 'react-native';
 
 import t from 'tcomb-form-native';
@@ -12,6 +13,32 @@ import t from 'tcomb-form-native';
 import moment from 'moment';
 
 const Form = t.form.Form;
+
+const Contact = t.refinement(t.String, contactNumber => {
+  const reg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+  return reg.test(contactNumber);
+});
+
+Contact.getValidationErrorMessage = function (value, path, context) {
+  if (!value) {
+    return 'Contact field empty';
+  } else {
+    return 'Invalid phone number';
+  }
+};
+
+const Zip = t.refinement(t.Number, zipCode => {
+  const reg = /^\d{5}$/;
+  return reg.test(zipCode);
+});
+
+Zip.getValidationErrorMessage = function (value, path, context) {
+  if (!value) {
+    return 'Zip code field empty';
+  } else {
+    return 'Invalid zip code';
+  }
+};
 
 const ActivityType = t.enums({
   Outdoors: 'Outdoors/Nature',
@@ -39,13 +66,13 @@ const Event = t.struct({
   date: t.Date,
   startTime: t.Date,
   endTime: t.Date,
-  contactNumber: t.Number,
+  contactNumber: Contact,
   cost: t.Number,
   address: t.String,
   city: t.String,
   state: t.String,
   country: t.String,
-  zipCode: t.Number,
+  zipCode: Zip,
   wheelchairAccessible: t.Boolean,
   wheelchairAccessibleRestroom: t.Boolean,
   activityType: t.list(ActivityType),
@@ -103,13 +130,12 @@ const options = {
     contactNumber: {
       label: 'Contact #*',
       placeholder: '123 456-7890',
-      error: 'Contact field empty',
     },
     cost: {
       label: 'Cost*',
       help: 'Enter 0 for \'Free\'',
-      placeholder: '$15.00',
-      error: 'Cost field empty',
+      placeholder: '15.00',
+      error: 'Cost field empty'
     },
     address: {
       label: 'Location*',
@@ -134,13 +160,11 @@ const options = {
     zipCode: {
       auto: 'none',
       placeholder: 'Zip Code',
-      error: 'Zip code field empty'
     },
     activityType: {
       label: 'Add 1 or more Activity Types*',
       disableOrder: true,
       item: {
-        nullOption: false,
         label: 'Options'
       }
     },
@@ -154,7 +178,6 @@ const options = {
       label: 'Disability Types*',
       disableOrder: true,
       item: {
-        nullOption: false,
         label: 'Options'
       }
     },
@@ -211,8 +234,44 @@ const options = {
 
 export default class App extends Component {
   handleSubmit = () => {
-    const value = this._form.getValue();
-      console.log('value: ', value);
+    var value = this._form.getValue();
+    console.log('value: ', value);
+    if (value) {
+      this.validate_submission(value);
+    }
+  }
+
+
+
+  validate_submission(value) {
+    var currentDate = moment();
+    var submittedDate = moment(value.date);
+    if (submittedDate.year() < currentDate.year()) {
+      Alert.alert(
+        'Date Error',
+        'Submitted year is in the past'
+      );
+    } else if (submittedDate.year() <= currentDate.year() && submittedDate.month() < currentDate.month()) {
+      Alert.alert(
+        'Date Error',
+        'Submitted month is in the past'
+      );
+    } else if (submittedDate.year() <= currentDate.year() && submittedDate.month() <= currentDate.month() && submittedDate.date() < currentDate.date()) {
+      Alert.alert(
+        'Date Error',
+        'Submitted day of month is in the past'
+      );
+    } else if (moment(value.startTime).hour() > moment(value.endTime).hour()) {
+      Alert.alert(
+        'Time Error',
+        'The end time must come after the start time'
+      );
+    } else if (value.youngestAge > value.oldestAge) {
+      Alert.alert(
+        'Ages Range Error',
+        'Oldest age allowed must be greater than or equal to youngest age'
+      );
+    }
   }
 
   render() {
@@ -223,6 +282,7 @@ export default class App extends Component {
             ref={c => this._form = c}
             type={Event}
             options={options}
+            context={{locale: 'it-IT'}}
             />
             <TouchableHighlight style={styles.button} onPress={this.handleSubmit} underlayColor='#99d9f4'>
               <Text style={styles.buttonText}>Submit</Text>
