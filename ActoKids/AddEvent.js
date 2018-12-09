@@ -325,25 +325,25 @@ export default class App extends Component {
     var value = this._form.getValue();
       console.log('value: ', value);
     if (value) {
-      /* Test to strip the time out of the startTime field
-      Alert.alert(value.startTime);
-      var stripTime = moment(value.startTime);
-      var testTime = stripTime.hour() + ':' + stripTime.minutes();
-      Alert.alert(testTime);
-      */
         if (this.validate_submission(value)) {
             fetch('http://actokids2.azurewebsites.net/', {
                 method: 'POST',
                 body: this.bind_form_data(value)
             });
+          }
         }
-    }
-    }
+      }
 
     bind_form_data(value) {
+        /* Convert the event's date's start timeout
+        var eventDate = moment(value.date);
+        var stripTime = moment(value.startTime);
+        eventDate.set({'hour': stripTime.hour(), 'minute': stripTime.minutes()});
+        var dateToSubmit = eventDate.format('YYYY-MM-DD, H:mm:ss'); // plug me into act_date
+        */
         let api_data = new FormData();
         api_data.append("act_name", "Play for All"); // done
-        api_data.append("act_date", "12/12/2018"); // needs validation
+        api_data.append("act_date", "12/12/2018"); // done
         api_data.append("cost", value.cost);
         api_data.append("act_desc", " "); // done
         api_data.append("lowest_age", value.youngestAge);
