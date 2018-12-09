@@ -233,6 +233,7 @@ const options = {
 };
 
 export default class App extends Component {
+
   handleSubmit = () => {
     var value = this._form.getValue();
       console.log('value: ', value);
@@ -240,32 +241,38 @@ export default class App extends Component {
         if (this.validate_submission(value)) {
             fetch('http://actokids2.azurewebsites.net/', {
                 method: 'POST',
-                body: JSON.stringify({
-                    act_name: 'Play for All',
-                    act_date: '12/12/2018',
-                    cost: 15,
-                    act_desc: '',
-                    lowest_age: 6,
-                    highest_age: 12,
-                    duration: 3,
-                    org_name: 'Shims training for all',
-                    url_link: 'www.google.com',
-                    cont_email: 'rshim@email.com',
-                    cont_phone: 4255552222,
-                    cont_name: 'Riley Shim',
-                    loc_email: 'rshim@email.com',
-                    state: 'WA',
-                    zip: 98115,
-                    city: 'Seattle',
-                    street: '7448 63rd Ave NE',
-                    loc_address: '7448 63rd Ave NE, Seattle, WA, 98115',
-                    loc_phone: 4255551111,
-                    loc_name: 'Shims Gym'
-                }),
+                body: this.bind_form_data(value)
             });
         }
     }
-  }
+    }
+
+    bind_form_data(value) {
+        let api_data = new FormData();
+        api_data.append("act_name", "Play for All");
+        api_data.append("act_date", "12/12/2018");
+        api_data.append("cost", value.cost);
+        api_data.append("act_desc", " ");
+        api_data.append("lowest_age", value.youngestAge);
+        api_data.append("highest_age", value.oldestAge);
+        api_data.append("duration", "3");
+        api_data.append("org_name", value.organization);
+        api_data.append("url_link", "www.google.com");
+        api_data.append("cont_email", "rshim@email.com");
+        api_data.append("cont_phone", value.contactNumber);
+        api_data.append("cont_name", "Riley Shim");
+        api_data.append("loc_email", "rshim@email.com");
+        api_data.append("state", value.state);
+        api_data.append("zip", value.zipCode);
+        api_data.append("city", value.city);
+        api_data.append("street", "7448 63rd Ave NE");
+        api_data.append("loc_address", value.address);
+        api_data.append("loc_phone", "4255551111");
+        api_data.append("loc_name", "Shims Gym");
+
+        return api_data;
+
+    }
 
 
 
