@@ -64,6 +64,7 @@ export default class Activity extends Component {
         lowest_age: " ",
         highest_age: " ",
         disabilities_served: " ",
+        duration: " "
     };
 
     componentDidMount() {
@@ -132,8 +133,11 @@ export default class Activity extends Component {
         phoneStr = phoneStr.slice(0, -2);
 
         // Strip the time out of the date
-        var eventDate = moment(this.state.activity_date).format("dddd, MMMM Do");
+        var eventDate = moment(this.state.activity_date);
+        eventDate.add(this.state.duration, 'hours');
+        var formattedEventDate = moment(this.state.activity_date).format("dddd, MMMM Do");
         var startTime = moment(this.state.activity_date).format("h:mm a");
+        var endTime = moment(eventDate).format("h:mm a");
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -154,8 +158,8 @@ export default class Activity extends Component {
                   />
                 </View>
               <View>
-                <Text style={{fontSize: 16}}>{eventDate}</Text>
-                <Text style={{fontSize: 16}}>{startTime}</Text>
+                <Text style={{fontSize: 16}}>{formattedEventDate}</Text>
+                <Text style={{fontSize: 16}}>{startTime} - {endTime}</Text>
               </View>
             </View>
             <View style={styles.row3}>

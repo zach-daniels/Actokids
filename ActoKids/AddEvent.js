@@ -135,7 +135,6 @@ const Event = t.struct({
   disabilityType: t.list(DisabilityType),
   youngestAge: t.Number,
   oldestAge: t.Number,
-  equipmentProvided: t.maybe(t.String),
   staffRatio: t.maybe(t.Number),
   wheelchairAccessible: t.Boolean,
   wheelchairAccessibleRestroom: t.Boolean,
@@ -271,10 +270,6 @@ const options = {
       placeholder: 'Oldest',
       error: 'Oldest field empty'
     },
-    equipmentProvided: {
-      label: 'Equipment Provided',
-      placeholder: 'List all equipment provided by your organization'
-    },
     staffRatio: {
       label: 'Child : Staff Ratio',
       placeholder: '1.5'
@@ -312,8 +307,6 @@ export default class App extends Component {
         var dateToSubmit = eventDate.format('YYYY-MM-DD H:mm:ss'); // plug me into act_date
         var endTime = moment(value.endTime);
         let api_data = new FormData();
-
-        alert(dateToSubmit);
 
         api_data.append("act_name", value.eventName); // done
         api_data.append("act_date", dateToSubmit); // done
