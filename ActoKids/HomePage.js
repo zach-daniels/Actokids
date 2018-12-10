@@ -71,18 +71,21 @@ export default class HomePage extends Component {
                           <TouchableHighlight
                               onPress={() => {
                                     this.props.navigation.navigate('Activities', {
-                                      activity_name: `${item.act_name}`,
-                                      activity_date: `${item.act_date}`,
-                                      cost: `${item.cost}`,
-                                      org_name: `${item.org_name}`,
-                                      location_name: `${item.loc_name}`,
-                                      location_address: `${item.loc_address}`,
-                                      contact_name: `${item.cont_name}`,
-                                      picture_url: `${item.pic_url}`,
-                                      activity_description: `${item.act_desc}`,
-                                      lowest_age: `${item.lowest_age}`,
-                                      highest_age: `${item.highest_age}`,
-                                      otherParam: 'anything you want here',
+                                    act_id: `${item.act_id}`,
+                                    activity_name: `${item.act_name}`,
+                                    activity_date: `${item.act_date}`,
+                                    cost: `${item.cost}`,
+                                    org_name: `${item.org_name}`,
+                                    location_name: `${item.loc_name}`,
+                                    location_address: `${item.loc_address}`,
+                                    contact_name: `${item.cont_name}`,
+                                    contact_phone: `${item.cont_phone}`,
+                                    contact_email: `${item.cont_email}`,
+                                    picture_url: `${item.pic_url}`,
+                                    activity_description: `${item.act_desc}`,
+                                    lowest_age: `${item.lowest_age}`,
+                                    highest_age: `${item.highest_age}`,
+                                    otherParam: 'anything you want here',
                                   });
                               }}>
                                 <Card

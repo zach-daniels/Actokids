@@ -293,17 +293,17 @@ export default class App extends Component {
     handleSubmit = () => {
 
         var value = this._form.getValue();
+        console.log('value: ', value);
+        if (value) {
+            if (this.validate_submission(value)) {
+                fetch('http://actokids2.azurewebsites.net/', {
+                    method: 'POST',
+                    body: this.bind_form_data(value)
+                });
 
-    console.log('value: ', value);
-    /*if (value) {
-        if (this.validate_submission(value)) {
-            fetch('http://actokids2.azurewebsites.net/', {
-                method: 'POST',
-                body: this.bind_form_data(value)
-            });
-          }
-        }*/
-      }
+            }
+        }
+    }
     bind_form_data(value) {
         //Convert the event's date's start timeout
         var eventDate = moment(value.date);
