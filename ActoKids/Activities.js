@@ -71,14 +71,71 @@ export default class Activity extends Component {
       <View style={styles.container}>
         <ScrollView>
           <Image style={{ width: 390, height: 200 }} source={{ uri: this.state.picture_url}} />
-            <Text style={styles.subTitles}>{this.state.activity_name}</Text>
+            <View style={styles.row}>
+              <View style={styles.textWrap}>
+                <Text style={styles.activityInfo}>{this.state.activity_name}</Text>
+              </View>
+              <View style={styles.textWrap}>
+                <Text style={styles.cost2}>${this.state.cost}</Text>
+              </View>
+            </View>
+            <View style={styles.row2}>
+              <View style={styles.imageWrapper}>
+                <Image
+                  style={[{ width: 28 }, { height: 28 }]}
+                  source={require('./images/baseline_access_time_black_48dp.png')}
+                  />
+                </View>
+              <View>
+                <Text style={{fontSize: 16}}>FRI, May 13</Text>
+                <Text style={{fontSize: 16}}>4:00PM - 5:30PM</Text>
+              </View>
+            </View>
+            <View style={styles.row3}>
+              <View style={styles.imageWrapper}>
+                <Image
+                  style={[{ width: 28 }, { height: 28 }]}
+                  source={require('./images/baseline_location_on_black_48dp.png')}
+                  />
+                </View>
+              <View>
+                <Text style={{fontSize: 16}}>{this.state.location_address}</Text>
+                <Text style={{fontSize: 16}}>{this.state.location_name}</Text>
+              </View>
+            </View>
+            <View style={styles.row4}>
+              <View style={styles.imageWrapper}>
+                <Image
+                  style={[{ width: 28 }, { height: 28 }]}
+                  source={require('./images/baseline_phone_black_48dp.png')}
+                  />
+                </View>
+              <View>
+                <Text style={{fontSize: 16, marginTop: 5}}>(206) 510 - 7185</Text>
+              </View>
+            </View>
+            <Text style={styles.subTitles}>DESCRIPTION</Text>
+            <Text style={styles.bodyText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+            and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
             <Text style={styles.subTitles}>ACCESSBILITY</Text>
+            <Text style={styles.bodyText}>Wheelchair accessible, wheelchair bathrooms, adaptive equipment</Text>
             <Text style={styles.subTitles}>DISABILITY</Text>
-            <Text style={styles.subTitles}>{this.state.lowest_age} - {this.state.highest_age}</Text>
+            <Text style={styles.bodyText}>Cognitive, Mobility, Other</Text>
+            <Text style={styles.subTitles}>AGE RANGE</Text>
+            <Text style={styles.bodyText}>{this.state.lowest_age} - {this.state.highest_age}</Text>
             <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
-            <Text style={styles.subTitles}>$ {this.state.cost}</Text>
-            <Text style={styles.subTitles}>{this.state.contact_name}</Text>
-            <Text style={styles.subTitles}>MAP</Text>
+            <Text style={styles.bodyText}>3</Text>
+            <Text style={styles.subTitles}>COST</Text>
+            <Text style={styles.bodyText}>${this.state.cost}</Text>
+            <View style={{borderColor: 'lightgray', borderBottomWidth: 2, marginTop: 30, marginBottom: 20}}></View>
+            <Text style={styles.subTitles}>CONTACT</Text>
+            <Text style={styles.bodyText}>{this.state.contact_name}</Text>
+            <Text style={styles.bodyText}>(206) 510 - 7185</Text>
+            <Text style={styles.bodyText}>info@nwadaptivecenter.org</Text>
+            <Text style={styles.bodyText}>nwadaptivecenter.org</Text>
         </ScrollView>
       </View>
     );
@@ -116,18 +173,51 @@ export class Organization extends Component {
 
 const styles = StyleSheet.create({
   activityInfo: {
-    textAlign: 'left',
+    fontSize: 24,
+  },
+  row: {
+    marginTop: 10,
+    flex: 1,
+    flexDirection: "row",
+  },
+  row2: {
+    marginTop: 10,
+    flex: 2,
+    flexDirection: "row",
+  },
+  row3: {
+    marginTop: 10,
+    flex: 3,
+    flexDirection: "row",
+  },
+  row4: {
+    marginTop: 10,
+    flex: 4,
+    flexDirection: "row"
+  },
+  textWrap: {
+    flex: 1,
+  },
+  cost2: {
     fontSize: 20,
-    paddingBottom: 10,
+    left: 140
   },
   subTitles: {
-    textAlign: 'left',
+    fontSize: 18,
     fontWeight: 'bold',
     color: 'black',
-    paddingVertical: 15
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 3
+  },
+  bodyText: {
+    fontSize: 16
   },
   container: {
     padding: 10,
+  },
+  imageWrapper: {
+    marginRight: 10
   },
   buttonContainer: {
     backgroundColor: '#F35A3A',

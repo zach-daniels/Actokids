@@ -93,7 +93,7 @@ Zip.getValidationErrorMessage = function (value, path, context) {
 };
 
 const ActivityType = t.enums({
-  Outdoors: 'Outdoors/Nature',
+  Outdoors: 'Outdoors and Nature',
   Sports: 'Sports',
   Music: 'Music',
   Zoo: 'Zoo',

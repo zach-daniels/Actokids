@@ -29,8 +29,7 @@ export default class HomePage extends Component {
                         navigation.navigate('FilterPage', {});
                     }}>
                     <Image
-                        source={require('./images/filter.png')}
-                    />
+                    source={require('./images/filter.png')}/>
                 </TouchableOpacity>
             )
         };
