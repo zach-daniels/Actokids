@@ -116,6 +116,7 @@ const Event = t.struct({
   eventName: t.String,
   eventDescription: t.String,
   organization: t.String,
+  organizationDescription: t.String,
   organizationLink: OrganizationLink,
   date: t.Date,
   startTime: t.Date,
@@ -130,7 +131,6 @@ const Event = t.struct({
   address: t.String,
   city: t.String,
   state: t.String,
-  country: t.String,
   zipCode: Zip,
   activityType: t.list(ActivityType),
   disabilityType: t.list(DisabilityType),
@@ -140,14 +140,6 @@ const Event = t.struct({
   staffRatio: t.maybe(t.Number),
   wheelchairAccessible: t.Boolean,
   wheelchairAccessibleRestroom: t.Boolean,
-  parentParticipation: t.Boolean,
-  assistantProvided: t.Boolean,
-  siblingParticipation: t.Boolean,
-  interpreterAvailable: t.Boolean,
-  hearingLoopAvailable: t.Boolean,
-  chargeForAttendant: t.Boolean,
-  serviceAnimalsAllowed: t.Boolean,
-  childcareOnsite: t.Boolean
 });
 
 const options = {
@@ -163,6 +155,10 @@ const options = {
     organization: {
       label: 'Organization*',
       error: 'Organization field empty'
+    },
+    organizationDescription: {
+      label: 'Organization Description*',
+      error: 'Organization description field empty'
     },
     organizationLink: {
       label: 'Organization URL*',
@@ -239,11 +235,6 @@ const options = {
       placeholder: 'State eg. (WA)',
       error: 'State field empty'
     },
-    country: {
-      auto: 'none',
-      placeholder: 'Country',
-      error: 'Country field empty'
-    },
     zipCode: {
       auto: 'none',
       placeholder: 'Zip Code',
@@ -278,37 +269,13 @@ const options = {
       placeholder: 'Oldest',
       error: 'Oldest field empty'
     },
-    parentParticipation: {
-      label: 'Parent Participation Required'
-    },
-    assistantProvided: {
-      label: 'Assistant Provided'
-    },
     equipmentProvided: {
       label: 'Equipment Provided',
       placeholder: 'List all equipment provided by your organization'
     },
-    siblingParticipation: {
-      label: 'Sibling Participation Allowed'
-    },
     staffRatio: {
       label: 'Child : Staff Ratio',
       placeholder: '1.5'
-    },
-    interpreterAvailable: {
-      label: 'ASL Interpreter Available'
-    },
-    hearingLoopAvailable: {
-      label: 'Closed-Circuit Hearing Loop Available'
-    },
-    chargeForAttendant: {
-      label: 'Additional Charge for Personal Care Attendant'
-    },
-    serviceAnimalsAllowed: {
-      label: 'Can Accomodate Service Animals'
-    },
-    childcareOnsite: {
-      label: 'On-Site Child Care'
     }
   },
   i18n: {
@@ -404,6 +371,8 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
+          <Text style={{ marginBottom: 5}}>Thank you for contributing to the Acto Kids database.</Text>
+          <Text>Required fields are marked with (*).</Text>
           <Form
             ref={c => this._form = c}
             type={Event}

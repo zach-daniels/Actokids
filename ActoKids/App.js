@@ -90,7 +90,7 @@ const AboutStack = createStackNavigator(
 
 const Tabs = createBottomTabNavigator({
     Activities: HomeStack,
-    Add: AddStack,
+    Submit: AddStack,
     About: AboutStack,
     },
     {
@@ -111,9 +111,9 @@ const Tabs = createBottomTabNavigator({
                         source={require('./images/activity.png')}
                         style={[{ width: 26 }, { height: 26 }]}
                     />
-                } else if (routeName === 'Add') {
+                } else if (routeName === 'Submit') {
                     return <Image
-                        source={require('./images/favorite.png')}
+                        source={require('./images/sharp_add_black_36dp.png')}
                         style={[{ width: 26 }, { height: 26 }]}
                     />
                 } else if (routeName === 'About') {

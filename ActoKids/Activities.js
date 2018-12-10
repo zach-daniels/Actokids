@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import { Platform, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView
+} from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 
 
@@ -60,16 +68,18 @@ export default class Activity extends Component {
     render() {
         //alert(this.state.picture_url);
     return (
-        <View style={styles.container}>
-            <Image style={{ width: 390, height: 100 }} source={{ uri: this.state.picture_url}} />
+      <View style={styles.container}>
+        <ScrollView>
+          <Image style={{ width: 390, height: 200 }} source={{ uri: this.state.picture_url}} />
             <Text style={styles.subTitles}>{this.state.activity_name}</Text>
-        <Text style={styles.subTitles}>ACCESSBILITY</Text>
-        <Text style={styles.subTitles}>DISABILITY</Text>
+            <Text style={styles.subTitles}>ACCESSBILITY</Text>
+            <Text style={styles.subTitles}>DISABILITY</Text>
             <Text style={styles.subTitles}>{this.state.lowest_age} - {this.state.highest_age}</Text>
-        <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
+            <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
             <Text style={styles.subTitles}>$ {this.state.cost}</Text>
             <Text style={styles.subTitles}>{this.state.contact_name}</Text>
-        <Text style={styles.subTitles}>MAP</Text>
+            <Text style={styles.subTitles}>MAP</Text>
+        </ScrollView>
       </View>
     );
   }
