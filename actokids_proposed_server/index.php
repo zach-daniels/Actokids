@@ -212,7 +212,7 @@ function submit_info(){
     
     $place_comma = false;
     
-    if(isset($_REQUEST['Cognative'])){
+    if(isset($_REQUEST['Cognitive'])){
         if($place_comma){
             $insert_disability_query = $insert_disability_query . ',';
         }
