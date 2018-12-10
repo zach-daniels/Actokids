@@ -141,14 +141,6 @@ const Event = t.struct({
   staffRatio: t.maybe(t.Number),
   wheelchairAccessible: t.Boolean,
   wheelchairAccessibleRestroom: t.Boolean,
-  parentParticipation: t.Boolean,
-  assistantProvided: t.Boolean,
-  siblingParticipation: t.Boolean,
-  interpreterAvailable: t.Boolean,
-  hearingLoopAvailable: t.Boolean,
-  chargeForAttendant: t.Boolean,
-  serviceAnimalsAllowed: t.Boolean,
-  childcareOnsite: t.Boolean
 });
 
 const options = {
@@ -283,37 +275,13 @@ const options = {
       placeholder: 'Oldest',
       error: 'Oldest field empty'
     },
-    parentParticipation: {
-      label: 'Parent Participation Required'
-    },
-    assistantProvided: {
-      label: 'Assistant Provided'
-    },
     equipmentProvided: {
       label: 'Equipment Provided',
       placeholder: 'List all equipment provided by your organization'
     },
-    siblingParticipation: {
-      label: 'Sibling Participation Allowed'
-    },
     staffRatio: {
       label: 'Child : Staff Ratio',
       placeholder: '1.5'
-    },
-    interpreterAvailable: {
-      label: 'ASL Interpreter Available'
-    },
-    hearingLoopAvailable: {
-      label: 'Closed-Circuit Hearing Loop Available'
-    },
-    chargeForAttendant: {
-      label: 'Additional Charge for Personal Care Attendant'
-    },
-    serviceAnimalsAllowed: {
-      label: 'Can Accomodate Service Animals'
-    },
-    childcareOnsite: {
-      label: 'On-Site Child Care'
     }
   },
   i18n: {
