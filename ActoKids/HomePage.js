@@ -91,20 +91,20 @@ export default class HomePage extends Component {
                                   uri: item.pic_url
                                 }}
                               >
-                                  <Text style={{ fontSize: 20, color: 'black' }}>
+                                  <Text style={styles.titleText}>
                                       {`${item.act_name}`}
                                   </Text>
-                                  <Text style={{ fontSize: 20, color: 'black' }}>
-                                      {`${item.loc_name}`}
+                                  <Text style={{ fontSize: 16, color: 'black', margin: 5}}>
+                                      {moment(`${item.act_date}`).format('dddd') + ', ' + moment(`${item.act_date}`).format('MMMM Do YYYY, h:mm a')}
                                   </Text>
-                                  <Text style={{ fontSize: 20, color: 'black' }}>
+                                  <Text style={{ fontSize: 16, color: 'black' }}>
                                       {`${item.loc_address}`}
                                   </Text>
-                                  <Text style={{ fontSize: 20, color: 'black' }}>
-                                        {moment(`${item.act_date}`).format('dddd') + ', ' + moment(`${item.act_date}`).format('MMMM Do YYYY, h:mm a')}
+                                  <Text style={{ fontSize: 16, color: 'black' }}>
+                                      {`${item.loc_name}`}
                                   </Text>
-                                  <Text style={{ fontSize: 20, color: 'black' }}>
-                                      {`Contact: ${item.cont_name}`}
+                                  <Text style={{ fontSize: 16, color: 'black' }}>
+                                      ${`${item.cost}`}
                                   </Text>
                                   </Card>
                           </TouchableHighlight>
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontFamily: 'serif',
-        fontSize: 32,
+        fontSize: 24,
         color: 'black',
     },
     headerText: {

@@ -131,7 +131,6 @@ const Event = t.struct({
   address: t.String,
   city: t.String,
   state: t.String,
-  country: t.String,
   zipCode: Zip,
   activityType: t.list(ActivityType),
   disabilityType: t.list(DisabilityType),
@@ -235,11 +234,6 @@ const options = {
       auto: 'none',
       placeholder: 'State eg. (WA)',
       error: 'State field empty'
-    },
-    country: {
-      auto: 'none',
-      placeholder: 'Country',
-      error: 'Country field empty'
     },
     zipCode: {
       auto: 'none',
@@ -377,6 +371,8 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
+          <Text style={{ marginBottom: 5}}>Thank you for contributing to the Acto Kids database.</Text>
+          <Text>Required fields are marked with (*).</Text>
           <Form
             ref={c => this._form = c}
             type={Event}
