@@ -296,10 +296,10 @@ export default class App extends Component {
             fetch('http://actokids2.azurewebsites.net/', {
                 method: 'POST',
                 body: this.bind_form_data(value)
-            });
+              });
+            }
           }
         }
-      }
 
     bind_form_data(value) {
         /* Convert the event's date's start timeout
@@ -307,6 +307,13 @@ export default class App extends Component {
         var stripTime = moment(value.startTime);
         eventDate.set({'hour': stripTime.hour(), 'minute': stripTime.minutes()});
         var dateToSubmit = eventDate.format('YYYY-MM-DD, H:mm:ss'); // plug me into act_date
+        // Find the difference between the start time and end time and store it as a String
+        var start = moment.utc(value.startTime, "HH:mm");
+        var roundStart = start.add(30, 'seconds').startOf('minute');
+        var end = moment.utc(value.endTime, "HH:mm");
+        var roundEnd = end.add(30, 'seconds').startOf('minute');
+        var duration = moment.duration(roundEnd.diff(roundStart));
+        var formattedDuration = moment.utc(+duration).format('H:mm');
         */
         let api_data = new FormData();
         api_data.append("act_name", "Play for All"); // done
