@@ -45,17 +45,22 @@ export default class Activity extends Component {
         activity_name: " ",
         activity_date: " ",
         activity_description:" ",
+        wheelchairaccess: " ",
+        wheelchairrestroom: " ",
+        childratio: " ",
+        organization_desc: " ",
         cost: " ",
-        org_desc: " ",
         org_name: " ",
         location_name: " ",
         location_address: " ",
         contact_name: " ",
+        contact_phone: " ",
+        contact_email: " ",
         picture_url: " ",
         activity_description: " ",
         lowest_age: " ",
         highest_age: " ",
-        disabilities_served: "",
+        disabilities_served: " ",
     };
 
     componentDidMount() {
@@ -76,12 +81,28 @@ export default class Activity extends Component {
         this.state.activity_name = navigation.getParam('activity_name', 'NO-NAME');
         this.state.activity_date = navigation.getParam('activity_date', 'NO-NAME');
         this.state.activity_description = navigation.getParam('activity_description', 'NO-NAME');
-        this.state.cost = navigation.getParam('cost', 'NO-NAME');
-        this.state.org_name = navigation.getParam('org_name', 'NO-NAME');
-        this.state.org_desc = navigation.getParam('organization_desc', 'NO-NAME');
+        this.state.wheelchairaccess = navigation.getParam('wheelchairaccess', 'NO-NAME');
+        if (this.state.wheelchairaccess == 1) {
+          this.state.wheelchairaccess = 'Wheelchair accessible';
+        } else {
+          this.state.wheelchairaccess = '';
+        }
+        this.state.wheelchairrestroom = navigation.getParam('wheelchairrestroom', 'NO-NAME');
+        if (this.state.wheelchairrestroom == 1) {
+          this.state.wheelchairrestroom = 'Wheelchair restrooms';
+        } else {
+          this.state.wheelchairrestroom = '';
+        }
+        this.state.childratio = navigation.getParam('childratio', 'NO-NAME');
+        this.state.organization_desc = navigation.getParam('organization_desc', 'NO-NAME');
         this.state.location_name = navigation.getParam('location_name', 'NO-NAME');
         this.state.location_address = navigation.getParam('location_address', 'NO-NAME');
         this.state.contact_name = navigation.getParam('contact_name', 'NO-NAME');
+        this.state.contact_phone = navigation.getParam('contact_phone', 'NO-NAME');
+        this.state.contact_email = navigation.getParam('contact_email', 'NO-NAME');
+        this.state.cost = navigation.getParam('cost', 'NO-NAME');
+        this.state.org_name = navigation.getParam('org_name', 'NO-NAME');
+        this.state.org_desc = navigation.getParam('organization_desc', 'NO-NAME');
         this.state.picture_url = navigation.getParam('picture_url', 'NO-NAME');
         this.state.activity_description = navigation.getParam('activity_description', 'NO-NAME');
         this.state.lowest_age = navigation.getParam('lowest_age', 'NO-NAME');
@@ -155,7 +176,7 @@ export default class Activity extends Component {
             <Text style={styles.subTitles}>ACCESSBILITY</Text>
             <Text style={styles.bodyText}>Wheelchair accessible, wheelchair bathrooms, adaptive equipment</Text>
             <Text style={styles.subTitles}>DISABILITY</Text>
-                <Text style={styles.bodyText}>{disabilities_served}</Text>
+            <Text style={styles.bodyText}>{disabilities_served}</Text>
             <Text style={styles.subTitles}>AGE RANGE</Text>
             <Text style={styles.bodyText}>{this.state.lowest_age} - {this.state.highest_age}</Text>
             <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
