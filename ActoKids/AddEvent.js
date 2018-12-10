@@ -302,7 +302,6 @@ export default class App extends Component {
             
           }
         }
-      }
 
     bind_form_data(value) {
         //Convert the event's date's start timeout
@@ -311,7 +310,6 @@ export default class App extends Component {
         eventDate.set({'hour': stripTime.hour(), 'minute': stripTime.minutes()});
         var dateToSubmit = eventDate.format('YYYY-MM-DD, H:mm:ss'); // plug me into act_date
         var endTime = moment(value.endTime);
-
         let api_data = new FormData();
         api_data.append("act_name", value.eventName); // done
         api_data.append("act_date", dateToSubmit); // done
