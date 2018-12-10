@@ -44,7 +44,9 @@ export default class Activity extends Component {
         act_id: " ",
         activity_name: " ",
         activity_date: " ",
+        activity_description:" ",
         cost: " ",
+        org_desc: " ",
         org_name: " ",
         location_name: " ",
         location_address: " ",
@@ -73,8 +75,10 @@ export default class Activity extends Component {
         this.state.act_id = navigation.getParam('act_id', 'NO-NAME');
         this.state.activity_name = navigation.getParam('activity_name', 'NO-NAME');
         this.state.activity_date = navigation.getParam('activity_date', 'NO-NAME');
+        this.state.activity_description = navigation.getParam('activity_description', 'NO-NAME');
         this.state.cost = navigation.getParam('cost', 'NO-NAME');
         this.state.org_name = navigation.getParam('org_name', 'NO-NAME');
+        this.state.org_desc = navigation.getParam('organization_desc', 'NO-NAME');
         this.state.location_name = navigation.getParam('location_name', 'NO-NAME');
         this.state.location_address = navigation.getParam('location_address', 'NO-NAME');
         this.state.contact_name = navigation.getParam('contact_name', 'NO-NAME');
