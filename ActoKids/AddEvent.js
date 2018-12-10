@@ -309,9 +309,12 @@ export default class App extends Component {
         var eventDate = moment(value.date);
         var stripTime = moment(value.startTime);
         eventDate.set({'hour': stripTime.hour(), 'minute': stripTime.minutes()});
-        var dateToSubmit = eventDate.format('YYYY-MM-DD, H:mm:ss'); // plug me into act_date
+        var dateToSubmit = eventDate.format('YYYY-MM-DD H:mm:ss'); // plug me into act_date
         var endTime = moment(value.endTime);
         let api_data = new FormData();
+
+        alert(dateToSubmit);
+
         api_data.append("act_name", value.eventName); // done
         api_data.append("act_date", dateToSubmit); // done
         api_data.append("cost", value.cost);
@@ -322,6 +325,19 @@ export default class App extends Component {
         api_data.append("org_name", value.organization);
 
         api_data.append("org_desc", value.organizationDescription);
+        api_data.append("childratio", value.staffRatio);
+
+        if (value.wheelchairAccessible) {
+            api_data.append("wheelchairraccess", 1);
+        } else {
+            api_data.append("wheelchairraccess", 0);
+        }
+        if (value.wheelchairrestroom) {
+            api_data.append("wheelchairrestroom", 1);
+        } else {
+            api_data.append("wheelchairrestroom", 0);
+        }
+
 
         api_data.append("url_link", value.organizationLink); // done
         api_data.append("cont_email", value.contactEmail); // done

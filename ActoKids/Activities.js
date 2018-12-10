@@ -112,6 +112,7 @@ export default class Activity extends Component {
         this.state.activity_description = navigation.getParam('activity_description', 'NO-NAME');
         this.state.lowest_age = navigation.getParam('lowest_age', 'NO-NAME');
         this.state.highest_age = navigation.getParam('highest_age', 'NO-NAME');
+        this.state.duration = navigation.getParam('duration', 'NO-NAME');
        // alert(this.state.picture_url);
     }
 

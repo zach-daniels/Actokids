@@ -69,6 +69,7 @@ function submit_info(){
                         WHERE url_link LIKE :url_link";
     
     $org_name = $_REQUEST['org_name'];
+    $org_desc = $_REQUEST['org_desc'];
     $url_link = $_REQUEST['url_link'];
             
     $insert_location_bindings = array(":loc_name", ":loc_phone", ":loc_email", 
@@ -97,6 +98,9 @@ function submit_info(){
         ":act_desc", 
         ":lowest_age", 
         ":highest_age", 
+        ":childratio",
+        ":wheelchairraccess",
+        ":wheelchairrestroom",
         ":duration");
     
     $insert_activity_info = array(
@@ -112,19 +116,22 @@ function submit_info(){
         $_REQUEST['cost'], 
         $_REQUEST['act_desc'], 
         $_REQUEST['lowest_age'], 
-        $_REQUEST['highest_age'], 
+        $_REQUEST['highest_age'],
+        $_REQUEST['childratio'],
+        $_REQUEST['wheelchairraccess'],
+        $_REQUEST['wheelchairrestroom'],
         $_REQUEST['duration']);
      
-    $insert_organization_bindings = array(":loc_name", ":street", ":org_name", ":url_link");
+    $insert_organization_bindings = array(":loc_name", ":street", ":org_name", ":url_link", ":org_desc");
     
-    $insert_organization_info = array($insert_location_info[0], $insert_location_info[4], $org_name, $url_link);
+    $insert_organization_info = array($insert_location_info[0], $insert_location_info[4], $org_name, $url_link, $org_desc );
     
-    $insert_organization_query = "INSERT INTO Org (location_id, org_name, url_id)
-                        VALUES(($select_location_query), :org_name, ($select_url_query))";
+    $insert_organization_query = "INSERT INTO Org (location_id, org_name, url_id, org_desc)
+                        VALUES(($select_location_query), :org_name, ($select_url_query), :org_desc)";
     
-    $insert_activity_query = "INSERT INTO Activity(location_id, org_id, contact_id, pic_id, url_id, act_name, act_date, cost, act_desc, lowest_age, highest_age, duration)
+    $insert_activity_query = "INSERT INTO Activity(location_id, org_id, contact_id, pic_id, url_id, act_name, act_date, cost, act_desc, lowest_age, highest_age, CHILDRATIO, WHEELCHAIRACCESSIBLE, WHEELCHAIRACCESSIBLERESTROOM, duration)
                         OUTPUT inserted.act_id
-                        VALUES(($select_location_query), ($select_organization_query), ($select_contact_query), 1, ($select_url_query), :act_name, :act_date, :cost, :act_desc, :lowest_age, :highest_age, :duration)";
+                        VALUES(($select_location_query), ($select_organization_query), ($select_contact_query), 1, ($select_url_query), :act_name, :act_date, :cost, :act_desc, :lowest_age, :highest_age, :childratio, :wheelchairraccess, :wheelchairrestroom, :duration)";
     
     
     
@@ -368,7 +375,7 @@ function json_query(){
         assembleQuery($conn);
 
     }else{
-        $query = "SELECT act_id, act_desc, act_name, act_date, cost, org_name, org_desc, WHEELCHAIRACCESSIBLE, WHEELCHAIRACCESSIBLERESTROOM, CHILDRATIO, CAREGIVERRATIO, Activity.org_id, loc_name, loc_address, ZIP, cont_name, cont_phone, cont_email, pic_url, act_desc, lowest_age, highest_age, duration
+        $query = "SELECT act_id, act_desc, act_name, act_date, cost, org_name, org_desc, WHEELCHAIRACCESSIBLE, WHEELCHAIRACCESSIBLERESTROOM, CHILDRATIO, Activity.org_id, loc_name, loc_address, ZIP, cont_name, cont_phone, cont_email, pic_url, act_desc, lowest_age, highest_age, duration
         FROM Activity JOIN Org ON Activity.org_id = Org.org_id
         JOIN Location ON Activity.location_id = Location.location_id
         JOIN Contact ON Activity.contact_id = Contact.contact_id
@@ -575,7 +582,7 @@ function assembleQuery($conn){
                 }
                 
                 
-                $query = "SELECT act_id, act_desc, act_name, act_date, cost, org_name, org_desc, WHEELCHAIRACCESSIBLE, WHEELCHAIRACCESSIBLERESTROOM, CHILDRATIO, CAREGIVERRATIO, Activity.org_id, loc_name, loc_address, ZIP, cont_name, cont_phone, cont_email, pic_url, act_desc, lowest_age, highest_age, duration
+                $query = "SELECT act_id, act_desc, act_name, act_date, cost, org_name, org_desc, WHEELCHAIRACCESSIBLE, WHEELCHAIRACCESSIBLERESTROOM, CHILDRATIO, Activity.org_id, loc_name, loc_address, ZIP, cont_name, cont_phone, cont_email, pic_url, act_desc, lowest_age, highest_age, duration
                             FROM Activity JOIN Org ON Activity.org_id = Org.org_id
                             JOIN Location ON Activity.location_id = Location.location_id
                             JOIN Contact ON Activity.contact_id = Contact.contact_id
