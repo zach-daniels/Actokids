@@ -1,5 +1,5 @@
 /**
- * Displays the available filters and allows the user to submit filters to filter 
+ * Displays the available filters and allows the user to submit filters to filter
  * events displayed
  */
 import React, { Component } from 'react';
@@ -21,7 +21,7 @@ import {
 
 import HomePage from './HomePage';
 
-import { CheckBox, Slider, Button, ThemeProvider } from 'react-native-elements';
+import { CheckBox, Button} from 'react-native-elements';
 
 
 export default class FilterPage extends Component {
@@ -32,20 +32,6 @@ export default class FilterPage extends Component {
             value: 100
         };
     }
-
- static navigationOptions = ({ navigation }) => {
-        return {
-            headerRight: (
-                <TouchableOpacity
-                    style={{ marginRight: 30 }}
-                    onPress={() => { /*applyfilter()*/ }}>
-
-                    <Text>Apply</Text>
-                </TouchableOpacity>
-            )
-        };
-    };
-
     applyfilter = () => {
         let curl = 'http://actokids2.azurewebsites.net/?filter=true';
         if (this.state.outdoor_checked) {
@@ -91,7 +77,7 @@ export default class FilterPage extends Component {
             curl = curl + '&Others=true';
         }
         //alert(curl);
-        this.props.navigation.navigate('Activities', {
+        this.props.navigation.navigate('HomePage', {
             url: curl,
             call: true,
         });
@@ -241,129 +227,43 @@ export default class FilterPage extends Component {
                             this.setState({ otherdisb_checked: !this.state.otherdisb_checked })
                         }}
                     />
-                    <Text style={styles.textLine}>
-                        _________________________________________________________
-           </Text>
                 </View>
-
-                <View>
-                    <Text style={styles.headTitle}>Frequency</Text>
-
-                    <CheckBox
-                        title="One-time"
-                    />
-                    <CheckBox
-                        title="Reoccuring"
-                    />
-
-
-                    <Text style={styles.textLine}>
-                        _________________________________________________________
-           </Text>
+                <View style={styles.buttonsContainer}>
+                  <View style={styles.buttonContainer}>
+                    <Button
+                      style={{
+                        width: "100%"
+                      }}
+                      buttonStyle={{
+                        width: "100%",
+                        borderRadius: 20
+                      }}
+                      onPress={() => {
+                        this.applyfilter()
+                      }}
+                      title="Apply" />
+                  </View>
+                  <View style={styles.buttonContainer}>
+                    <Button
+                      style={{
+                        width: "100%"
+                      }}
+                      buttonStyle={{
+                        width: "100%",
+                        borderRadius: 20
+                      }}
+                      onPress={() => {
+                        this.props.navigation.navigate('HomePage', {
+                            url: 'http://actokids2.azurewebsites.net/',
+                            call: true,
+                          });
+                        }}
+                        title="Reset" />
+                  </View>
                 </View>
-
-
-                <View>
-                    <Text style={styles.headTitle}>
-                        Day of Week
-             </Text>
-
-                    <CheckBox
-                        title="Monday"
-                    />
-                    <CheckBox
-                        title="Tuesday"
-                    />
-                    <CheckBox
-                        title="Wednesday"
-                    />
-                    <CheckBox
-                        title="Thursday"
-                    />
-                    <CheckBox
-                        title="Friday"
-                    />
-                    <CheckBox
-                        title="Saturday"
-                    />
-                    <CheckBox
-                        title="Sunday"
-                    />
-                    <Text style={styles.textLine}>
-                        _________________________________________________________
-           </Text>
-                </View>
-
-
-
-                <View>
-                    <Text style={styles.headTitle}>
-                        Time of Day
-             </Text>
-
-                    <CheckBox
-                        title="Morning (Before 12pm)"
-                    />
-                    <CheckBox
-                        title="Evening (After 6pm)"
-                    />
-                    <CheckBox
-                        title="Afternoon"
-                    />
-
-                    <Text style={styles.textLine}>
-                        _________________________________________________________
-           </Text>
-                </View>
-
-
-                <View style={{ flex: 1, marginLeft: 10, marginRight: 10, alignItems: 'stretch', justifyContent: 'center' }}>
-                    <Text style={styles.headTitle}>
-                        Cost (US Dollars)
-             </Text>
-
-                    <Slider
-                        value={this.state.value}
-                        onValueChange={value => this.setState({ value })}
-                    />
-                    <Text>
-                        Value: {this.state.value}
-                    </Text>
-
-                </View>
-
-
-                <View style={{ flex: 1, marginLeft: 10, marginRight: 10, alignItems: 'stretch', justifyContent: 'center' }}>
-                    <Text style={styles.headTitle}>
-                        Distance ( Milies )
-             </Text>
-
-                    <Slider
-                        value={this.state.value}
-                        onValueChange={value => this.setState({ value })}
-                    />
-                    <Text>
-                        Value: {this.state.value}
-                    </Text>
-                </View>
-                <Button onPress={() => {
-                    this.applyfilter()
-
-                }} title="APPLY FILTER" />
-                <Button onPress={() => {
-                    this.props.navigation.navigate('Activities', {
-                        url: 'http://actokids2.azurewebsites.net/',
-                        call: true,
-                    });
-                }} title="RESET FILTER" />
-                   
-
             </ScrollView>
-
         );
     }
-
-
 }
 
 const styles = StyleSheet.create({
@@ -371,15 +271,22 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'lightgray',
     },
-
     headTitle: {
         textAlign: 'center',
         color: 'red',
         fontSize: 25,
     },
-
     textLine: {
         textAlign: 'center',
     },
-
+    buttonsContainer: {
+      flex: 1,
+      flexDirection: "row",
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+  buttonContainer: {
+    flex: 1,
+    margin: 5
+  },
 });

@@ -43,14 +43,14 @@ export class Organization extends Component {
 export default createMaterialTopTabNavigator({
     About: DetailsPage,
     Terms: Organization
-}, 
+},
     {
         swipeEnabled: true,
         tabBarOptions: {
             activeTintColor: 'white',
-            inactiveTintColor: 'grey',
+            inactiveTintColor: 'black',
             style: {
-                backgroundColor: '#F35A3A'
+                backgroundColor: '#FF4500'
             },
             indicatorStyle: {
                 height: 1,

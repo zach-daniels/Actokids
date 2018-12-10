@@ -11,7 +11,6 @@ import { createStackNavigator, createAppContainer, createMaterialTopTabNavigator
 
 
 import HomePage from './HomePage';
-import CalendarPage from './CalendarPage';
 import DetailsPage from './DetailsPage';
 import FilterPage from './FilterPage';
 import AddEvent from './AddEvent';
@@ -26,7 +25,7 @@ const ActivityStack = createMaterialTopTabNavigator({
         swipeEnabled: true,
         tabBarOptions: {
             activeTintColor: 'white',
-            inactiveTintColor: 'grey',
+            inactiveTintColor: 'black',
             style: {
                 backgroundColor: '#FF4500'
             },
@@ -46,28 +45,51 @@ const HomeStack = createStackNavigator(
     },
     {
         defaultNavigationOptions: {
-            title: 'Actokids',
+            title: 'Acto Kids',
             activeTintColor: 'black',
             headerTintColor: '#F8F8FF',
             headerStyle: {
                 backgroundColor: '#FF4500',
             },
         },
-        
+
     }
 );
 
-const AddStack = createStackNavigator({
-    AddEvent: { screen: AddEvent }
-});
+const AddStack = createStackNavigator(
+  {
+    AddEvent: { screen: AddEvent },
+  },
+  {
+    defaultNavigationOptions: {
+        title: 'Acto Kids',
+        activeTintColor: 'black',
+        headerTintColor: '#F8F8FF',
+        headerStyle: {
+            backgroundColor: '#FF4500',
+        },
+    },
+  }
+);
 
-const AboutStack = createStackNavigator({
+const AboutStack = createStackNavigator(
+  {
     About: { screen: DetailsPage }
-});
+  },
+  {
+    defaultNavigationOptions: {
+        title: 'Acto Kids',
+        activeTintColor: 'black',
+        headerTintColor: '#F8F8FF',
+        headerStyle: {
+            backgroundColor: '#FF4500',
+        },
+    },
+  }
+);
 
 const Tabs = createBottomTabNavigator({
     Activities: HomeStack,
-    Calendar: { screen: CalendarPage},
     Add: AddStack,
     About: AboutStack,
     },
@@ -89,11 +111,6 @@ const Tabs = createBottomTabNavigator({
                         source={require('./images/activity.png')}
                         style={[{ width: 26 }, { height: 26 }]}
                     />
-                } else if (routeName === 'Calendar') {
-                    return <Image
-                        source={require('./images/calendar.png')}
-                        style={[{ width: 26 }, { height: 26 }]}
-                    />
                 } else if (routeName === 'Add') {
                     return <Image
                         source={require('./images/favorite.png')}
@@ -105,7 +122,6 @@ const Tabs = createBottomTabNavigator({
                         style={[{ width: 26 }, { height: 26 }]}
                     />
                 }
-
                 return <Image
                     source={require('./images/filter.png')}
                     style={[{ width: 26 }, { height: 26 }]}
@@ -113,7 +129,7 @@ const Tabs = createBottomTabNavigator({
 
             },
         }),
-        
+
     }
 );
 

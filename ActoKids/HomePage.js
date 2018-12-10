@@ -17,29 +17,13 @@ import {
 
 import moment from 'moment';
 
-
-
-
 export default class HomePage extends Component {
-
-
-
     //Add Top Navigation
     static navigationOptions = ({ navigation }) => {
         return {
             headerRight: (
                 <TouchableOpacity
                     style={{ marginRight: 30 }}
-                    onPress={() => { console.log('location icon pressed') }}>
-
-                    <Image
-                        source={require('./images/location.png')}
-                    />
-                </TouchableOpacity>
-            ),
-            headerLeft: (
-                <TouchableOpacity
-                    style={{ marginLeft: 310 }}
 
                     onPress={() => {
                         navigation.navigate('FilterPage', {});
@@ -56,7 +40,7 @@ export default class HomePage extends Component {
         data: [],
     };
 
-    //ComponentDidMount checks to see if the screen mounted, and if so 
+    //ComponentDidMount checks to see if the screen mounted, and if so
     componentDidMount() {
         this.load()
         this.props.navigation.addListener('willFocus', this.load)
@@ -89,7 +73,6 @@ export default class HomePage extends Component {
                               onPress={() => {
                                     this.props.navigation.navigate('Activities', {
                                       activity_name: `${item.act_name}`,
-
                                       activity_date: `${item.act_date}`,
                                       cost: `${item.cost}`,
                                       org_name: `${item.org_name}`,
@@ -118,7 +101,7 @@ export default class HomePage extends Component {
                                       {`${item.loc_address}`}
                                   </Text>
                                   <Text style={{ fontSize: 20, color: 'black' }}>
-                                        {moment(`${item.act_date}`).format('dddd') + ', ' + moment(`${item.act_date}`).format('MMMM Do YYYY, h:mm:ss a')}
+                                        {moment(`${item.act_date}`).format('dddd') + ', ' + moment(`${item.act_date}`).format('MMMM Do YYYY, h:mm a')}
                                   </Text>
                                   <Text style={{ fontSize: 20, color: 'black' }}>
                                       {`Contact: ${item.cont_name}`}
@@ -127,17 +110,6 @@ export default class HomePage extends Component {
                           </TouchableHighlight>
                         </View>
                     } />
-
-
-                {/**Search Icon */}
-                <TouchableHighlight style={styles.searchButton}
-                    underlayColor='#ff7043'
-                    onPress={() => { console.log('pressed') }}>
-                    <Image
-                        source={require('./images/search.png')}
-                    />
-                </TouchableHighlight>
-
             </View>
 
         );
@@ -147,7 +119,6 @@ export default class HomePage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'lightgray',
     },
 
     toolbar: {
@@ -176,35 +147,11 @@ const styles = StyleSheet.create({
         right: 0,
 
     },
-
-    searchButton: {
-        backgroundColor: '#ff5722',
-        borderColor: '#ff5722',
-        borderWidth: 1,
-        height: 50,
-        width: 50,
-        borderRadius: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-        shadowColor: "#000000",
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        shadowOffset: {
-            height: 1,
-            width: 0
-        }
-    },
-
     button: {
         alignItems: 'center',
         backgroundColor: '#ddd',
         padding: 20
     },
-
-
     titleText: {
         fontFamily: 'serif',
         fontSize: 32,
