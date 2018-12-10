@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
   Image,
-  TouchableOpacity,
   ScrollView
 } from 'react-native';
-import { createMaterialTopTabNavigator } from 'react-navigation';
 
 
 export default class Activity extends Component {
@@ -33,7 +30,18 @@ export default class Activity extends Component {
         };
     };*/
 
+    fetchDisability = async () => {
+        const { navigation } = this.props;
+
+        const api_call = 'http://actokids2.azurewebsites.net/?act_id=' + this.state.act_id;
+        const response = await fetch(api_call);
+        const json = await response.json();
+        this.setState({ data: json });
+    };
+
     state = {
+        data: [],
+        act_id: " ",
         activity_name: " ",
         activity_date: " ",
         cost: " ",
@@ -45,11 +53,24 @@ export default class Activity extends Component {
         activity_description: " ",
         lowest_age: " ",
         highest_age: " ",
-
+        disabilities_served: "",
     };
+
+    componentDidMount() {
+        this.load()
+        this.props.navigation.addListener('willFocus', this.load)
+    }
+
+    load = () => {
+        //alert('True');
+        this.fetchDisability();        
+    }
+
+
 
     componentWillMount() {
         const { navigation } = this.props;
+        this.state.act_id = navigation.getParam('act_id', 'NO-NAME');
         this.state.activity_name = navigation.getParam('activity_name', 'NO-NAME');
         this.state.activity_date = navigation.getParam('activity_date', 'NO-NAME');
         this.state.cost = navigation.getParam('cost', 'NO-NAME');
@@ -66,7 +87,14 @@ export default class Activity extends Component {
 
 
     render() {
+        let disabilities_served;
         //alert(this.state.picture_url);
+        if (this.state.data != null) {
+            for (let temp of this.state.data) {
+                disabilities_served = disabilities_served + " " + temp['access_name'];
+                console.log(temp['access_name']);
+            }
+        }
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -123,13 +151,13 @@ export default class Activity extends Component {
             <Text style={styles.subTitles}>ACCESSBILITY</Text>
             <Text style={styles.bodyText}>Wheelchair accessible, wheelchair bathrooms, adaptive equipment</Text>
             <Text style={styles.subTitles}>DISABILITY</Text>
-            <Text style={styles.bodyText}>Cognitive, Mobility, Other</Text>
+                <Text style={styles.bodyText}>{disabilities_served}</Text>
             <Text style={styles.subTitles}>AGE RANGE</Text>
             <Text style={styles.bodyText}>{this.state.lowest_age} - {this.state.highest_age}</Text>
             <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
             <Text style={styles.bodyText}>3</Text>
             <Text style={styles.subTitles}>COST</Text>
-            <Text style={styles.bodyText}>${this.state.cost}</Text>
+            <Text style={styles.bodyText}>{this.state.cost}</Text>
             <View style={{borderColor: 'lightgray', borderBottomWidth: 2, marginTop: 30, marginBottom: 20}}></View>
             <Text style={styles.subTitles}>CONTACT</Text>
             <Text style={styles.bodyText}>{this.state.contact_name}</Text>
