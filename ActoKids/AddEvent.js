@@ -351,7 +351,9 @@ export default class App extends Component {
             }
         }
         if (value.disabilityType != null) {
+             
             for (let temp of value.disabilityType) {
+                alert(temp);
                 if (temp == "Others") {
                     api_data.append("ActOthers", "true");
                 } else {
