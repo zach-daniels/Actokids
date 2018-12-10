@@ -14,16 +14,68 @@ import moment from 'moment';
 
 const Form = t.form.Form;
 
-const Contact = t.refinement(t.String, contactNumber => {
+const OrganizationLink = t.refinement(t.String, organizationLink => {
+  const reg = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+  return reg.test(organizationLink);
+});
+
+OrganizationLink.getValidationErrorMessage = function (value, path, context) {
+  if (!value) {
+    return 'URL field empty';
+  } else {
+    return 'Invalid URL';
+  }
+};
+
+const ContactNumber = t.refinement(t.String, contactNumber => {
   const reg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
   return reg.test(contactNumber);
 });
 
-Contact.getValidationErrorMessage = function (value, path, context) {
+ContactNumber.getValidationErrorMessage = function (value, path, context) {
   if (!value) {
     return 'Contact field empty';
   } else {
     return 'Invalid phone number';
+  }
+};
+
+const ContactEmail = t.refinement(t.String, contactEmail => {
+  const reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+  return reg.test(contactEmail);
+});
+
+ContactEmail.getValidationErrorMessage = function (value, path, context) {
+  if (!value) {
+    return 'Email field empty';
+  } else {
+    return 'Invalid email';
+  }
+};
+
+const LocationNumber = t.refinement(t.String, locationNumber => {
+  const reg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+  return reg.test(locationNumber);
+});
+
+LocationNumber.getValidationErrorMessage = function (value, path, context) {
+  if (!value) {
+    return 'Contact field empty';
+  } else {
+    return 'Invalid phone number';
+  }
+};
+
+const LocationEmail = t.refinement(t.String, locationEmail => {
+  const reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+  return reg.test(locationEmail);
+});
+
+LocationEmail.getValidationErrorMessage = function (value, path, context) {
+  if (!value) {
+    return 'Email field empty';
+  } else {
+    return 'Invalid email';
   }
 };
 
@@ -64,12 +116,17 @@ const Event = t.struct({
   eventName: t.String,
   eventDescription: t.String,
   organization: t.String,
+  organizationLink: OrganizationLink,
   date: t.Date,
   startTime: t.Date,
   endTime: t.Date,
-  contactNumber: Contact,
+  contactName: t.String,
+  contactNumber: ContactNumber,
+  contactEmail: ContactEmail,
   cost: t.Number,
   locationName: t.String,
+  locationNumber: LocationNumber,
+  locationEmail: LocationEmail,
   address: t.String,
   city: t.String,
   state: t.String,
@@ -107,6 +164,10 @@ const options = {
       label: 'Organization*',
       error: 'Organization field empty'
     },
+    organizationLink: {
+      label: 'Organization URL*',
+      placeholder: 'www.website.com'
+    },
     date: {
       label: 'Date*',
       mode: 'date',
@@ -133,9 +194,17 @@ const options = {
         format: date => moment(date).format('h:mm a')
       }
     },
+    contactName: {
+      label: 'Contact Name*',
+      error: 'Contact name field empty'
+    },
     contactNumber: {
       label: 'Contact #*',
       placeholder: '123 456-7890',
+    },
+    contactEmail: {
+      label: 'Contact Email*',
+      placeholder: 'name@website.com'
     },
     cost: {
       label: 'Cost*',
@@ -146,6 +215,14 @@ const options = {
     locationName: {
       label: 'Location Name*',
       error: 'Location name field empty'
+    },
+    locationNumber: {
+      label: 'Location #*',
+      placeholder: '123 456-7890',
+    },
+    locationEmail: {
+      label: 'Location Email*',
+      placeholder: 'name@website.com'
     },
     address: {
       label: 'Location Address*',
@@ -248,40 +325,40 @@ export default class App extends Component {
     var value = this._form.getValue();
       console.log('value: ', value);
     if (value) {
-      /* Test to strip the time out of the startTime field
-      Alert.alert(value.startTime);
-      var stripTime = moment(value.startTime);
-      var testTime = stripTime.hour() + ':' + stripTime.minutes();
-      Alert.alert(testTime);
-      */
         if (this.validate_submission(value)) {
             fetch('http://actokids2.azurewebsites.net/', {
                 method: 'POST',
                 body: this.bind_form_data(value)
             });
+          }
         }
-    }
-    }
+      }
 
     bind_form_data(value) {
+        /* Convert the event's date's start timeout
+        var eventDate = moment(value.date);
+        var stripTime = moment(value.startTime);
+        eventDate.set({'hour': stripTime.hour(), 'minute': stripTime.minutes()});
+        var dateToSubmit = eventDate.format('YYYY-MM-DD, H:mm:ss'); // plug me into act_date
+        */
         let api_data = new FormData();
-        api_data.append("act_name", "Play for All");
-        api_data.append("act_date", "12/12/2018");
+        api_data.append("act_name", "Play for All"); // done
+        api_data.append("act_date", "12/12/2018"); // done
         api_data.append("cost", value.cost);
-        api_data.append("act_desc", " ");
+        api_data.append("act_desc", " "); // done
         api_data.append("lowest_age", value.youngestAge);
         api_data.append("highest_age", value.oldestAge);
-        api_data.append("duration", "3");
+        api_data.append("duration", "3"); // needs validation
         api_data.append("org_name", value.organization);
-        api_data.append("url_link", "www.google.com");
-        api_data.append("cont_email", "rshim@email.com");
+        api_data.append("url_link", "www.google.com"); // done
+        api_data.append("cont_email", "rshim@email.com"); // done
         api_data.append("cont_phone", value.contactNumber);
-        api_data.append("cont_name", "Riley Shim");
-        api_data.append("loc_email", "rshim@email.com");
+        api_data.append("cont_name", "Riley Shim"); // done
+        api_data.append("loc_email", "rshim@email.com"); // done
         api_data.append("state", value.state);
         api_data.append("zip", value.zipCode);
         api_data.append("city", value.city);
-        api_data.append("street", "7448 63rd Ave NE");
+        api_data.append("street", "7448 63rd Ave NE"); // done
         api_data.append("loc_address", value.address);
         api_data.append("loc_phone", "4255551111");
         api_data.append("loc_name", value.locationName);
