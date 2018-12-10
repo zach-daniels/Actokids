@@ -313,8 +313,6 @@ export default class App extends Component {
         var endTime = moment(value.endTime);
         let api_data = new FormData();
 
-        alert(dateToSubmit);
-
         api_data.append("act_name", value.eventName); // done
         api_data.append("act_date", dateToSubmit); // done
         api_data.append("cost", value.cost);
@@ -358,7 +356,9 @@ export default class App extends Component {
             }
         }
         if (value.disabilityType != null) {
+             
             for (let temp of value.disabilityType) {
+                alert(temp);
                 if (temp == "Others") {
                     api_data.append("ActOthers", "true");
                 } else {
