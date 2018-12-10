@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import { Platform, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 
 
-export default class Activity extends Component {
+
+export default class Organization extends Component {
 
     constructor(props) {
         super(props)
@@ -11,19 +12,6 @@ export default class Activity extends Component {
             params: props.navigation.params
         }
     }
-
-   /* static navigationOptions = ({ navigation }) => {
-        return {
-            headerRight: (
-                <TouchableOpacity
-                    style={{ marginRight: 30 }}
-                    onPress={() => { navigation.navigate('Organization', {}); }}>
-
-                    <Text style={styles.buttonText}>See Organization</Text>
-                </TouchableOpacity>
-            )
-        };
-    };*/
 
     state = {
         activity_name: " ",
@@ -53,30 +41,25 @@ export default class Activity extends Component {
         this.state.activity_description = navigation.getParam('activity_description', 'NO-NAME');
         this.state.lowest_age = navigation.getParam('lowest_age', 'NO-NAME');
         this.state.highest_age = navigation.getParam('highest_age', 'NO-NAME');
-       // alert(this.state.picture_url);
+        // alert(this.state.picture_url);
     }
+
+    /*static navigationOptions = ({ navigation }) => {
+        return {
+            headerRight: (
+                <TouchableOpacity
+                    style={{ marginRight: 30 }}
+                    onPress={() => { navigation.navigate('Activities', {}); }}>
+
+                    <Text style={styles.buttonText}>See Activity</Text>
+                </TouchableOpacity>
+            )
+        };
+    };*/
 
 
     render() {
-        //alert(this.state.picture_url);
-    return (
-        <View style={styles.container}>
-            <Image style={{ width: 390, height: 100 }} source={{ uri: this.state.picture_url}} />
-            <Text style={styles.subTitles}>{this.state.activity_name}</Text>
-        <Text style={styles.subTitles}>ACCESSBILITY</Text>
-        <Text style={styles.subTitles}>DISABILITY</Text>
-            <Text style={styles.subTitles}>{this.state.lowest_age} - {this.state.highest_age}</Text>
-        <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
-            <Text style={styles.subTitles}>$ {this.state.cost}</Text>
-            <Text style={styles.subTitles}>{this.state.contact_name}</Text>
-        <Text style={styles.subTitles}>MAP</Text>
-      </View>
-    );
-  }
-}
-
-export class Organization extends Component {
-  render() {
+    //alert(this.state.picture_url);
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>ORGANIZATION Information</Text>

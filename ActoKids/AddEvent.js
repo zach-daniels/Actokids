@@ -360,8 +360,8 @@ export default class App extends Component {
         api_data.append("city", value.city);
         api_data.append("street", "7448 63rd Ave NE"); // done
         api_data.append("loc_address", value.address);
-        api_data.append("loc_phone", "4255551111"); // done
-        api_data.append("loc_name", "Shims Gym"); // done
+        api_data.append("loc_phone", "4255551111");
+        api_data.append("loc_name", value.locationName);
 
         return api_data;
     }
