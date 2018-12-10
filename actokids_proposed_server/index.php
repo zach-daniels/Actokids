@@ -42,7 +42,7 @@ function connection(){
 
 
 function submit_info(){
-    
+       
     $select_organization_query = "SELECT org_id
                                   FROM Org JOIN urls ON Org.url_id = urls.url_id
                                   WHERE org_name LIKE :org_name AND url_link LIKE :url_link_1";   
@@ -70,8 +70,7 @@ function submit_info(){
     
     $org_name = $_REQUEST['org_name'];
     $url_link = $_REQUEST['url_link'];
-    
-    
+            
     $insert_location_bindings = array(":loc_name", ":loc_phone", ":loc_email", 
                     ":loc_address", ":street", ":city", ":zip", ":state");
     
@@ -124,23 +123,133 @@ function submit_info(){
                         VALUES(($select_location_query), :org_name, ($select_url_query))";
     
     $insert_activity_query = "INSERT INTO Activity(location_id, org_id, contact_id, pic_id, url_id, act_name, act_date, cost, act_desc, lowest_age, highest_age, duration)
+                        OUTPUT inserted.act_id
                         VALUES(($select_location_query), ($select_organization_query), ($select_contact_query), 1, ($select_url_query), :act_name, :act_date, :cost, :act_desc, :lowest_age, :highest_age, :duration)";
     
     
     
     
-    //run_insert_query($insert_location_query, $insert_location_bindings, $insert_location_info);
+    run_insert_query($insert_location_query, $insert_location_bindings, $insert_location_info);
     
-    //run_insert_query($insert_contact_query, $insert_contact_bindings, $insert_contact_info);
+    run_insert_query($insert_contact_query, $insert_contact_bindings, $insert_contact_info);
     
-    //run_insert_query($insert_url_query, array(":url_link"), array($url_link));
+    run_insert_query($insert_url_query, array(":url_link"), array($url_link));
     
-    //run_insert_query($insert_organization_query, $insert_organization_bindings, $insert_organization_info);
-    
-    run_insert_query($insert_activity_query, $insert_activity_bindings, $insert_activity_info);
+    run_insert_query($insert_organization_query, $insert_organization_bindings, $insert_organization_info);
     
     
     
+    $return_id = run_insert_query($insert_activity_query, $insert_activity_bindings, $insert_activity_info);
+    $place_comma = false;
+    
+    
+    $insert_type_query = "INSERT INTO Act_Type (act_id, type_id) VALUES";
+    $insert_disability_query = "INSERT INTO Act_Access (act_id, access_id) VALUES";
+    
+    if(isset($_REQUEST['Sports'])){
+        if($place_comma){
+            $insert_type_query = $insert_type_query . ',';
+        }
+        $insert_type_query = $insert_type_query . "($return_id , 1)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['Outdoors & Nature'])){
+        if($place_comma){
+            $insert_type_query = $insert_type_query . ',';
+        }
+        $insert_type_query = $insert_type_query . "($return_id , 16)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['Music'])){
+        if($place_comma){
+            $insert_type_query = $insert_type_query . ',';
+        }
+        $insert_type_query = $insert_type_query . "($return_id , 3)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['Zoo'])){
+        if($place_comma){
+            $insert_type_query = $insert_type_query . ',';
+        }
+        $insert_type_query = $insert_type_query . "($return_id , 4)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['Art'])){
+        if($place_comma){
+            $insert_type_query = $insert_type_query . ',';
+        }
+        $insert_type_query = $insert_type_query . "($return_id , 2)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['Camp'])){
+        if($place_comma){
+            $insert_type_query = $insert_type_query . ',';
+        }
+        $insert_type_query = $insert_type_query . "($return_id , 6)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['Museum'])){
+        if($place_comma){
+            $insert_type_query = $insert_type_query . ',';
+        }
+        $insert_type_query = $insert_type_query . "($return_id , 5)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['TypeOthers'])){
+        if($place_comma){
+            $insert_type_query = $insert_type_query . ',';
+        }
+        $insert_type_query = $insert_type_query . "($return_id , 15)";
+        $place_comma = true;
+    }
+    
+    $place_comma = false;
+    
+    if(isset($_REQUEST['Cognative'])){
+        if($place_comma){
+            $insert_disability_query = $insert_disability_query . ',';
+        }
+        $insert_disability_query = $insert_disability_query . "($return_id , 1)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['Mobility'])){
+        if($place_comma){
+            $insert_disability_query = $insert_disability_query . ',';
+        }
+        $insert_disability_query = $insert_disability_query . "($return_id , 2)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['Hearing'])){
+        if($place_comma){
+            $insert_disability_query = $insert_disability_query . ',';
+        }
+        $insert_disability_query = $insert_disability_query . "($return_id , 3)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['Vision'])){
+        if($place_comma){
+            $insert_disability_query = $insert_disability_query . ',';
+        }
+        $insert_disability_query = $insert_disability_query . "($return_id , 4)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['Sensory'])){
+        if($place_comma){
+            $insert_disability_query = $insert_disability_query . ',';
+        }
+        $insert_disability_query = $insert_disability_query . "($return_id , 5)";
+        $place_comma = true;
+    }
+    if(isset($_REQUEST['Other'])){
+        if($place_comma){
+            $insert_disability_query = $insert_disability_query . ',';
+        }
+        $insert_disability_query = $insert_disability_query . "($return_id , 6)";
+        $place_comma = true;
+    }
+    
+    simple_insert_query($insert_type_query);
+    simple_insert_query($insert_disability_query);
     
     /*$act_name = $_REQUEST['act_name'];
     $act_date = $_REQUEST['act_date'];
@@ -169,26 +278,48 @@ function submit_info(){
     //echo $insert_location_info[0];
     
     
+        
+    
+    
+    
+ 
 }
 
 function run_insert_query($query, $binding, $info){
     $conn = connection();
     $statement = $conn->prepare($query);
+    $return_id = null;
     
-    echo($query);
+    //echo($query);
    
     
     for($i = 0; $i < count($binding); $i++){
-        echo($binding[$i] . " -> " . $info[$i] . "<br>");
+        //echo($binding[$i] . " -> " . $info[$i] . "<br>");
         $statement->bindValue($binding[$i], $info[$i]);
     }
+    try{
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC); 
+        $return_id = $results[0]['act_id'];
+    }catch(Exception $e) {
+        echo 'Exception -> ';
+        var_dump($e->getMessage());
+    }
+    echo("END");
+    $conn = null;
+    return $return_id;
+}
+
+function simple_insert_query($query){
+    $conn = connection();
+    $statement = $conn->prepare($query);
+
     try{
         $statement->execute();
     }catch(Exception $e) {
         echo 'Exception -> ';
         var_dump($e->getMessage());
     }
-    echo("END");
     $conn = null;
 }
 
