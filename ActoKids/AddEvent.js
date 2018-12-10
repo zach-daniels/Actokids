@@ -320,6 +320,9 @@ export default class App extends Component {
         api_data.append("highest_age", value.oldestAge);
         api_data.append("duration", endTime.hour() - stripTime.hour()); // needs validation
         api_data.append("org_name", value.organization);
+
+        api_data.append("org_desc", value.organizationDescription);
+
         api_data.append("url_link", value.organizationLink); // done
         api_data.append("cont_email", value.contactEmail); // done
         api_data.append("cont_phone", value.contactNumber);
