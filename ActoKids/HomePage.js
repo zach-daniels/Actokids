@@ -78,7 +78,6 @@ export default class HomePage extends Component {
                                     wheelchairaccess: `${item.WHEELCHAIRACCESSIBLE}`,
                                     wheelchairrestroom: `${item.WHEELCHAIRACCESSIBLERESTROOM}`,
                                     childratio: `${item.CHILDRATIO}`,
-                                    caregiverratio: `${item.CAREGIVERRATIO}`,
                                     organization_desc: `${item.org_desc}`,
                                     cost: `${item.cost}`,
                                     org_name: `${item.org_name}`,

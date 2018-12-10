@@ -49,6 +49,7 @@ export default class Activity extends Component {
         org_desc: " ",
         org_name: " ",
         location_name: " ",
+        childratio: " ",
         location_address: " ",
         contact_name: " ",
         picture_url: " ",
@@ -77,6 +78,7 @@ export default class Activity extends Component {
         this.state.activity_date = navigation.getParam('activity_date', 'NO-NAME');
         this.state.activity_description = navigation.getParam('activity_description', 'NO-NAME');
         this.state.cost = navigation.getParam('cost', 'NO-NAME');
+        this.state.childratio = navigation.getParam('childratio', 'NO-NAME');
         this.state.org_name = navigation.getParam('org_name', 'NO-NAME');
         this.state.org_desc = navigation.getParam('organization_desc', 'NO-NAME');
         this.state.location_name = navigation.getParam('location_name', 'NO-NAME');
