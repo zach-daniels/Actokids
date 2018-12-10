@@ -93,7 +93,7 @@ Zip.getValidationErrorMessage = function (value, path, context) {
 };
 
 const ActivityType = t.enums({
-  Outdoors: 'Outdoors and Nature',
+  Outdoors: 'Outdoors & Nature',
   Sports: 'Sports',
   Music: 'Music',
   Zoo: 'Zoo',
@@ -288,54 +288,64 @@ const options = {
 
 export default class App extends Component {
 
-  handleSubmit = () => {
-    var value = this._form.getValue();
-      console.log('value: ', value);
+    handleSubmit = () => {
+
+        var value = this._form.getValue();
+           
+    console.log('value: ', value);
     if (value) {
         if (this.validate_submission(value)) {
             fetch('http://actokids2.azurewebsites.net/', {
                 method: 'POST',
                 body: this.bind_form_data(value)
-              });
-            }
+            });
+            
           }
         }
 
     bind_form_data(value) {
-        /* Convert the event's date's start timeout
+        //Convert the event's date's start timeout
         var eventDate = moment(value.date);
         var stripTime = moment(value.startTime);
         eventDate.set({'hour': stripTime.hour(), 'minute': stripTime.minutes()});
         var dateToSubmit = eventDate.format('YYYY-MM-DD, H:mm:ss'); // plug me into act_date
-        // Find the difference between the start time and end time and store it as a String
-        var start = moment.utc(value.startTime, "HH:mm");
-        var roundStart = start.add(30, 'seconds').startOf('minute');
-        var end = moment.utc(value.endTime, "HH:mm");
-        var roundEnd = end.add(30, 'seconds').startOf('minute');
-        var duration = moment.duration(roundEnd.diff(roundStart));
-        var formattedDuration = moment.utc(+duration).format('H:mm');
-        */
+        var endTime = moment(value.endTime);
         let api_data = new FormData();
-        api_data.append("act_name", "Play for All"); // done
-        api_data.append("act_date", "12/12/2018"); // done
+        api_data.append("act_name", value.eventName); // done
+        api_data.append("act_date", dateToSubmit); // done
         api_data.append("cost", value.cost);
-        api_data.append("act_desc", " "); // done
+        api_data.append("act_desc", value.eventDescription); // done
         api_data.append("lowest_age", value.youngestAge);
         api_data.append("highest_age", value.oldestAge);
-        api_data.append("duration", "3"); // needs validation
+        api_data.append("duration", endTime.hour() - stripTime.hour()); // needs validation
         api_data.append("org_name", value.organization);
-        api_data.append("url_link", "www.google.com"); // done
-        api_data.append("cont_email", "rshim@email.com"); // done
+        api_data.append("url_link", value.organizationLink); // done
+        api_data.append("cont_email", value.contactEmail); // done
         api_data.append("cont_phone", value.contactNumber);
-        api_data.append("cont_name", "Riley Shim"); // done
-        api_data.append("loc_email", "rshim@email.com"); // done
+        api_data.append("cont_name", value.contactName); // done
+        api_data.append("loc_email", value.locationEmail); // done
         api_data.append("state", value.state);
         api_data.append("zip", value.zipCode);
         api_data.append("city", value.city);
-        api_data.append("street", "7448 63rd Ave NE"); // done
+        api_data.append("street", value.address); // done
         api_data.append("loc_address", value.address);
-        api_data.append("loc_phone", "4255551111");
+        api_data.append("loc_phone", value.locationNumber);
         api_data.append("loc_name", value.locationName);
+
+        if (value.activityType != null) {
+            for (let temp of value.activityType) {
+                api_data.append(temp, "true");
+            }
+        }
+        if (value.disabilityType != null) {
+            for (let temp of value.disabilityType) {
+                if (temp == "Others") {
+                    api_data.append("ActOthers", "true");
+                } else {
+                    api_data.append(temp, "true");
+                }
+            }
+        }
 
         return api_data;
     }
