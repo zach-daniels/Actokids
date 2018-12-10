@@ -42,12 +42,9 @@ function connection(){
 
 
 function submit_info(){
-       
-    $select_organization_query = "SELECT org_id
-                                  FROM Org JOIN urls ON Org.url_id = urls.url_id
-                                  WHERE org_name LIKE :org_name AND url_link LIKE :url_link_1";   
-    
+          
     $insert_location_query = "INSERT INTO Location(loc_name, loc_phone, loc_email, loc_address, street, city, zip, state)
+                   OUTPUT inserted.location_id
                    VALUES(:loc_name, :loc_phone, :loc_email, :loc_address, :street, :city, :zip, :state)";
     
     $select_location_query = "SELECT location_id
@@ -55,6 +52,7 @@ function submit_info(){
                               WHERE loc_name LIKE :loc_name AND street LIKE :street";
     
     $insert_contact_query = "INSERT INTO contact (cont_name, cont_phone, cont_email)
+                        OUTPUT inserted.contact_id
                        VALUES(:cont_name, :cont_phone, :cont_email)";
     
     $select_contact_query = "SELECT contact_id
@@ -62,6 +60,7 @@ function submit_info(){
                             WHERE cont_name LIKE :cont_name AND cont_phone = :cont_phone";
     
     $insert_url_query = "INSERT INTO urls (url_link)
+                        OUTPUT inserted.url_id
                         VALUES(:url_link)";
     
     $select_url_query = "SELECT url_id
@@ -84,14 +83,60 @@ function submit_info(){
     $insert_contact_info = array($_REQUEST['cont_name'], $_REQUEST['cont_phone'], 
         $_REQUEST['cont_email']);   
     
+
+    $loc_id = run_insert_query($select_location_query, array(":loc_name", ":street"), array($insert_location_info[0], $insert_location_info[4]), "location_id");
+    if($loc_id == null || $loc_id == ""){
+        $loc_id = run_insert_query($insert_location_query, $insert_location_bindings, $insert_location_info, "LOCATION_ID");
+    }    
+    echo $loc_id;
+    
+    $contact_id = run_insert_query($select_contact_query, array(":cont_name", ":cont_phone"), array($insert_contact_info[0], $insert_contact_info[1]), "contact_id");
+    if($contact_id == null || $contact_id == ""){
+        $contact_id = run_insert_query($insert_contact_query, $insert_contact_bindings, $insert_contact_info, "contact_id");
+    }   
+    echo $contact_id;
+    
+    $url_id = run_insert_query($select_url_query, array(":url_link"), array($url_link), "url_id");
+    if($url_id == null || $url_id == ""){
+        $url_id = run_insert_query($insert_url_query, array(":url_link"), array($url_link), "url_id");
+    }   
+    echo $url_id;
+    
+    $insert_organization_bindings = array(":loc_id", ":org_name", ":url_id", ":org_desc");
+    
+    $insert_organization_info = array($loc_id, $org_name, $url_id, $org_desc);
+    
+
+    
+    /*$insert_organization_query = "INSERT INTO Org (location_id, org_name, url_id, org_desc)
+                        OUTPUT inserted.org_id
+                        VALUES(($select_location_query), :org_name, ($select_url_query), :org_desc)";
+    
+    $insert_activity_query = "INSERT INTO Activity(location_id, org_id, contact_id, pic_id, url_id, act_name, act_date, cost, act_desc, lowest_age, highest_age, CHILDRATIO, WHEELCHAIRACCESSIBLE, WHEELCHAIRACCESSIBLERESTROOM, duration)
+                        OUTPUT inserted.act_id
+                        VALUES(($select_location_query), ($select_organization_query), ($select_contact_query), 1, ($select_url_query), :act_name, :act_date, :cost, :act_desc, :lowest_age, :highest_age, :childratio, :wheelchairraccess, :wheelchairrestroom, :duration)";*/
+    
+    $insert_organization_query = "INSERT INTO Org (location_id, org_name, url_id, org_desc)
+                        OUTPUT inserted.org_id
+                        VALUES(:loc_id, :org_name, :url_id, :org_desc)";
+    
+    $select_organization_query = "SELECT org_id
+                                  FROM Org JOIN urls ON Org.url_id = urls.url_id
+                                  WHERE org_name LIKE :org_name AND url_link LIKE :url_link"; 
+    
+    $org_id = run_insert_query($select_organization_query, array(":org_name", ":url_link"), array($org_name, $url_link), "org_id");
+    if($org_id == null || $org_id == ""){
+        $org_id = run_insert_query($insert_organization_query, $insert_organization_bindings, $insert_organization_info, "org_id");
+    }   
+    echo $org_id;
+    
+    
+    
     $insert_activity_bindings = array(
-        ":loc_name", 
-        ":street", 
-        ":org_name", 
-        ":url_link_1", 
-        ":cont_name", 
-        ":cont_phone", 
-        ":url_link",
+        ":loc_id", 
+        ":org_id", 
+        ":contact_id", 
+        ":url_id",
         ":act_name", 
         ":act_date", 
         ":cost", 
@@ -104,13 +149,10 @@ function submit_info(){
         ":duration");
     
     $insert_activity_info = array(
-        $insert_location_info[0], 
-        $insert_location_info[4], 
-        $org_name, 
-        $url_link, 
-        $insert_contact_info[0], 
-        $insert_contact_info[1], 
-        $url_link,
+        $loc_id, 
+        $org_id, 
+        $contact_id,
+        $url_id,
         $_REQUEST['act_name'], 
         $_REQUEST['act_date'], 
         $_REQUEST['cost'], 
@@ -121,37 +163,21 @@ function submit_info(){
         $_REQUEST['wheelchairraccess'],
         $_REQUEST['wheelchairrestroom'],
         $_REQUEST['duration']);
-     
-    $insert_organization_bindings = array(":loc_name", ":street", ":org_name", ":url_link", ":org_desc");
-    
-    $insert_organization_info = array($insert_location_info[0], $insert_location_info[4], $org_name, $url_link, $org_desc );
-    
-    $insert_organization_query = "INSERT INTO Org (location_id, org_name, url_id, org_desc)
-                        VALUES(($select_location_query), :org_name, ($select_url_query), :org_desc)";
     
     $insert_activity_query = "INSERT INTO Activity(location_id, org_id, contact_id, pic_id, url_id, act_name, act_date, cost, act_desc, lowest_age, highest_age, CHILDRATIO, WHEELCHAIRACCESSIBLE, WHEELCHAIRACCESSIBLERESTROOM, duration)
-                        OUTPUT inserted.act_id
-                        VALUES(($select_location_query), ($select_organization_query), ($select_contact_query), 1, ($select_url_query), :act_name, :act_date, :cost, :act_desc, :lowest_age, :highest_age, :childratio, :wheelchairraccess, :wheelchairrestroom, :duration)";
+                    OUTPUT inserted.act_id
+                    VALUES(:loc_id, :org_id, :contact_id, 1, :url_id, :act_name, :act_date, :cost, :act_desc, :lowest_age, :highest_age, :childratio, :wheelchairraccess, :wheelchairrestroom, :duration)";
+
+    $return_id = run_insert_query($insert_activity_query, $insert_activity_bindings, $insert_activity_info, "act_id");
     
-    
-    
-    
-    run_insert_query($insert_location_query, $insert_location_bindings, $insert_location_info);
-    
-    run_insert_query($insert_contact_query, $insert_contact_bindings, $insert_contact_info);
-    
-    run_insert_query($insert_url_query, array(":url_link"), array($url_link));
-    
-    run_insert_query($insert_organization_query, $insert_organization_bindings, $insert_organization_info);
-    
-    
-    
-    $return_id = run_insert_query($insert_activity_query, $insert_activity_bindings, $insert_activity_info);
     $place_comma = false;
     
     
     $insert_type_query = "INSERT INTO Act_Type (act_id, type_id) VALUES";
     $insert_disability_query = "INSERT INTO Act_Access (act_id, access_id) VALUES";
+    
+    //echo run_insert_query($select_location_query, array(":loc_name", ":street"), array("Emerald City Gymnastics", "17969 NE 65th Street"), "location_id");
+    
     
     if(isset($_REQUEST['Sports'])){
         if($place_comma){
@@ -264,7 +290,7 @@ function submit_info(){
    
 }
 
-function run_insert_query($query, $binding, $info){
+function run_insert_query($query, $binding, $info, $return_label){
     $conn = connection();
     $statement = $conn->prepare($query);
     $return_id = null;
@@ -279,12 +305,34 @@ function run_insert_query($query, $binding, $info){
     try{
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC); 
-        $return_id = $results[0]['act_id'];
+        $return_id = $results[0][$return_label];
     }catch(Exception $e) {
         echo 'Exception -> ';
         var_dump($e->getMessage());
     }
     echo("END");
+    $conn = null;
+    return $return_id;
+}
+
+function check_database($query, $bindings, $params, $return_label){
+    $conn = connection();
+    $statement = $conn->prepare($query);
+    $return_id = null;
+    
+    for($i = 0; $i < count($binding); $i++){
+        //echo($binding[$i] . " -> " . $info[$i] . "<br>");
+        $statement->bindValue($binding[$i], $info[$i]);
+    }
+    
+    try{
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC); 
+        $return_id = $results[0][$return_label];
+    }catch(Exception $e) {
+        echo 'Exception -> ';
+        var_dump($e->getMessage());
+    }
     $conn = null;
     return $return_id;
 }
