@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, Image, TouchableOpacity, ScrollView, View} from 'react-native';
 import {createMaterialTopTabNavigator} from 'react-navigation';
 
-export default class Activities extends Component {
+class Activity extends Component {
   render() {
     const { navigation } = this.props;
     const activity_name = navigation.getParam('activity_name', 'NO-NAME');
@@ -60,6 +60,9 @@ export default class Activities extends Component {
           (206) 475 - 7364 
           </Text>
         </View>
+          <TouchableOpacity style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>REGISTER</Text>
+          </TouchableOpacity>
         <View style={{paddingVertical:5}} >
           <View style={{borderBottomColor: 'gray',borderBottomWidth: 1, paddingVertical:10}}/>
           <View style={{flex: 1, flexDirection:'row', alignItems:'center', justifyContent:'space-between', paddingLeft:20}}>
@@ -111,7 +114,6 @@ export default class Activities extends Component {
   }
 }
 
-/*
 class Organization extends Component {
   render() {
     const { navigation } = this.props;
@@ -125,7 +127,7 @@ class Organization extends Component {
 }
 
 export default createMaterialTopTabNavigator({
-  Activity: Activities,
+  Activity: Activity,
   Organization: Organization
 },
   {
@@ -143,7 +145,7 @@ export default createMaterialTopTabNavigator({
       }
     },
 );
-*/
+
 
 const styles = StyleSheet.create({
   activityInfo: {

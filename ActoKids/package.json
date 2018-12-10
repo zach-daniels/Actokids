@@ -14,15 +14,16 @@
     "react-native-deprecated-custom-components": "^0.1.2",
     "react-native-dropdown": "0.0.6",
     "react-native-elements": "^0.19.1",
+    "react-native-gesture-handler": "^1.0.10",
     "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-modal-dropdown": "^0.6.2",
     "react-native-searchbar": "^1.6.0",
-    "react-navigation": "^2.18.2"
+    "react-navigation": "^3.0.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
-    "@babel/preset-env": "^7.1.6",
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
     "babel-jest": "23.6.0",
     "babel-preset-react-native": "5.0.1",
     "jest": "23.6.0",
