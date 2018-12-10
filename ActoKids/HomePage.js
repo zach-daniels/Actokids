@@ -89,7 +89,8 @@ export default class HomePage extends Component {
                                     picture_url: `${item.pic_url}`,
                                     activity_description: `${item.act_desc}`,
                                     lowest_age: `${item.lowest_age}`,
-                                    highest_age: `${item.highest_age}`,
+                                        highest_age: `${item.highest_age}`,
+                                        duration: `${item.duration}`,
                                     otherParam: 'anything you want here',
                                   });
                               }}>
