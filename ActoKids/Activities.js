@@ -7,6 +7,9 @@ import {
   ScrollView
 } from 'react-native';
 
+import _ from 'lodash'
+
+import moment from 'moment';
 
 export default class Activity extends Component {
 
@@ -45,18 +48,23 @@ export default class Activity extends Component {
         activity_name: " ",
         activity_date: " ",
         activity_description:" ",
+        wheelchairaccess: " ",
+        wheelchairrestroom: " ",
+        childratio: " ",
+        organization_desc: " ",
         cost: " ",
-        org_desc: " ",
         org_name: " ",
         location_name: " ",
-        childratio: " ",
         location_address: " ",
         contact_name: " ",
+        contact_phone: " ",
+        contact_email: " ",
         picture_url: " ",
         activity_description: " ",
         lowest_age: " ",
         highest_age: " ",
-        disabilities_served: "",
+        disabilities_served: " ",
+        duration: " "
     };
 
     componentDidMount() {
@@ -66,7 +74,7 @@ export default class Activity extends Component {
 
     load = () => {
         //alert('True');
-        this.fetchDisability();        
+        this.fetchDisability();
     }
 
 
@@ -77,13 +85,30 @@ export default class Activity extends Component {
         this.state.activity_name = navigation.getParam('activity_name', 'NO-NAME');
         this.state.activity_date = navigation.getParam('activity_date', 'NO-NAME');
         this.state.activity_description = navigation.getParam('activity_description', 'NO-NAME');
-        this.state.cost = navigation.getParam('cost', 'NO-NAME');
+        this.state.wheelchairaccess = navigation.getParam('wheelchairaccess', 'NO-NAME');
+        this.state.wheelchairrestroom = navigation.getParam('wheelchairrestroom', 'NO-NAME');
+        // We don't want a blank accessibility field, so if they don't have wheelchair access, we will display N/A
+        if (this.state.wheelchairaccess == 0 && this.state.wheelchairrestroom == 0) {
+          this.state.wheelchairaccess = 'N/A';
+        } else if (this.state.wheelchairaccess == 1) {
+          this.state.wheelchairaccess = 'Wheelchair accessible ';
+        } else {
+          this.state.wheelchairaccess = '';
+        }
+        if (this.state.wheelchairrestroom == 1) {
+          this.state.wheelchairrestroom = 'Wheelchair restrooms';
+        } else {
+          this.state.wheelchairrestroom = '';
+        }
         this.state.childratio = navigation.getParam('childratio', 'NO-NAME');
+        this.state.organization_desc = navigation.getParam('organization_desc', 'NO-NAME');
+        this.state.cost = navigation.getParam('cost', 'NO-NAME');
         this.state.org_name = navigation.getParam('org_name', 'NO-NAME');
-        this.state.org_desc = navigation.getParam('organization_desc', 'NO-NAME');
         this.state.location_name = navigation.getParam('location_name', 'NO-NAME');
         this.state.location_address = navigation.getParam('location_address', 'NO-NAME');
         this.state.contact_name = navigation.getParam('contact_name', 'NO-NAME');
+        this.state.contact_phone = navigation.getParam('contact_phone', 'NO-NAME');
+        this.state.contact_email = navigation.getParam('contact_email', 'NO-NAME');
         this.state.picture_url = navigation.getParam('picture_url', 'NO-NAME');
         this.state.activity_description = navigation.getParam('activity_description', 'NO-NAME');
         this.state.lowest_age = navigation.getParam('lowest_age', 'NO-NAME');
@@ -102,6 +127,17 @@ export default class Activity extends Component {
                 console.log(temp['access_name']);
             }
         }
+
+        // Phone # is stored as a float so we must truncate the decimal place
+        var phoneStr = this.state.contact_phone.toString();
+        phoneStr = phoneStr.slice(0, -2);
+
+        // Strip the time out of the date
+        var eventDate = moment(this.state.activity_date);
+        eventDate.add(this.state.duration, 'hours');
+        var formattedEventDate = moment(this.state.activity_date).format("dddd, MMMM Do");
+        var startTime = moment(this.state.activity_date).format("h:mm a");
+        var endTime = moment(eventDate).format("h:mm a");
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -122,8 +158,8 @@ export default class Activity extends Component {
                   />
                 </View>
               <View>
-                <Text style={{fontSize: 16}}>FRI, May 13</Text>
-                <Text style={{fontSize: 16}}>4:00PM - 5:30PM</Text>
+                <Text style={{fontSize: 16}}>{formattedEventDate}</Text>
+                <Text style={{fontSize: 16}}>{startTime} - {endTime}</Text>
               </View>
             </View>
             <View style={styles.row3}>
@@ -146,42 +182,30 @@ export default class Activity extends Component {
                   />
                 </View>
               <View>
-                <Text style={{fontSize: 16, marginTop: 5}}>(206) 510 - 7185</Text>
+                <Text style={{fontSize: 16, marginTop: 5}}>{phoneStr}</Text>
               </View>
             </View>
             <Text style={styles.subTitles}>DESCRIPTION</Text>
-            <Text style={styles.bodyText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
+            <Text style={styles.bodyText}>{this.state.activity_description}</Text>
             <Text style={styles.subTitles}>ACCESSBILITY</Text>
-            <Text style={styles.bodyText}>Wheelchair accessible, wheelchair bathrooms, adaptive equipment</Text>
+            <Text style={styles.bodyText}>{this.state.wheelchairaccess}{this.state.wheelchairrestroom}</Text>
             <Text style={styles.subTitles}>DISABILITY</Text>
-                <Text style={styles.bodyText}>{disabilities_served}</Text>
+            <Text style={styles.bodyText}>{disabilities_served}</Text>
             <Text style={styles.subTitles}>AGE RANGE</Text>
             <Text style={styles.bodyText}>{this.state.lowest_age} - {this.state.highest_age}</Text>
             <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
-            <Text style={styles.bodyText}>3</Text>
+            <Text style={styles.bodyText}>{this.state.childratio}</Text>
             <Text style={styles.subTitles}>COST</Text>
-            <Text style={styles.bodyText}>{this.state.cost}</Text>
-            <View style={{borderColor: 'lightgray', borderBottomWidth: 2, marginTop: 30, marginBottom: 20}}></View>
-            <Text style={styles.subTitles}>CONTACT</Text>
+            <Text style={styles.bodyText}>${this.state.cost}</Text>
+            <Text style={styles.subTitles}>EVENT CONTACT</Text>
             <Text style={styles.bodyText}>{this.state.contact_name}</Text>
-            <Text style={styles.bodyText}>(206) 510 - 7185</Text>
-            <Text style={styles.bodyText}>info@nwadaptivecenter.org</Text>
-            <Text style={styles.bodyText}>nwadaptivecenter.org</Text>
+            <Text style={styles.bodyText}>{phoneStr}</Text>
+            <Text style={styles.bodyText}>{this.state.contact_email}</Text>
+            <View style={{borderColor: 'lightgray', borderBottomWidth: 2, marginTop: 30, marginBottom: 20}}></View>
+            <Text style={styles.activityInfo}>{this.state.org_name}</Text>
+            <Text style={styles.subTitles}>DESCRIPTION</Text>
+            <Text style={styles.bodyText}>{this.state.organization_desc}</Text>
         </ScrollView>
-      </View>
-    );
-  }
-}
-
-export class Organization extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>ORGANIZATION Information</Text>
       </View>
     );
   }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, View, TouchableOpacity, ScrollView, Image} from 'react-native';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 
 
@@ -25,24 +25,9 @@ export default class Organization extends Component {
         activity_description: " ",
         lowest_age: " ",
         highest_age: " ",
-
     };
 
-    componentWillMount() {
-        const { navigation } = this.props;
-        this.state.activity_name = navigation.getParam('activity_name', 'NO-NAME');
-        this.state.activity_date = navigation.getParam('activity_date', 'NO-NAME');
-        this.state.cost = navigation.getParam('cost', 'NO-NAME');
-        this.state.org_name = navigation.getParam('org_name', 'NO-NAME');
-        this.state.location_name = navigation.getParam('location_name', 'NO-NAME');
-        this.state.location_address = navigation.getParam('location_address', 'NO-NAME');
-        this.state.contact_name = navigation.getParam('contact_name', 'NO-NAME');
-        this.state.picture_url = navigation.getParam('picture_url', 'NO-NAME');
-        this.state.activity_description = navigation.getParam('activity_description', 'NO-NAME');
-        this.state.lowest_age = navigation.getParam('lowest_age', 'NO-NAME');
-        this.state.highest_age = navigation.getParam('highest_age', 'NO-NAME');
-        // alert(this.state.picture_url);
-    }
+
 
     /*static navigationOptions = ({ navigation }) => {
         return {
@@ -62,7 +47,10 @@ export default class Organization extends Component {
     //alert(this.state.picture_url);
     return (
       <View style={styles.container}>
+      <ScrollView>
+        <Image style={{ width: 390, height: 200 }} source={{ uri: this.state.picture_url}} />
         <Text style={styles.welcome}>ORGANIZATION Information</Text>
+      </ScrollView>
       </View>
     );
   }

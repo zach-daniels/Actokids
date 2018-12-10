@@ -136,7 +136,6 @@ const Event = t.struct({
   disabilityType: t.list(DisabilityType),
   youngestAge: t.Number,
   oldestAge: t.Number,
-  equipmentProvided: t.maybe(t.String),
   staffRatio: t.maybe(t.Number),
   wheelchairAccessible: t.Boolean,
   wheelchairAccessibleRestroom: t.Boolean,
@@ -269,10 +268,6 @@ const options = {
       placeholder: 'Oldest',
       error: 'Oldest field empty'
     },
-    equipmentProvided: {
-      label: 'Equipment Provided',
-      placeholder: 'List all equipment provided by your organization'
-    },
     staffRatio: {
       label: 'Child : Staff Ratio',
       placeholder: '1.5'
@@ -299,12 +294,12 @@ export default class App extends Component {
                 fetch('http://actokids2.azurewebsites.net/', {
                     method: 'POST',
                     body: this.bind_form_data(value)
-                });
-
+                }).catch( error => console.log(error));
+                this.props.navigation.navigate('HomePage');
             }
         }
     }
-    bind_form_data(value) {
+    bind_form_data = (value) => {
         //Convert the event's date's start timeout
         var eventDate = moment(value.date);
         var stripTime = moment(value.startTime);
@@ -356,9 +351,8 @@ export default class App extends Component {
             }
         }
         if (value.disabilityType != null) {
-             
+
             for (let temp of value.disabilityType) {
-                alert(temp);
                 if (temp == "Others") {
                     api_data.append("ActOthers", "true");
                 } else {

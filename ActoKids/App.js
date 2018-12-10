@@ -15,8 +15,8 @@ import DetailsPage from './DetailsPage';
 import FilterPage from './FilterPage';
 import AddEvent from './AddEvent';
 import Activities from './Activities';
-import Organization from './Organization';
 
+/*
 const ActivityStack = createMaterialTopTabNavigator({
     Activities: { screen: Activities },
     Organization: { screen: Organization }
@@ -36,12 +36,13 @@ const ActivityStack = createMaterialTopTabNavigator({
         }
     }
 );
+*/
 
 const HomeStack = createStackNavigator(
     {
         HomePage: { screen: HomePage },
         FilterPage: { screen: FilterPage },
-        ActivityStack: ActivityStack
+        Activities: { screen: Activities},
     },
     {
         defaultNavigationOptions: {
@@ -72,26 +73,9 @@ const AddStack = createStackNavigator(
   }
 );
 
-const AboutStack = createStackNavigator(
-  {
-    About: { screen: DetailsPage }
-  },
-  {
-    defaultNavigationOptions: {
-        title: 'Acto Kids',
-        activeTintColor: 'black',
-        headerTintColor: '#F8F8FF',
-        headerStyle: {
-            backgroundColor: '#FF4500',
-        },
-    },
-  }
-);
-
 const Tabs = createBottomTabNavigator({
     Activities: HomeStack,
     Submit: AddStack,
-    About: AboutStack,
     },
     {
         tabBarOptions: {
@@ -116,17 +100,11 @@ const Tabs = createBottomTabNavigator({
                         source={require('./images/sharp_add_black_36dp.png')}
                         style={[{ width: 26 }, { height: 26 }]}
                     />
-                } else if (routeName === 'About') {
-                    return <Image
-                        source={require('./images/user.png')}
-                        style={[{ width: 26 }, { height: 26 }]}
-                    />
-                }
+                  }
                 return <Image
                     source={require('./images/filter.png')}
                     style={[{ width: 26 }, { height: 26 }]}
                 />
-
             },
         }),
 

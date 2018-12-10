@@ -245,7 +245,7 @@ export default class FilterPage extends Component {
                   </View>
                   <View style={styles.buttonContainer}>
                     <Button
-                      style={{
+                    style={{
                         width: "100%"
                       }}
                       buttonStyle={{
