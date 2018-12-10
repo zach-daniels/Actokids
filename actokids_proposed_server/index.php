@@ -195,7 +195,7 @@ function submit_info(){
         $insert_type_query = $insert_type_query . "($return_id , 5)";
         $place_comma = true;
     }
-    if(isset($_REQUEST['TypeOthers'])){
+    if(isset($_REQUEST['ActOthers'])){
         if($place_comma){
             $insert_type_query = $insert_type_query . ',';
         }
@@ -251,38 +251,10 @@ function submit_info(){
     simple_insert_query($insert_type_query);
     simple_insert_query($insert_disability_query);
     
-    /*$act_name = $_REQUEST['act_name'];
-    $act_date = $_REQUEST['act_date'];
-    $act_desc = $_REQUEST['act_desc'];
-    $cost = $_REQUEST['cost'];   
-    $lowest_age = $_REQUEST['lowest_age'];
-    $highest_age = $_REQUEST['highest_age'];
-    $duration = $_REQUEST['duration'];*/
-    
-    /*$cont_name = $_REQUEST['cont_name'];
-    $cont_phone = $_REQUEST['cont_phone'];
-    $cont_email = $_REQUEST['cont_email'];*/
-    
-    /*$loc_name = $_REQUEST['loc_name'];
-    $loc_phone = $_REQUEST['loc_phone'];
-    $loc_email = $_REQUEST['loc_email'];
-    $loc_address = $_REQUEST['loc_address'];   
-    $street = $_REQUEST['street'];
-    $city = $_REQUEST['city'];
-    $zip = $_REQUEST['zip'];
-    $state = $_REQUEST['state'];*/
-    
     http_response_code(200);
-    
-    
-    //echo $insert_location_info[0];
-    
-    
-        
-    
-    
-    
  
+    //echo $insert_location_info[0];
+   
 }
 
 function run_insert_query($query, $binding, $info){
@@ -377,12 +349,26 @@ function json_query(){
         //var_dump($resultz);
         http_response_code(200);
         echo $resultz;
+        
+    }else if(isset($_GET['act_id'])){
+        $act_id = $_GET['act_id'];
+        $query = "SELECT access_name
+                FROM Activity JOIN Act_Access ON Activity.act_id = Act_Access.act_id
+                JOIN Accessibility ON Act_Access.access_id = Accessibility.access_id
+                WHERE Activity.act_id = $act_id";
+        $statement = $conn->prepare($query);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);                   
+        $resultz = json_encode($results, JSON_UNESCAPED_SLASHES);
+        //var_dump($resultz);
+        http_response_code(200);
+        echo $resultz;
     }else if(isset($_GET['filter'])){
 
         assembleQuery($conn);
 
     }else{
-        $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
+        $query = "SELECT act_id, act_desc, act_name, act_date, cost, org_name, org_desc, WHEELCHAIRACCESSIBLE, WHEELCHAIRACCESSIBLERESTROOM, CHILDRATIO, CAREGIVERRATIO, Activity.org_id, loc_name, loc_address, ZIP, cont_name, cont_phone, cont_email, pic_url, act_desc, lowest_age, highest_age, duration
         FROM Activity JOIN Org ON Activity.org_id = Org.org_id
         JOIN Location ON Activity.location_id = Location.location_id
         JOIN Contact ON Activity.contact_id = Contact.contact_id
@@ -589,7 +575,7 @@ function assembleQuery($conn){
                 }
                 
                 
-                $query = "SELECT act_name, act_date, cost, org_name, Activity.org_id, loc_name, loc_address, ZIP, cont_name, pic_url, act_desc, lowest_age, highest_age, duration
+                $query = "SELECT act_id, act_desc, act_name, act_date, cost, org_name, org_desc, WHEELCHAIRACCESSIBLE, WHEELCHAIRACCESSIBLERESTROOM, CHILDRATIO, CAREGIVERRATIO, Activity.org_id, loc_name, loc_address, ZIP, cont_name, cont_phone, cont_email, pic_url, act_desc, lowest_age, highest_age, duration
                             FROM Activity JOIN Org ON Activity.org_id = Org.org_id
                             JOIN Location ON Activity.location_id = Location.location_id
                             JOIN Contact ON Activity.contact_id = Contact.contact_id
