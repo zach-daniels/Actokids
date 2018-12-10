@@ -116,6 +116,7 @@ const Event = t.struct({
   eventName: t.String,
   eventDescription: t.String,
   organization: t.String,
+  organizationDescription: t.String,
   organizationLink: OrganizationLink,
   date: t.Date,
   startTime: t.Date,
@@ -163,6 +164,10 @@ const options = {
     organization: {
       label: 'Organization*',
       error: 'Organization field empty'
+    },
+    organizationDescription: {
+      label: 'Organization Description*',
+      error: 'Organization description field empty'
     },
     organizationLink: {
       label: 'Organization URL*',
