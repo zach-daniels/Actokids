@@ -5,6 +5,13 @@ import { createMaterialTopTabNavigator } from 'react-navigation';
 
 export default class Activity extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            params: props.navigation.params
+        }
+    }
+
    /* static navigationOptions = ({ navigation }) => {
         return {
             headerRight: (
@@ -33,7 +40,7 @@ export default class Activity extends Component {
 
     };
 
-    componentDidMount() {
+    componentWillMount() {
         const { navigation } = this.props;
         this.state.activity_name = navigation.getParam('activity_name', 'NO-NAME');
         this.state.activity_date = navigation.getParam('activity_date', 'NO-NAME');
@@ -46,22 +53,22 @@ export default class Activity extends Component {
         this.state.activity_description = navigation.getParam('activity_description', 'NO-NAME');
         this.state.lowest_age = navigation.getParam('lowest_age', 'NO-NAME');
         this.state.highest_age = navigation.getParam('highest_age', 'NO-NAME');
-        alert(this.state.picture_url);
+       // alert(this.state.picture_url);
     }
 
 
     render() {
-
+        //alert(this.state.picture_url);
     return (
         <View style={styles.container}>
-        <Image source={{ uri: this.state.picture_url }} />
-        <Text style={styles.subTitles}>DESCRIPTION</Text>
+            <Image style={{ width: 390, height: 100 }} source={{ uri: this.state.picture_url}} />
+            <Text style={styles.subTitles}>{this.state.activity_name}</Text>
         <Text style={styles.subTitles}>ACCESSBILITY</Text>
         <Text style={styles.subTitles}>DISABILITY</Text>
-        <Text style={styles.subTitles}>AGE RANGE</Text>
+            <Text style={styles.subTitles}>{this.state.lowest_age} - {this.state.highest_age}</Text>
         <Text style={styles.subTitles}>CHILD : STAFF RATIO</Text>
-        <Text style={styles.subTitles}>COST</Text>
-        <Text style={styles.subTitles}>CONTACT</Text>
+            <Text style={styles.subTitles}>$ {this.state.cost}</Text>
+            <Text style={styles.subTitles}>{this.state.contact_name}</Text>
         <Text style={styles.subTitles}>MAP</Text>
       </View>
     );
