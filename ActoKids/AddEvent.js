@@ -132,17 +132,17 @@ const Event = t.struct({
   state: t.String,
   country: t.String,
   zipCode: Zip,
-  wheelchairAccessible: t.Boolean,
-  wheelchairAccessibleRestroom: t.Boolean,
   activityType: t.list(ActivityType),
   disabilityType: t.list(DisabilityType),
   youngestAge: t.Number,
   oldestAge: t.Number,
+  equipmentProvided: t.maybe(t.String),
+  staffRatio: t.maybe(t.Number),
+  wheelchairAccessible: t.Boolean,
+  wheelchairAccessibleRestroom: t.Boolean,
   parentParticipation: t.Boolean,
   assistantProvided: t.Boolean,
-  equipmentProvided: t.maybe(t.String),
   siblingParticipation: t.Boolean,
-  staffRatio: t.maybe(t.Number),
   interpreterAvailable: t.Boolean,
   hearingLoopAvailable: t.Boolean,
   chargeForAttendant: t.Boolean,
@@ -292,7 +292,7 @@ const options = {
       label: 'Sibling Participation Allowed'
     },
     staffRatio: {
-      label: 'Kid to Staff Ratio',
+      label: 'Child : Staff Ratio',
       placeholder: '1.5'
     },
     interpreterAvailable: {
