@@ -130,23 +130,20 @@ export default class Activity extends Component {
             <Text style={styles.bodyText}>3</Text>
             <Text style={styles.subTitles}>COST</Text>
             <Text style={styles.bodyText}>${this.state.cost}</Text>
-            <View style={{borderColor: 'lightgray', borderBottomWidth: 2, marginTop: 30, marginBottom: 20}}></View>
-            <Text style={styles.subTitles}>CONTACT</Text>
+            <Text style={styles.subTitles}>EVENT CONTACT</Text>
             <Text style={styles.bodyText}>{this.state.contact_name}</Text>
             <Text style={styles.bodyText}>(206) 510 - 7185</Text>
             <Text style={styles.bodyText}>info@nwadaptivecenter.org</Text>
             <Text style={styles.bodyText}>nwadaptivecenter.org</Text>
+            <View style={{borderColor: 'lightgray', borderBottomWidth: 2, marginTop: 30, marginBottom: 20}}></View>
+            <Text style={styles.activityInfo}>{this.state.org_name}</Text>
+            <Text style={styles.subTitles}>DESCRIPTION</Text>
+            <Text style={styles.bodyText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+            and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
         </ScrollView>
-      </View>
-    );
-  }
-}
-
-export class Organization extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>ORGANIZATION Information</Text>
       </View>
     );
   }

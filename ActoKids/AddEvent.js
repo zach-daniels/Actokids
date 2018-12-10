@@ -93,7 +93,6 @@ Zip.getValidationErrorMessage = function (value, path, context) {
 };
 
 const ActivityType = t.enums({
-  Outdoors: 'Outdoors & Nature',
   Sports: 'Sports',
   Music: 'Music',
   Zoo: 'Zoo',
@@ -243,7 +242,9 @@ const options = {
       label: 'Add 1 or more Activity Types*',
       disableOrder: true,
       item: {
+        nullOption: {value: '', text: 'Choose an Activity Type'},
         label: 'Options'
+
       }
     },
     wheelchairAccessible: {
@@ -256,6 +257,7 @@ const options = {
       label: 'Add 1 or more Disability Types*',
       disableOrder: true,
       item: {
+        nullOption: {value: '', text: 'Choose a Disability Type'},
         label: 'Options'
       }
     },
@@ -293,14 +295,14 @@ export default class App extends Component {
         var value = this._form.getValue();
 
     console.log('value: ', value);
-    if (value) {
+    /*if (value) {
         if (this.validate_submission(value)) {
             fetch('http://actokids2.azurewebsites.net/', {
                 method: 'POST',
                 body: this.bind_form_data(value)
             });
           }
-        }
+        }*/
       }
     bind_form_data(value) {
         //Convert the event's date's start timeout
