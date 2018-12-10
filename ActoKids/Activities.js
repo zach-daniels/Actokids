@@ -52,6 +52,7 @@ export default class Activity extends Component {
         cost: " ",
         org_name: " ",
         location_name: " ",
+        childratio: " ",
         location_address: " ",
         contact_name: " ",
         contact_phone: " ",
@@ -81,6 +82,7 @@ export default class Activity extends Component {
         this.state.activity_name = navigation.getParam('activity_name', 'NO-NAME');
         this.state.activity_date = navigation.getParam('activity_date', 'NO-NAME');
         this.state.activity_description = navigation.getParam('activity_description', 'NO-NAME');
+<<<<<<< HEAD
         this.state.wheelchairaccess = navigation.getParam('wheelchairaccess', 'NO-NAME');
         if (this.state.wheelchairaccess == 1) {
           this.state.wheelchairaccess = 'Wheelchair accessible';
@@ -95,6 +97,12 @@ export default class Activity extends Component {
         }
         this.state.childratio = navigation.getParam('childratio', 'NO-NAME');
         this.state.organization_desc = navigation.getParam('organization_desc', 'NO-NAME');
+=======
+        this.state.cost = navigation.getParam('cost', 'NO-NAME');
+        this.state.childratio = navigation.getParam('childratio', 'NO-NAME');
+        this.state.org_name = navigation.getParam('org_name', 'NO-NAME');
+        this.state.org_desc = navigation.getParam('organization_desc', 'NO-NAME');
+>>>>>>> ffa744e562daa76d4484a2eadfd8808e0721cef2
         this.state.location_name = navigation.getParam('location_name', 'NO-NAME');
         this.state.location_address = navigation.getParam('location_address', 'NO-NAME');
         this.state.contact_name = navigation.getParam('contact_name', 'NO-NAME');
