@@ -86,7 +86,7 @@ function submit_info(){
 
     $loc_id = run_insert_query($select_location_query, array(":loc_name", ":street"), array($insert_location_info[0], $insert_location_info[4]), "location_id");
     if($loc_id == null || $loc_id == ""){
-        $loc_id = run_insert_query($insert_location_query, $insert_location_bindings, $insert_location_info, "LOCATION_ID");
+        $loc_id = run_insert_query($insert_location_query, $insert_location_bindings, $insert_location_info, "location_id");
     }    
     echo $loc_id;
     
