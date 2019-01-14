@@ -16,28 +16,6 @@ import FilterPage from './FilterPage';
 import AddEvent from './AddEvent';
 import Activities from './Activities';
 
-/*
-const ActivityStack = createMaterialTopTabNavigator({
-    Activities: { screen: Activities },
-    Organization: { screen: Organization }
-},
-    {
-        swipeEnabled: true,
-        tabBarOptions: {
-            activeTintColor: 'white',
-            inactiveTintColor: 'black',
-            style: {
-                backgroundColor: '#FF4500'
-            },
-            indicatorStyle: {
-                height: 1,
-                backgroundColor: 'white'
-            }
-        }
-    }
-);
-*/
-
 const HomeStack = createStackNavigator(
     {
         HomePage: { screen: HomePage },

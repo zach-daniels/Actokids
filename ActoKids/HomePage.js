@@ -46,7 +46,6 @@ export default class HomePage extends Component {
     }
 
     load = () => {
-        //alert('True');
         this.fetchData();
     }
 
@@ -140,7 +139,6 @@ const styles = StyleSheet.create({
         width: 150,
         fontSize: 25,
         textAlign: 'center',
-        //flex: 1,
     },
     toolbarFilter: {
         width: 50,

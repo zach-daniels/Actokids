@@ -7,8 +7,6 @@ import {
   ScrollView
 } from 'react-native';
 
-import _ from 'lodash'
-
 import moment from 'moment';
 
 export default class Activity extends Component {
@@ -19,19 +17,6 @@ export default class Activity extends Component {
             params: props.navigation.params
         }
     }
-
-   /* static navigationOptions = ({ navigation }) => {
-        return {
-            headerRight: (
-                <TouchableOpacity
-                    style={{ marginRight: 30 }}
-                    onPress={() => { navigation.navigate('Organization', {}); }}>
-
-                    <Text style={styles.buttonText}>See Organization</Text>
-                </TouchableOpacity>
-            )
-        };
-    };*/
 
     fetchDisability = async () => {
         const { navigation } = this.props;
@@ -73,7 +58,6 @@ export default class Activity extends Component {
     }
 
     load = () => {
-        //alert('True');
         this.fetchDisability();
     }
 
@@ -114,20 +98,17 @@ export default class Activity extends Component {
         this.state.lowest_age = navigation.getParam('lowest_age', 'NO-NAME');
         this.state.highest_age = navigation.getParam('highest_age', 'NO-NAME');
         this.state.duration = navigation.getParam('duration', 'NO-NAME');
-       // alert(this.state.picture_url);
     }
 
 
     render() {
         let disabilities_served;
-        //alert(this.state.picture_url);
+
         if (this.state.data != null) {
             for (let temp of this.state.data) {
                 disabilities_served = disabilities_served + " " + temp['access_name'];
-                console.log(temp['access_name']);
             }
         }
-
         // Phone # is stored as a float so we must truncate the decimal place
         var phoneStr = this.state.contact_phone.toString();
         phoneStr = phoneStr.slice(0, -2);
@@ -211,28 +192,9 @@ export default class Activity extends Component {
   }
 }
 
-/*export default createMaterialTopTabNavigator({
-  Activity: Activity,
-  Organization: Organization},
-  {
-    swipeEnabled: true,
-    tabBarOptions: {
-      activeTintColor: 'white',
-      inactiveTintColor: 'grey',
-      style:{
-        backgroundColor: '#F35A3A'
-      },
-      indicatorStyle: {
-        height: 1,
-        backgroundColor: 'white'
-        }
-      }
-    },
-);*/
-
 const styles = StyleSheet.create({
   activityInfo: {
-    fontSize: 24,
+    fontSize: 20,
   },
   row: {
     marginTop: 10,
@@ -287,5 +249,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white'
   }
-
 });

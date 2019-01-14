@@ -242,6 +242,7 @@ const options = {
       label: 'Add 1 or more Activity Types*',
       disableOrder: true,
       item: {
+        nullOption: {value: '', text: 'Choose an Activity type'},
         label: 'Options'
       }
     },
@@ -255,6 +256,7 @@ const options = {
       label: 'Add 1 or more Disability Types*',
       disableOrder: true,
       item: {
+      nullOption: {value: '', text: 'Choose a disability type'},
         label: 'Options'
       }
     },
