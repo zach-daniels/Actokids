@@ -1,3 +1,0 @@
-This text file eventually needs to be changed.
-
-pip install facebook-sdk
